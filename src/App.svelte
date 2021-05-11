@@ -2,6 +2,9 @@
   import Theme from "./Theme.svelte";
   import TopNav from "./components/nav/TopNav.svelte";
   import SideNav from "./components/nav/SideNav.svelte";
+  import { startFirebase } from "./firebase/core";
+
+  startFirebase();
 
 </script>
 

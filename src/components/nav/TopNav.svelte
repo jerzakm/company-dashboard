@@ -1,1 +1,4 @@
-topnav
+<script>
+  let user;
+
+</script>
