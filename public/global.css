@@ -14,7 +14,6 @@ body {
 }
 
 a {
-  color: rgb(0, 100, 200);
   text-decoration: none;
 }
 
@@ -23,5 +22,4 @@ a:hover {
 }
 
 a:visited {
-  color: rgb(0, 80, 160);
 }

@@ -1,5 +1,6 @@
 <style>
   :global(body) {
-    @apply bg-gray-100;
+    background-color: rgb(247, 246, 244);
   }
+
 </style>
