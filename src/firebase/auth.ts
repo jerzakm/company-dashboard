@@ -10,7 +10,6 @@ export const registerNewUser = (email: string, password: string) => {
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
-      console.log("registered", userCredential);
       // ...
     })
     .catch((error) => {
@@ -21,23 +20,22 @@ export const registerNewUser = (email: string, password: string) => {
 };
 
 export const signInUser = (email: string, password: string) => {
+  console.log(`signing in ${email}`);
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
-      var user = userCredential.user;
-      // ...
+      const user = userCredential.user;
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
     });
 };
 
 export const startObservingAuthChanges = () => {
   firebase.auth().onAuthStateChanged((user) => {
-    console.log(user);
     if (user) {
       authStore.set(user);
     } else {
