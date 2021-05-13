@@ -27,6 +27,7 @@
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.2.2",
 		"@lukeed/uuid": "^2.0.0",
+		"@prisma/client": "^2.22.1",
 		"cookie": "^0.4.1"
 	}
 }
