@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String @id @default(cuid())
+  login           String @unique
+  name            String
+  password        String
+  roles           Role[]
+  created_at      DateTime @default(now())
+  returnEvents    ReturnEvent[]
+  returnNotes     ReturnNote[]
+  returnLocations ReturnLocation[]
+  returnImages    ReturnImage[]
+  active          Boolean @default(false)
+}
+
+model Role {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  users       User[]
+}
+
+model ReturnEntry {
+  id              String @id @default(cuid())
+  created_at      DateTime @default(now())
+  isBusiness      Boolean
+  saleDocument    String
+  resolved        Boolean
+  sender          ReturnSender?
+  events          ReturnEvent[]
+  notes           ReturnNote[]
+  location        ReturnLocation[]
+  products        ReturnProduct[]
+  images          ReturnImage[]
+  returnReason    ReturnReason?
+}
+
+model ReturnSender {
+  id              String @id @default(cuid())
+  name            String
+  phone           String
+  postCode        String
+  street          String
+  return          ReturnEntry   @relation(fields: [returnId], references: [id])
+  returnId        String
+}
+
+model ReturnEvent{
+  id          String @id @default(cuid())
+  type        String
+  description String
+  created_at  DateTime @default(now())
+  userId      String
+  user        User @relation(fields: [userId], references: [id])
+  returnId    String
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+}
+
+model ReturnNote{
+  id              String @id @default(cuid())
+  type            String
+  content         String
+  created_at      DateTime @default(now())
+  userId          String
+  user            User @relation(fields: [userId], references: [id])
+  returnId        String
+  returnEntry     ReturnEntry @relation(fields: [returnId], references: [id])
+}
+
+model ReturnLocation{
+  id          String @id @default(cuid())
+  location    String
+  subLocation String
+  description String
+  created_at  DateTime @default(now())
+  userId      String
+  user        User @relation(fields: [userId], references: [id])
+  returnId    String
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+}
+
+model ReturnProduct{
+  id          String @id @default(cuid())
+  name        String
+  symbol      String
+  price       Decimal
+  quantity    Int
+  group       String
+  description String
+  returnId    String
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+}
+
+model ReturnImage{
+  id              String @id @default(cuid())
+  imgSrc          String
+  description     String
+  created_at      DateTime @default(now())
+  userId          String
+  user            User @relation(fields: [userId], references: [id])
+  returnId    String
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+}
+
+model ReturnReason{
+  id          String @id @default(cuid())
+  reason      String
+  description String
+  returnId    String
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+}
