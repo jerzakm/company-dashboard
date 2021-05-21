@@ -1,6 +1,16 @@
 <script lang="ts">
 	import Header from '$lib/Header/index.svelte';
 	import '../app.css';
+	import { onMount } from 'svelte';
+	import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
+
+	let authenticated;
+
+	onMount(() => {
+		if (!authenticated) {
+			goto('login');
+		}
+	});
 </script>
 
 <Header />
