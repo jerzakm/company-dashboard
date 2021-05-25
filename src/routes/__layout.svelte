@@ -3,6 +3,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
+	import { authStore } from '$lib/auth';
 
 	let authenticated;
 
