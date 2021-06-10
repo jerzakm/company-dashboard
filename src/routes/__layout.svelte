@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Header from '$lib/Header/index.svelte';
+	import Header from '$lib/Menus/Header.svelte';
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
