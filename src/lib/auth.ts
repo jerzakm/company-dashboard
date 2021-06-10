@@ -26,3 +26,8 @@ export const authenticateUser = async (login, password) => {
 
 	return response;
 };
+
+export const logOut = () => {
+	localStorage.removeItem('companyDashBoardUser');
+	window.location.href = '/';
+};

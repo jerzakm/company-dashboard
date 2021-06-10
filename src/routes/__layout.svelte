@@ -7,10 +7,10 @@
 	import { getStores, navigating, page, session } from '$app/stores';
 	import { authStore, verifyUser } from '$lib/auth';
 
-	let authenticated;
+	let verified = false;
 
 	page.subscribe(async (p) => {
-		const verified = await verifyUser();
+		verified = await verifyUser();
 
 		if (p.path != '/login' && !verified) {
 			goto('/login');
@@ -23,9 +23,13 @@
 </script>
 
 <layout>
-	<Sidebar />
+	{#if verified}
+		<Sidebar />
+	{/if}
 	<main>
-		<Header />
+		{#if verified}
+			<Header />
+		{/if}
 		<slot />
 	</main>
 </layout>
@@ -33,5 +37,8 @@
 <style>
 	layout {
 		display: flex;
+	}
+	main {
+		flex: 1;
 	}
 </style>

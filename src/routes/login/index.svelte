@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { authenticateUser } from '$lib/auth';
 
-	let login = 'test';
-	let password = 'test';
+	let login = '';
+	let password = '';
 
 	const handleOnSubmit = async () => {
-		authenticateUser(login, password);
+		await authenticateUser(login, password);
+		window.location.href = '/';
 	};
 </script>
 
