@@ -2,21 +2,33 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function post(request) {
-	const article = { test: 'test' };
-
-	const res = await prisma.user.findUnique({
+	const userQuery = await prisma.user.findUnique({
 		where: {
 			login: request.body.login
 		}
 	});
 
-	console.log(res);
+	let user: null | AuthUser = null;
 
-	if (article) {
-		return {
-			body: {
-				k: 'k'
-			}
+	if (userQuery && userQuery.password == request.body.password) {
+		user = {
+			login: userQuery.login,
+			name: userQuery.name,
+			password: userQuery.password,
+			active: userQuery.active
 		};
 	}
+
+	return {
+		body: {
+			user
+		}
+	};
+}
+
+export interface AuthUser {
+	login: string;
+	name: string;
+	password: string;
+	active: boolean;
 }

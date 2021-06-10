@@ -17,7 +17,7 @@ model User {
   password        String
   email           String?
   phone           String?
-  roles           Role[]
+  permissions     Permissions[]
   created_at      DateTime @default(now())
   returnEvents    ReturnEvent[]
   returnNotes     ReturnNote[]
@@ -26,11 +26,12 @@ model User {
   active          Boolean @default(false)
 }
 
-model Role {
+model Permissions {
   id          String @id @default(cuid())
   name        String
   description String
   users       User[]
+	@@map("Role")
 }
 
 model ReturnEntry {
