@@ -10,8 +10,13 @@
 
 	page.subscribe(async (p) => {
 		const verified = await verifyUser();
+
 		if (p.path != '/login' && !verified) {
 			goto('/login');
+		}
+
+		if (p.path == '/login' && verified) {
+			goto('/');
 		}
 	});
 </script>

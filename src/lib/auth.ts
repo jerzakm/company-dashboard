@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import { AuthUser } from '../routes/api/auth/login';
 import { post } from './api';
 
 export const authStore = writable(undefined);
