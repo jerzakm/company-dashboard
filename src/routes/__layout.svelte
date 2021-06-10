@@ -3,13 +3,15 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
-	import { authStore } from '$lib/auth';
+	import { getStores, navigating, page, session } from '$app/stores';
+	import { authStore, verifyUser } from '$lib/auth';
 
 	let authenticated;
 
-	onMount(() => {
-		if (!authenticated) {
-			goto('login');
+	page.subscribe(async (p) => {
+		const verified = await verifyUser();
+		if (p.path != '/login' && !verified) {
+			goto('/login');
 		}
 	});
 </script>
