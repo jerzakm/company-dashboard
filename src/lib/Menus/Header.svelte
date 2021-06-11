@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { logOut } from '$lib/auth';
+
+	import Button from '@smui/button/Button.svelte';
 </script>
 
 <header>
@@ -11,7 +13,7 @@
 			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
 			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 		</ul>
-		<button on:click={() => logOut()}>Logout</button>
+		<Button on:click={() => logOut()}>Log out</Button>
 	</nav>
 </header>
 
