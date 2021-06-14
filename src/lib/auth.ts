@@ -31,3 +31,9 @@ export const logOut = () => {
 	localStorage.removeItem('companyDashBoardUser');
 	window.location.href = '/';
 };
+
+export const getUser = () => {
+	const user = JSON.parse(localStorage.getItem('companyDashBoardUser'));
+
+	return user;
+};
