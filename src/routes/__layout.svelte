@@ -4,8 +4,8 @@
 
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
-	import { getStores, navigating, page, session } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { authStore, verifyUser } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
 	import Button, { Label } from '@smui/button';
@@ -49,7 +49,8 @@
 	<!-- <Button on:click={() => (open = !open)}><Label>Toggle Drawer</Label></Button> -->
 
 	<AppContent class="app-content">
-		<TopBar />
+		{#if verified}
+			<TopBar />{/if}
 		<main>
 			<slot />
 		</main>
