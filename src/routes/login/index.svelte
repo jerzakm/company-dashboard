@@ -6,35 +6,37 @@
 
 	let login = '';
 	let password = '';
+	let inProgress = false;
+	let error = null;
+
+	async function submit() {
+		const user = await authenticateUser(login, password);
+		if (user) window.location.href = '/';
+	}
 </script>
 
-<loginForm>
+<form on:submit|preventDefault={submit}>
 	<Card>
 		<Content>
-			<Textfield variant="outlined" bind:value={login} label="Login">
+			<Textfield variant="outlined" bind:value={login} label="Login" name="username">
 				<!-- <HelperText slot="helper">Helper Text</HelperText> -->
 			</Textfield>
 			<div style="width:100%; height: 1rem" />
-			<Textfield variant="outlined" bind:value={password} type="password" label="Hasło">
+			<Textfield variant="outlined" bind:value={password} type="password" label="Hasło" name="password">
 				<!-- <HelperText slot="helper">Helper Text</HelperText> -->
 			</Textfield>
 		</Content>
 		<Actions fullBleed>
-			<Button
-				on:click={() => {
-					authenticateUser(login, password);
-					window.location.href = '/';
-				}}
-			>
+			<Button type="submit">
 				<Label>Zaloguj się</Label>
 				<i class="material-icons" aria-hidden="true">arrow_forward</i>
 			</Button>
 		</Actions>
 	</Card>
-</loginForm>
+</form>
 
 <style>
-	loginForm {
+	form {
 		width: 100%;
 		min-height: 500px;
 		display: flex;

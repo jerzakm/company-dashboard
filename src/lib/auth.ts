@@ -16,7 +16,9 @@ export const verifyUser = async () => {
 };
 
 export const authenticateUser = async (login, password) => {
+	console.log('authenticating user ' + login);
 	const response = await post('auth/login', { login, password });
+	console.log(response);
 
 	if (response.user) {
 		localStorage.setItem('companyDashBoardUser', JSON.stringify(response.user));
