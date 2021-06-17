@@ -15,6 +15,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Logowanie</title>
+</svelte:head>
+
 <form on:submit|preventDefault={submit}>
 	<Card>
 		<Content>
