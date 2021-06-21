@@ -123,3 +123,22 @@ model ReturnReason{
   returnId    String
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
+
+model ApplicationLog {
+  id String @id @default(cuid())
+  created_at  DateTime @default(now())
+  status String
+  description String
+}
+
+model Product {
+  id String @id @default(cuid())
+  subiektId Decimal @unique
+  symbol String
+  name String
+  isSet Boolean
+  volume Decimal
+  weight Decimal
+  buyPrice Decimal
+  group String
+}

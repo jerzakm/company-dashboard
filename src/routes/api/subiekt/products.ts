@@ -1,45 +1,65 @@
 import { PrismaClient } from '@prisma/client';
-import knex from 'knex';
-import { getSubiektConnection, subiektDbName } from './_connection';
+import { getProductList } from './_dbQueries';
 
 const prisma = new PrismaClient();
 
-// Admin - Fetches Product List from SubiektGT and puts it in prismaDb
-export async function post(request) {
-	const subiektConnection = getSubiektConnection();
-
-	const sqlQuery = `SELECT tw_Id, tw_Symbol, tw_Nazwa, tw_Rodzaj, tw_Objetosc, tw_Masa, grt_Nazwa, tc_CenaNetto5
-	FROM
-		 ${subiektDbName}.dbo.tw__Towar,
-		 ${subiektDbName}.dbo.tw_Cena,
-		 ${subiektDbName}.dbo.sl_GrupaTw
-    WHERE
-		${subiektDbName}.dbo.tw__Towar.tw_IdGrupa = ${subiektDbName}.dbo.sl_GrupaTw.grt_Id AND
-		${subiektDbName}.dbo.tw__Towar.tw_Id = ${subiektDbName}.dbo.tw_Cena.tc_IdTowar`;
-
-	let res: any;
-
-	const query = await subiektConnection
-		.raw(sqlQuery)
-		.on('query', function (data) {
-			console.log(data.sql);
-		})
-		.then(function (response) {
-			res = response;
-		});
+// Any authenticated user - get the product list from prismaDb
+export async function get(request) {
+	const products = prisma.product.findMany();
 
 	return {
 		body: {
-			data: res
+			data: products
 		}
 	};
 }
 
-// Any authenticated user - get the product list from prismaDb
-export async function get(request) {
-	return {
-		body: {
-			data: 'nothing'
+export async function post() {
+	const updatedProductCount = await updateProductList();
+	return { body: { updatedCount: updatedProductCount } };
+}
+
+async function updateProductList() {
+	const products = await getProductList();
+
+	let productCount = 0;
+
+	if (products) {
+		const promises = [];
+		for (const product of products) {
+			promises.push(
+				prisma.product.upsert({
+					where: {
+						subiektId: product.tw_Id
+					},
+					update: {
+						subiektId: product.tw_Id,
+						buyPrice: product.tc_CenaNetto5 ? product.tc_CenaNetto5 : 0,
+						isSet: product.tw_Rodzaj ? false : true,
+						name: product.tw_Nazwa ? product.tw_Nazwa : '',
+						symbol: product.tw_Symbol ? product.tw_Symbol : '',
+						volume: product.tw_Objetosc ? product.tw_Objetosc : 0,
+						weight: product.tw_Masa ? product.tw_Masa : 0,
+						group: product.grt_Nazwa ? product.grt_Nazwa : ''
+					},
+					create: {
+						subiektId: product.tw_Id,
+						buyPrice: product.tc_CenaNetto5 ? product.tc_CenaNetto5 : 0,
+						isSet: product.tw_Rodzaj ? false : true,
+						name: product.tw_Nazwa ? product.tw_Nazwa : '',
+						symbol: product.tw_Symbol ? product.tw_Symbol : '',
+						volume: product.tw_Objetosc ? product.tw_Objetosc : 0,
+						weight: product.tw_Masa ? product.tw_Masa : 0,
+						group: product.grt_Nazwa ? product.grt_Nazwa : ''
+					}
+				})
+			);
 		}
-	};
+
+		const transaction = await prisma.$transaction(promises).then((r) => {
+			productCount = r.length;
+		});
+	}
+
+	return productCount;
 }
