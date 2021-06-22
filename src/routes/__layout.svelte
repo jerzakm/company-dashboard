@@ -21,14 +21,14 @@
 	}
 
 	page.subscribe(async (p) => {
-		verified = await verifyUser();
+		// verified = await verifyUser();
 
 		if (p.path != '/login' && !verified) {
-			goto('/login');
+			// goto('/login');
 		}
 
 		if (p.path == '/login' && verified) {
-			goto('/');
+			// goto('/');
 		}
 	});
 </script>

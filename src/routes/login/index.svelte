@@ -11,7 +11,6 @@
 
 	async function submit() {
 		const user = await authenticateUser(login, password);
-		if (user) window.location.href = '/';
 	}
 </script>
 

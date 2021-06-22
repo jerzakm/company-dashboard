@@ -16,8 +16,7 @@ export const verifyUser = async () => {
 };
 
 export const authenticateUser = async (login, password) => {
-	console.log('authenticating user ' + login);
-	const response = await post('auth/login', { login, password });
+	const response = await post('auth', { login, password });
 	console.log(response);
 
 	if (response.user) {
