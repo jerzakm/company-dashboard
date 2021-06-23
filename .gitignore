@@ -4,3 +4,6 @@ node_modules
 /build
 /functions
 .env
+firebase-adminsdk.json
+firebase-appsdk.json
+dashboard-config.json

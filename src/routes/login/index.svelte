@@ -1,16 +1,20 @@
 <script lang="ts">
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { authenticateUser } from '$lib/auth';
 	import Textfield from '@smui/textfield';
+	import { authStore, signIn } from '$lib/firebase';
+	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
 
-	let login = '';
+	let user = '';
 	let password = '';
-	let inProgress = false;
-	let error = null;
+
+	authStore.subscribe((u) => {
+		if (u) goto('/');
+	});
 
 	async function submit() {
-		const user = await authenticateUser(login, password);
+		const creds = await signIn(user, password);
 	}
 </script>
 
@@ -21,7 +25,7 @@
 <form on:submit|preventDefault={submit}>
 	<Card>
 		<Content>
-			<Textfield variant="outlined" bind:value={login} label="Login" name="username">
+			<Textfield variant="outlined" bind:value={user} label="Użytkownik" name="username">
 				<!-- <HelperText slot="helper">Helper Text</HelperText> -->
 			</Textfield>
 			<div style="width:100%; height: 1rem" />

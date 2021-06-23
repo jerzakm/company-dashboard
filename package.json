@@ -47,6 +47,8 @@
 		"@smui/top-app-bar": "^4.2.0",
 		"cookie": "^0.4.1",
 		"dotenv": "^10.0.0",
+		"firebase": "^8.6.8",
+		"firebase-admin": "^9.9.0",
 		"knex": "^0.95.6",
 		"tedious": "^11.0.9"
 	}

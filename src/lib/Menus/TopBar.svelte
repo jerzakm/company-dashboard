@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { logOut, getUser } from '$lib/auth';
+	import { signOut } from '$lib/firebase';
 	import Button, { Label, Icon } from '@smui/button';
 	import MenuSurface from '@smui/menu-surface';
 	import { onMount } from 'svelte';
 
-	let userName = '';
+	export let user;
 	let surface;
 
 	onMount(() => {
-		userName = getUser().name;
+		// userName = getUser().name;
 	});
 </script>
 
@@ -16,13 +16,13 @@
 	<div class="corner" />
 	<userMenu>
 		<Button color="secondary" on:click={() => surface.setOpen(true)}>
-			<Label>{userName}</Label>
+			<Label>{user.email.split('.')[0]}</Label>
 			<Icon class="material-icons">account_circle</Icon>
 		</Button>
 
 		<MenuSurface bind:this={surface} anchorCorner="BOTTOM_START">
 			<div style="margin: 1rem; display: flex; flex-direction: column; align-items: flex-end;">
-				<Button style="margin-top: 1em;" on:click={() => logOut()}>Wyloguj</Button>
+				<Button style="margin-top: 1em;" on:click={() => signOut()}>Wyloguj</Button>
 			</div>
 		</MenuSurface>
 	</userMenu>

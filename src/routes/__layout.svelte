@@ -6,35 +6,25 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { authStore, verifyUser } from '$lib/auth';
+	import { authStore } from '$lib/firebase';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text } from '@smui/list';
 
-	let verified = false;
+	let user = null;
+
+	authStore.subscribe((u) => {
+		console.log(user);
+		user = u;
+		if (!u) goto('/login');
+	});
 
 	let open = true;
-	let active = 'Gray Kittens';
-
-	function setActive(value) {
-		active = value;
-	}
-
-	page.subscribe(async (p) => {
-		// verified = await verifyUser();
-
-		if (p.path != '/login' && !verified) {
-			// goto('/login');
-		}
-
-		if (p.path == '/login' && verified) {
-			// goto('/');
-		}
-	});
+	let active = '';
 </script>
 
 <layout>
-	{#if verified}
+	{#if user}
 		<Drawer variant="dismissible" bind:open>
 			<Header>
 				<Title>Panel</Title>
@@ -49,8 +39,8 @@
 	<!-- <Button on:click={() => (open = !open)}><Label>Toggle Drawer</Label></Button> -->
 
 	<AppContent class="app-content">
-		{#if verified}
-			<TopBar />{/if}
+		{#if user}
+			<TopBar {user} />{/if}
 		<main>
 			<slot />
 		</main>
