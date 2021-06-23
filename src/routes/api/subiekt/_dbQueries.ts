@@ -11,7 +11,7 @@ export const getProductList = async () => {
 		 ${subiektDbName}.dbo.sl_GrupaTw
     WHERE
 		${subiektDbName}.dbo.tw__Towar.tw_IdGrupa = ${subiektDbName}.dbo.sl_GrupaTw.grt_Id AND
-		${subiektDbName}.dbo.tw__Towar.tw_Id = ${subiektDbName}.dbo.tw_Cena.tc_IdTowar`;
+		${subiektDbName}.dbo.tw__Towar.tw_Id = ${subiektDbName}.dbo.tw_Cena.tc_IdTowar AND tw_Zablokowany = 0;`;
 
 	let res: any;
 

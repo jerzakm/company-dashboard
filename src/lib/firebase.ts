@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/analytics';
+import 'firebase/firestore';
 import { browser } from '$app/env';
 import credentials from './config/firebase-appsdk.json';
 import dashboardConfig from './config/dashboard-config.json';
@@ -14,6 +15,8 @@ export const analytics = (): firebase.analytics.Analytics => firebase.analytics(
 export const auth: firebase.auth.Auth = firebase.auth();
 export const emailProvider = new firebase.auth.EmailAuthProvider();
 
+export const firestore = firebase.firestore();
+
 export const authStore = writable(null);
 
 // listen to auth changes on client
@@ -23,7 +26,6 @@ if (browser) {
 	// a token for any authenticated session
 	auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 	auth.onAuthStateChanged((user) => {
-		console.log('changed', user);
 		authStore.set(user);
 	});
 }

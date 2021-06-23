@@ -5,7 +5,21 @@ const prisma = new PrismaClient();
 
 // Any authenticated user - get the product list from prismaDb
 export async function get(request) {
-	const products = prisma.product.findMany();
+	const productsRaw = await getProductList();
+	const products = [];
+
+	for (const product of productsRaw) {
+		products.push({
+			subiektId: product.tw_Id,
+			buyPrice: product.tc_CenaNetto5 ? product.tc_CenaNetto5 : 0,
+			isSet: product.tw_Rodzaj ? false : true,
+			name: product.tw_Nazwa ? product.tw_Nazwa : '',
+			symbol: product.tw_Symbol ? product.tw_Symbol : '',
+			volume: product.tw_Objetosc ? product.tw_Objetosc : 0,
+			weight: product.tw_Masa ? product.tw_Masa : 0,
+			group: product.grt_Nazwa ? product.grt_Nazwa : ''
+		});
+	}
 
 	return {
 		body: {

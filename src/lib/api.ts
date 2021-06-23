@@ -1,4 +1,4 @@
-const base = 'api';
+const base = '/api';
 
 interface SendRequestParams {
 	method: string;

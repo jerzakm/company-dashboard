@@ -3,24 +3,18 @@
 	import TopBar from '$lib/Menus/TopBar.svelte';
 
 	import '../app.css';
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { authStore } from '$lib/firebase';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
-	import Button, { Label } from '@smui/button';
-	import List, { Item, Text } from '@smui/list';
 
 	let user = null;
 
 	authStore.subscribe((u) => {
-		console.log(user);
 		user = u;
 		if (!u) goto('/login');
 	});
 
 	let open = true;
-	let active = '';
 </script>
 
 <layout>
