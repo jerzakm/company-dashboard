@@ -3,8 +3,9 @@ import { post } from './api';
 
 export const authStore = writable(undefined);
 
-export const verifyUser = async () => {
+export const checkStoredLogin = async () => {
 	const storedUser = JSON.parse(localStorage.getItem('companyDashBoardUser'));
+
 	let verified = false;
 	if (storedUser) {
 		const { login, password } = storedUser;
@@ -15,22 +16,22 @@ export const verifyUser = async () => {
 	return verified;
 };
 
-export const authenticateUser = async (login, password) => {
-	const response = await post('auth', { login, password });
-	console.log(response);
-
+export const authenticateUser = async (user, password) => {
+	const response = await post('auth', { user, password });
 	if (response.user) {
+		authStore.set(response.user);
 		localStorage.setItem('companyDashBoardUser', JSON.stringify(response.user));
 	} else {
+		authStore.set(undefined);
 		localStorage.removeItem('companyDashBoardUser');
 	}
 
 	return response;
 };
 
-export const logOut = () => {
+export const signOut = () => {
 	localStorage.removeItem('companyDashBoardUser');
-	window.location.href = '/';
+	authStore.set(undefined);
 };
 
 export const getUser = () => {

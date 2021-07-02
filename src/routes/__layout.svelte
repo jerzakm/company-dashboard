@@ -4,14 +4,19 @@
 
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/firebase';
+	import { authStore, checkStoredLogin } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
+	import { onMount } from 'svelte';
 
 	let user = null;
 
 	authStore.subscribe((u) => {
 		user = u;
-		if (!u) goto('/login');
+		if (!user && typeof window != undefined) goto('/login');
+	});
+
+	onMount(() => {
+		checkStoredLogin();
 	});
 
 	let open = true;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { signOut } from '$lib/firebase';
+	import { signOut } from '$lib/auth';
 	import Button, { Label, Icon } from '@smui/button';
 	import MenuSurface from '@smui/menu-surface';
 	import { onMount } from 'svelte';
@@ -16,7 +16,7 @@
 	<div class="corner" />
 	<userMenu>
 		<Button color="secondary" on:click={() => surface.setOpen(true)}>
-			<Label>{user.email.split('.')[0]}</Label>
+			<Label>{user.name}</Label>
 			<Icon class="material-icons">account_circle</Icon>
 		</Button>
 
