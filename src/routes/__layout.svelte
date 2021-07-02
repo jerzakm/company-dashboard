@@ -4,14 +4,15 @@
 
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/firebase';
+	import { authStore } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
 
 	let user = null;
 
 	authStore.subscribe((u) => {
+		console.log('store', u);
 		user = u;
-		if (!u) goto('/login');
+		if (!user && typeof window != undefined) goto('/login');
 	});
 
 	let open = true;

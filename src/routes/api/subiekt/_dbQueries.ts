@@ -17,9 +17,7 @@ export const getProductList = async () => {
 
 	await subiektConnection
 		.raw(sqlQuery)
-		.on('query', function (data) {
-			// console.log(data.sql);
-		})
+		.on('query', function (data) {})
 		.then(function (response) {
 			res = response;
 		});

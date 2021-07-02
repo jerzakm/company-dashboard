@@ -2,19 +2,26 @@
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
-	import { authStore, signIn } from '$lib/firebase';
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
+	import { authenticateUser, authStore } from '$lib/auth';
 
 	let user = '';
 	let password = '';
 
+	let loginError: boolean = false;
+
 	authStore.subscribe((u) => {
-		if (u) goto('/');
+		if (u && typeof window != undefined) goto('/');
 	});
 
 	async function submit() {
-		const creds = await signIn(user, password);
+		const auth = await authenticateUser(user, password);
+		if (auth.user) {
+			loginError = false;
+		} else {
+			loginError = true;
+		}
 	}
 </script>
 
@@ -40,6 +47,9 @@
 			</Button>
 		</Actions>
 	</Card>
+	{#if loginError}
+		<p>Błąd</p>
+	{/if}
 </form>
 
 <style>
@@ -47,9 +57,13 @@
 		width: 100%;
 		min-height: 500px;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-items: center;
 		align-content: center;
 		justify-content: center;
+	}
+	p {
+		color: red;
 	}
 </style>

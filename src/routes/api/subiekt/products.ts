@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { prisma } from '../_prisma';
 import { getProductList } from './_dbQueries';
-
-const prisma = new PrismaClient();
 
 // Any authenticated user - get the product list from prismaDb
 export async function get(request) {

@@ -7,16 +7,12 @@ interface SendRequestParams {
 	token?: string;
 }
 
-async function send({ method, path, data, token }: SendRequestParams) {
+async function send({ method, path, data }: SendRequestParams) {
 	let opts: any = { method, headers: {} };
 
 	if (data) {
 		opts.headers['Content-Type'] = 'application/json';
 		opts.body = JSON.stringify(data);
-	}
-
-	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
 	return fetch(`${base}/${path}`, opts)
