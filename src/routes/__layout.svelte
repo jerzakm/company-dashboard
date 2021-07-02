@@ -4,15 +4,19 @@
 
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	import { authStore } from '$lib/auth';
+	import { authStore, checkStoredLogin } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
+	import { onMount } from 'svelte';
 
 	let user = null;
 
 	authStore.subscribe((u) => {
-		console.log('store', u);
 		user = u;
 		if (!user && typeof window != undefined) goto('/login');
+	});
+
+	onMount(() => {
+		checkStoredLogin();
 	});
 
 	let open = true;
