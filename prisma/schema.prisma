@@ -23,6 +23,7 @@ model User {
   returnNotes     ReturnNote[]
   returnLocations ReturnLocation[]
   returnImages    ReturnImage[]
+  applicationLogs ApplicationLog[]
   active          Boolean @default(false)
 }
 
@@ -129,6 +130,8 @@ model ApplicationLog {
   created_at  DateTime @default(now())
   status String
   description String
+  userId          String
+  user            User @relation(fields: [userId], references: [id])
 }
 
 model Product {

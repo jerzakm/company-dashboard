@@ -7,6 +7,7 @@ export const tokenHasPermission = async (token: string, requiredPermission: stri
 
 	const login = token.split(':')[0];
 	const password = token.split(':')[1];
+	let granted = false;
 
 	const user = await prisma.user.findFirst({
 		where: {
@@ -19,13 +20,15 @@ export const tokenHasPermission = async (token: string, requiredPermission: stri
 	if (user && user.permissions) {
 		for (const permission of user.permissions) {
 			if (permission.name == requiredPermission) {
-				return true;
+				granted = true;
 			}
 		}
-		return false;
-	} else {
-		return false;
 	}
+
+	return {
+		userId: user.id ? user.id : undefined,
+		granted
+	};
 };
 
 export enum ApiPermission {

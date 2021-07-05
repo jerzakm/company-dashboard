@@ -1,4 +1,5 @@
 import { minutesSince } from '$lib/timeUtil';
+import { AppLogStatus, createAppLogEntry } from '../_applicationLog';
 import { ApiPermission, tokenHasPermission } from '../_authUtil';
 import { prisma } from '../_prisma';
 import { getProductList } from './_dbQueries';
@@ -6,14 +7,15 @@ import { getProductList } from './_dbQueries';
 let products;
 let lastUpdate = 0;
 
-// Any authenticated user - get the product list from prismaDb
 export async function get(request) {
-	const permissionGranted = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_GET);
+	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_GET);
 
 	let status = 0;
 	let body = {};
 
-	if (permissionGranted) {
+	createAppLogEntry(AppLogStatus.INFO, 'User requested products update', permission.userId);
+
+	if (permission.granted) {
 		try {
 			if (minutesSince(lastUpdate) > 60) {
 				products = await prisma.product.findMany({});
@@ -36,21 +38,24 @@ export async function get(request) {
 	};
 }
 
-// User with permission productList:update
 export async function post(request) {
-	const permissionGranted = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_POST);
+	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_POST);
 
 	let status = 0;
 	let body = {};
 
-	if (permissionGranted) {
+	createAppLogEntry(AppLogStatus.INFO, 'User requested products update', permission.userId);
+
+	if (permission.granted) {
 		try {
 			const updatedProductCount = await updateProductList();
 			body = { updatedCount: updatedProductCount };
 			status = 200;
+			createAppLogEntry(AppLogStatus.OK, 'Product update successful', permission.userId);
 		} catch (error) {
 			body = { error };
 			status = 500;
+			createAppLogEntry(AppLogStatus.CRITICAL, `Product update error: ${error.toString()}`, permission.userId);
 		}
 	} else {
 		status = 401;
