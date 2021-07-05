@@ -10,6 +10,11 @@ interface SendRequestParams {
 async function send({ method, path, data }: SendRequestParams) {
 	let opts: any = { method, headers: {} };
 
+	const storedUser = JSON.parse(localStorage.getItem('companyDashBoardUser'));
+	if (storedUser) {
+		opts.headers['Authorization'] = `${storedUser.login}:${storedUser.password}`;
+	}
+
 	if (data) {
 		opts.headers['Content-Type'] = 'application/json';
 		opts.body = JSON.stringify(data);
