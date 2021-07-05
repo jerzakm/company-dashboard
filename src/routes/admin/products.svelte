@@ -4,7 +4,10 @@
 	import Button, { Label } from '@smui/button';
 
 	const updateProducts = async () => {
-		const productsU = await post('subiekt/products', {});
+		const products = await get('subiekt/products');
+		console.log(products);
+		// const productsU = await post('subiekt/products', {});
+		// console.log(productsU);
 	};
 </script>
 

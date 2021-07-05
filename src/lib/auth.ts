@@ -18,6 +18,7 @@ export const checkStoredLogin = async () => {
 
 export const authenticateUser = async (user, password) => {
 	const response = await post('auth', { user, password });
+
 	if (response.user) {
 		authStore.set(response.user);
 		localStorage.setItem('companyDashBoardUser', JSON.stringify(response.user));

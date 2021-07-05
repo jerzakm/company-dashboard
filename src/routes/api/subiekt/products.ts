@@ -1,4 +1,5 @@
 import { minutesSince } from '$lib/timeUtil';
+import { ApiPermission, tokenHasPermission } from '../_authUtil';
 import { prisma } from '../_prisma';
 import { getProductList } from './_dbQueries';
 
@@ -7,21 +8,58 @@ let lastUpdate = 0;
 
 // Any authenticated user - get the product list from prismaDb
 export async function get(request) {
-	if (minutesSince(lastUpdate) > 60) {
-		products = await prisma.product.findMany({});
+	const permissionGranted = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_GET);
+
+	let status = 0;
+	let body = {};
+
+	if (permissionGranted) {
+		try {
+			if (minutesSince(lastUpdate) > 60) {
+				products = await prisma.product.findMany({});
+			}
+			body = {
+				data: products
+			};
+			status = 200;
+		} catch (error) {
+			body = { error };
+			status = 500;
+		}
+	} else {
+		status = 401;
 	}
 
 	return {
-		body: {
-			data: products
-		}
+		status,
+		body
 	};
 }
 
 // User with permission productList:update
-export async function post() {
-	const updatedProductCount = await updateProductList();
-	return { body: { updatedCount: updatedProductCount } };
+export async function post(request) {
+	const permissionGranted = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_POST);
+
+	let status = 0;
+	let body = {};
+
+	if (permissionGranted) {
+		try {
+			const updatedProductCount = await updateProductList();
+			body = { updatedCount: updatedProductCount };
+			status = 200;
+		} catch (error) {
+			body = { error };
+			status = 500;
+		}
+	} else {
+		status = 401;
+	}
+
+	return {
+		status,
+		body
+	};
 }
 
 async function updateProductList() {
