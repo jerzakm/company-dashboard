@@ -4,14 +4,17 @@ import { post } from './api';
 export const authStore = writable(undefined);
 
 export const checkStoredLogin = async () => {
-	const storedUser = JSON.parse(localStorage.getItem('companyDashBoardUser'));
-
 	let verified = false;
-	if (storedUser) {
-		const { login, password } = storedUser;
-		const auth = await authenticateUser(login, password);
-		verified = auth.user;
-	}
+
+  if(localStorage){
+    const storedUser = JSON.parse(localStorage.getItem('companyDashBoardUser'));
+
+		if (storedUser) {
+			const { login, password } = storedUser;
+			const auth = await authenticateUser(login, password);
+			verified = auth.user;
+		}
+  }	
 
 	return verified;
 };

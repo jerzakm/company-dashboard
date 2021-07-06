@@ -12,7 +12,10 @@
 
 	authStore.subscribe((u) => {
 		user = u;
-		if (!user && typeof window != undefined) goto('/login');
+		if (!user && typeof window != undefined) {
+			const verified = checkStoredLogin();
+			if (!verified) goto('/login');
+		}
 	});
 
 	onMount(() => {
