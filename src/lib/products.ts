@@ -9,12 +9,10 @@ export const getProducts = async () => {
 	if (localStorage.getItem('subiektProducts')) {
 		const subiektProducts = JSON.parse(localStorage.getItem('subiektProducts'));
 		lastProductsFetch = subiektProducts.lastProductsFetch;
-		products = subiektProducts.products.data;
-		console.log('from cache', subiektProducts);
+		products = subiektProducts.products;
 	}
 	// if not or update was later than X minutes ago, get them from Api and put in local storage for later
 	if (minutesSince(lastProductsFetch) > 360) {
-		console.log('getting from db cause too long..');
 		try {
 			const apiProducts = await get('subiekt/products');
 			products = apiProducts.data;
