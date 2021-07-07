@@ -2,16 +2,25 @@
 	import ProductSearch from '$lib/components/ProductSearch.svelte';
 	import Textfield from '@smui/textfield';
 	import Icon from '@smui/textfield/icon';
-	import HelperText from '@smui/textfield/helper-text/index';
 	import Card from '@smui/card';
+	import Button, { Label } from '@smui/button';
 
 	const newReturn = {
 		name: '',
 		street: '',
 		postCode: '',
 		city: '',
-		country: 'PL'
+		country: 'PL',
+		products: []
 	};
+	// ReturnProduct
+	// id          String @id @default(cuid())
+	// name        String
+	// symbol      String
+	// price       Decimal
+	// quantity    Int
+	// group       String
+	// description String
 
 	let product;
 </script>
@@ -47,12 +56,24 @@
 		</container>
 		<!-- <ProductSearch bind:product /> -->
 	</Card>
+
+	<Card padded>
+		<container>
+			<h2>Produkty</h2>
+			<Button touch variant="raised" style="width:100%;">
+				<Label>Dodaj produkt</Label>
+			</Button>
+			<br />
+			<ProductSearch bind:product />
+		</container>
+	</Card>
 </newReturn>
 
 <style>
 	newReturn {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(1fr, 1);
+		row-gap: 2rem;
 	}
 	container > * {
 		margin: 0.6rem 0;

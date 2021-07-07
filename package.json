@@ -40,6 +40,7 @@
 		"@prisma/client": "^2.22.1",
 		"@smui/button": "^4.2.0",
 		"@smui/card": "^4.2.0",
+		"@smui/data-table": "^4.2.0",
 		"@smui/drawer": "^4.2.0",
 		"@smui/list": "^4.2.0",
 		"@smui/menu-surface": "^4.2.0",

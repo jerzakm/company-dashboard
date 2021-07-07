@@ -38,31 +38,32 @@
 
 {filteredProducts.length}/{products.length}
 
-<MenuSurface static style="width: 100%; transition: all 1s ease-out;">
-	<div style="margin: 1rem;">
-		<Textfield
-			bind:value={productSearchString}
-			label="Wyszukaj"
-			on:input={() => filterProducts()}
-			style="width:100%;"
-			on:focus={() => (focused = true)}
-			on:blur={() => setTimeout(() => (focused = false), 200)}
-		>
-			<HelperText slot="helper">Wpisz nazwę lub symbol towaru</HelperText>
-		</Textfield>
-		{#if focused}
-			{#key filteredProducts}
-				<VirtualList width="100%" height={600} itemCount={filteredProducts.length} itemSize={50}>
-					<div slot="item" let:index let:style {style}>
-						<Button
-							on:click={() => {
-								product = filteredProducts[index];
-								focused = true;
-							}}>[{filteredProducts[index].symbol}] {filteredProducts[index].name}</Button
-						>
-					</div>
-				</VirtualList>
-			{/key}
-		{/if}
-	</div>
-</MenuSurface>
+<div style="margin: 1rem;">
+	<Textfield
+		bind:value={productSearchString}
+		label="Wyszukaj"
+		on:input={() => filterProducts()}
+		style="width:100%;"
+		on:focus={() => (focused = true)}
+		on:blur={() => setTimeout(() => (focused = false), 200)}
+	>
+		<HelperText slot="helper">Wpisz nazwę lub symbol towaru</HelperText>
+	</Textfield>
+	{#if focused}
+		{#key filteredProducts}
+			<VirtualList width="100%" height={250} itemCount={filteredProducts.length} itemSize={33}>
+				<div slot="item" let:index let:style {style}>
+					<Button
+						on:click={() => {
+							product = filteredProducts[index];
+							focused = true;
+						}}>[{filteredProducts[index].symbol}] {filteredProducts[index].name}</Button
+					>
+				</div>
+			</VirtualList>
+		{/key}
+	{/if}
+</div>
+
+<style>
+</style>
