@@ -54,8 +54,10 @@ model ReturnSender {
   id              String @id @default(cuid())
   name            String
   phone           String
-  postCode        String
+  postCode        String  
   street          String
+  city            String
+  country         String
   return          ReturnEntry   @relation(fields: [returnId], references: [id])
   returnId        String
 }
