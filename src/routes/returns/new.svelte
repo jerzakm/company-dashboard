@@ -1,11 +1,11 @@
 <script lang="ts">
-	import ProductSearch from '$lib/components/ProductSearch.svelte';
+	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
 	import Textfield from '@smui/textfield';
 	import Icon from '@smui/textfield/icon';
 	import Card from '@smui/card';
 	import Button, { Label } from '@smui/button';
 
-	const newReturn = {
+	let newReturn = {
 		name: '',
 		street: '',
 		postCode: '',
@@ -13,14 +13,10 @@
 		country: 'PL',
 		products: []
 	};
-	// ReturnProduct
-	// id          String @id @default(cuid())
-	// name        String
-	// symbol      String
-	// price       Decimal
-	// quantity    Int
-	// group       String
-	// description String
+
+	let products = [];
+
+	$: console.log(products.length);
 
 	let product;
 </script>
@@ -60,11 +56,25 @@
 	<Card padded>
 		<container>
 			<h2>Produkty</h2>
-			<Button touch variant="raised" style="width:100%;">
-				<Label>Dodaj produkt</Label>
-			</Button>
-			<br />
-			<ProductSearch bind:product />
+
+			{#each newReturn.products as product}{product.name}{/each}
+
+			<div class="divider" />
+			<div class="new-product-container">
+				<h3>Dodaj nowy</h3>
+				<NewProductSearch bind:product />
+				<Button
+					touch
+					variant="raised"
+					style="width:100%;"
+					on:click={() => {
+						newReturn.products.push(product);
+						newReturn.products = newReturn.products;
+					}}
+				>
+					<Label>Dodaj</Label>
+				</Button>
+			</div>
 		</container>
 	</Card>
 </newReturn>
@@ -84,5 +94,9 @@
 	cityPost {
 		width: 100%;
 		display: flex;
+	}
+	.new-product-container {
+		padding: 0.5rem;
+		background-color: rgba(202, 202, 202, 0.39);
 	}
 </style>
