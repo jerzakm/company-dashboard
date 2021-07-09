@@ -4,6 +4,12 @@
 	import Icon from '@smui/textfield/icon';
 	import Card from '@smui/card';
 	import Button, { Label } from '@smui/button';
+	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+
+	import Dialog, { Title, Content, Actions } from '@smui/dialog';
+
+	let openAddProduct;
+	let clicked = 'Nothing yet.';
 
 	let newReturn = {
 		name: '',
@@ -52,32 +58,79 @@
 		</container>
 		<!-- <ProductSearch bind:product /> -->
 	</Card>
-
 	<Card padded>
 		<container>
-			<h2>Produkty</h2>
-
-			{#each newReturn.products as product}{product.name}{/each}
-
-			<div class="divider" />
-			<div class="new-product-container">
-				<h3>Dodaj nowy</h3>
-				<NewProductSearch bind:product />
-				<Button
-					touch
-					variant="raised"
-					style="width:100%;"
-					on:click={() => {
-						newReturn.products.push(product);
-						newReturn.products = newReturn.products;
-					}}
-				>
+			<h2>
+				Produkty <Button on:click={() => (openAddProduct = true)}>
 					<Label>Dodaj</Label>
 				</Button>
-			</div>
+			</h2>
+
+			<DataTable table$aria-label="People list" style="max-width: 100%;">
+				<Head>
+					<Row>
+						<Cell>#</Cell>
+						<Cell numeric>Ilość</Cell>
+						<Cell>Symbol</Cell>
+						<Cell>Nazwa</Cell>
+						<Cell>Uwagi</Cell>
+						<Cell />
+					</Row>
+				</Head>
+				<Body>
+					{#each newReturn.products as product, i}
+						<Row>
+							<Cell numeric>{i + 1}</Cell>
+							<Cell numeric>{product.quantity}</Cell>
+							<Cell>{product.symbol}</Cell>
+							<Cell>{product.name}</Cell>
+							<Cell>{product.description}</Cell>
+							<Cell
+								><Button
+									touch
+									on:click={() => {
+										newReturn.products = newReturn.products.filter((item, index) => index != i);
+									}}
+									color="secondary"
+								>
+									<Label>Usuń</Label>
+								</Button></Cell
+							>
+						</Row>
+					{/each}
+				</Body>
+			</DataTable>
+
+			<div class="divider" />
 		</container>
 	</Card>
 </newReturn>
+
+<Dialog bind:open={openAddProduct} aria-labelledby="simple-title" aria-describedby="simple-content">
+	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+	<Title id="simple-title">Dodaj nowy produkt</Title>
+	<Content id="simple-content"
+		><div class="new-product-container">
+			<NewProductSearch bind:product />
+		</div></Content
+	>
+	<Actions
+		><Button touch on:click={() => {}} color="secondary">
+			<Label>Anuluj</Label>
+		</Button>
+		<Button
+			touch
+			variant="raised"
+			on:click={() => {
+				newReturn.products.push(JSON.parse(JSON.stringify(product)));
+				newReturn.products = newReturn.products;
+				console.log(newReturn.products);
+			}}
+		>
+			<Label>Dodaj</Label>
+		</Button>
+	</Actions>
+</Dialog>
 
 <style>
 	newReturn {
@@ -97,6 +150,6 @@
 	}
 	.new-product-container {
 		padding: 0.5rem;
-		background-color: rgba(202, 202, 202, 0.39);
+		/* background-color: rgba(202, 202, 202, 0.39); */
 	}
 </style>
