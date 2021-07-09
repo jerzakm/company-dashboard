@@ -5,11 +5,14 @@
 	import Card from '@smui/card';
 	import Button, { Label } from '@smui/button';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import { post } from '$lib/api';
 
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 
 	let openAddProduct;
 	let clicked = 'Nothing yet.';
+
+  
 
 	let newReturn = {
 		name: '',
@@ -17,14 +20,20 @@
 		postCode: '',
 		city: '',
 		country: 'PL',
-		products: []
+		products: [],
+    phone: ''
 	};
 
 	let products = [];
 
-	$: console.log(products.length);
+	$: console.log(products.length);  
 
 	let product;
+
+  async function addNewReturn() {
+    const productsU = await post('returns/new', newReturn);
+		console.log(productsU);
+  }
 </script>
 
 <h1>Nowy zwrot</h1>
@@ -66,7 +75,7 @@
 				</Button>
 			</h2>
 
-			<DataTable table$aria-label="People list" style="max-width: 100%;">
+			<DataTable table$aria-label="People list" style="width: 100%;">
 				<Head>
 					<Row>
 						<Cell>#</Cell>
@@ -100,13 +109,21 @@
 					{/each}
 				</Body>
 			</DataTable>
-
-			<div class="divider" />
 		</container>
 	</Card>
+ <Button
+    touch
+    variant="raised"
+    on:click={() => {
+      addNewReturn()
+    }}
+
+  >
+    <Label>Zakończ i dodaj nowy wpis</Label>
+  </Button>
 </newReturn>
 
-<Dialog bind:open={openAddProduct} aria-labelledby="simple-title" aria-describedby="simple-content">
+<Dialog bind:open={openAddProduct} aria-labelledby="simple-title" aria-describedby="simple-content" fullscreen>
 	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
 	<Title id="simple-title">Dodaj nowy produkt</Title>
 	<Content id="simple-content"

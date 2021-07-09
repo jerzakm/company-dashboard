@@ -9,7 +9,7 @@ export const getProducts = async () => {
 	if (localStorage.getItem('subiektProducts')) {
 		const subiektProducts = JSON.parse(localStorage.getItem('subiektProducts'));
 		lastProductsFetch = subiektProducts.lastProductsFetch;
-		products = subiektProducts.products;
+		products = [...subiektProducts.products];
 	}
 	// if not or update was later than X minutes ago, get them from Api and put in local storage for later
 	if (minutesSince(lastProductsFetch) > 360) {
