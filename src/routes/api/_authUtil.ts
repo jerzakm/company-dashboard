@@ -3,8 +3,6 @@ import { prisma } from './_prisma';
 export const users: any = {};
 
 export const tokenHasPermission = async (token: string, requiredPermission: string) => {
-	// console.log(`checking permission ${requiredPermission} for ${token}`);
-
 	const login = token.split(':')[0];
 	const password = token.split(':')[1];
 	let granted = false;
@@ -33,5 +31,6 @@ export const tokenHasPermission = async (token: string, requiredPermission: stri
 
 export enum ApiPermission {
 	PRODUCTS_GET = 'products:get',
-	PRODUCTS_POST = 'products:post'
+	PRODUCTS_POST = 'products:post',
+	ADD_NEW_RETURN = 'retursNew:post'
 }

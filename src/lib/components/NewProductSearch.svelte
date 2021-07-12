@@ -40,10 +40,11 @@
 		filterProducts();
 	});
 
-	function assignProduct({ name, symbol, price, group }) {
+	function assignProduct(selectedProduct) {
+		const { name, symbol, price, group } = selectedProduct;
 		product.name = name;
 		product.symbol = symbol;
-		product.price = price;
+		product.price = price ? price : 0;
 		product.group = group;
 	}
 

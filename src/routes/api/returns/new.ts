@@ -1,37 +1,26 @@
-import { AppLogStatus, createAppLogEntry } from '../_applicationLog';
 import { ApiPermission, tokenHasPermission } from '../_authUtil';
-import { prisma } from '../_prisma';
+import { newReturn } from './_returnEntry';
 
 export async function post(request) {
-	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.PRODUCTS_POST);
-
-	console.log(request.body);
-
 	let status = 400;
 	let body = {};
+
+	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.ADD_NEW_RETURN);
+
+	console.log(permission);
+
+	if (!permission.granted) {
+		status = 401;
+		return { status, body };
+	}
 
 	if (!request.body) {
 		return { status, body };
 	}
 
 	try {
-		const { city, country, name, postCode, phone, street } = request.body;
-		prisma.returnEntry.create({
-			data: {
-				sender: {
-					create: {
-						city,
-						country,
-						name,
-						postCode,
-						phone,
-						street
-					}
-				},
-
-				resolved: false
-			}
-		});
+		await newReturn(request.body);
+		status = 200;
 	} catch (e) {}
 
 	// createAppLogEntry(AppLogStatus.INFO, 'User requested products update', permission.userId);

@@ -5,14 +5,12 @@
 	import Card from '@smui/card';
 	import Button, { Label } from '@smui/button';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import { post } from '$lib/api';
+	import { post } from '$lib/api';
 
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 
 	let openAddProduct;
 	let clicked = 'Nothing yet.';
-
-  
 
 	let newReturn = {
 		name: '',
@@ -21,19 +19,19 @@
 		city: '',
 		country: 'PL',
 		products: [],
-    phone: ''
+		phone: ''
 	};
 
 	let products = [];
 
-	$: console.log(products.length);  
+	$: console.log(newReturn);
 
 	let product;
 
-  async function addNewReturn() {
-    const productsU = await post('returns/new', newReturn);
-		console.log(productsU);
-  }
+	async function addNewReturn() {
+		const productsU = await post('returns/new', newReturn);
+		console.log(productsU, newReturn);
+	}
 </script>
 
 <h1>Nowy zwrot</h1>
@@ -111,16 +109,15 @@
 			</DataTable>
 		</container>
 	</Card>
- <Button
-    touch
-    variant="raised"
-    on:click={() => {
-      addNewReturn()
-    }}
-
-  >
-    <Label>Zakończ i dodaj nowy wpis</Label>
-  </Button>
+	<Button
+		touch
+		variant="raised"
+		on:click={() => {
+			addNewReturn();
+		}}
+	>
+		<Label>Zakończ i dodaj nowy wpis</Label>
+	</Button>
 </newReturn>
 
 <Dialog bind:open={openAddProduct} aria-labelledby="simple-title" aria-describedby="simple-content" fullscreen>
@@ -139,6 +136,7 @@
 			touch
 			variant="raised"
 			on:click={() => {
+				console.log(product);
 				newReturn.products.push(JSON.parse(JSON.stringify(product)));
 				newReturn.products = newReturn.products;
 				console.log(newReturn.products);
