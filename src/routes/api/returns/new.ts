@@ -7,8 +7,6 @@ export async function post(request) {
 
 	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.ADD_NEW_RETURN);
 
-	console.log(permission);
-
 	if (!permission.granted) {
 		status = 401;
 		return { status, body };
@@ -19,7 +17,7 @@ export async function post(request) {
 	}
 
 	try {
-		await newReturn(request.body);
+		await newReturn(request.body, permission.userId);
 		status = 200;
 	} catch (e) {}
 

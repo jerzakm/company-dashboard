@@ -1,7 +1,7 @@
 import { prisma } from '../_prisma';
 
-export const newReturn = async (returnEntry: IReturnEntryBasic) => {
-	const { city, country, name, postCode, phone, street, products } = returnEntry;
+export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
+	const { city, country, name, postCode, phone, street, products, notes } = returnEntry;
 
 	console.log(returnEntry.products);
 
@@ -21,6 +21,20 @@ export const newReturn = async (returnEntry: IReturnEntryBasic) => {
 				resolved: false,
 				products: {
 					create: products
+				},
+				notes: {
+					create: {
+						content: notes,
+						type: 'Return created - notes',
+						userId
+					}
+				},
+				events: {
+					create: {
+						description: 'Wpis utworzony',
+						userId,
+						type: 'Return created'
+					}
 				}
 			}
 		});
@@ -39,6 +53,7 @@ export interface IReturnEntryBasic {
 	phone: string;
 	street: string;
 	products: IReturnProduct[];
+	notes: string;
 }
 
 export interface IReturnProduct {
