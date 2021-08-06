@@ -23,9 +23,12 @@
 		notes: ''
 	};
 
+	import { getContext } from 'svelte';
+	const notification = getContext('notification');
+
 	let products = [];
 
-	$: console.log(newReturn);
+	// $: console.log(newReturn);
 
 	let product;
 

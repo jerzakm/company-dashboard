@@ -23,6 +23,14 @@
 	});
 
 	let open = true;
+
+	import { setContext } from 'svelte';
+
+	function notification(type, content) {
+		alert(`${type} ${content}`);
+	}
+
+	setContext('notification', notification);
 </script>
 
 <layout>
