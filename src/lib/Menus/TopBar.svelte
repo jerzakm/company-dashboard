@@ -2,7 +2,9 @@
 	import { signOut } from '$lib/auth';
 	import Button, { Label, Icon } from '@smui/button';
 	import MenuSurface from '@smui/menu-surface';
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
+
+	const toggleMenu: any = getContext('toggleMenu');
 
 	export let user;
 	let surface;
@@ -25,6 +27,9 @@
 				<Button style="margin-top: 1em;" on:click={() => signOut()}>Wyloguj</Button>
 			</div>
 		</MenuSurface>
+		<Button on:click={() => toggleMenu()}>
+			<Label><Icon class="material-icons">menu</Icon></Label>
+		</Button>
 	</userMenu>
 </header>
 

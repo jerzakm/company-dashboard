@@ -1,12 +1,13 @@
 <script lang="ts">
 	import Sidebar from '$lib/Menus/Sidebar.svelte';
 	import TopBar from '$lib/Menus/TopBar.svelte';
+	import Button, { Label, Icon } from '@smui/button';
 
 	import '../app.css';
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 
 	let user = null;
 
@@ -24,18 +25,21 @@
 
 	let open = true;
 
-	import { setContext } from 'svelte';
-
 	function notification(type, content) {
 		alert(`${type} ${content}`);
 	}
 
+	function toggleMenu() {
+		open = !open;
+	}
+
 	setContext('notification', notification);
+	setContext('toggleMenu', toggleMenu);
 </script>
 
 <layout>
 	{#if user}
-		<Drawer variant="dismissible" bind:open>
+		<Drawer variant="dismissible" fixed={false} bind:open>
 			<Header>
 				<Title>Panel</Title>
 				<Subtitle>Środowisko testowe</Subtitle>
@@ -51,6 +55,7 @@
 	<AppContent class="app-content">
 		{#if user}
 			<TopBar {user} />{/if}
+
 		<main>
 			<slot />
 		</main>
@@ -61,6 +66,7 @@
 	layout {
 		position: relative;
 		display: flex;
+		flex-direction: column;
 		min-height: 100vh;
 		border: 1px solid var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.1));
 		overflow: hidden;
