@@ -24,3 +24,21 @@ export const getProductList = async () => {
 
 	return res;
 };
+
+export const getPackingLists = async () => {
+	const subiektConnection = getSubiektConnection();
+	const sqlQuery = `SELECT pl_Id, pl_Symbol, pl_CreationDate, pl_Printed,pl_Notes, dr_Name
+  FROM [SELLO-SHOP].dbo.pc_SendingList, [SELLO-SHOP].dbo.sl_Deliverer
+  WHERE pl_CreationDate >= '2021-08-01' AND [SELLO-SHOP].dbo.pc_SendingList.pl_DelivererId = [SELLO-SHOP].dbo.sl_Deliverer.dr_Id;`;
+
+	let res: any;
+
+	await subiektConnection
+		.raw(sqlQuery)
+		.on('query', function (data) {})
+		.then(function (response) {
+			res = response;
+		});
+
+	return res;
+};

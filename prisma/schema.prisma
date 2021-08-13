@@ -36,10 +36,10 @@ model Permissions {
 }
 
 model ReturnEntry {
-  id              String @id @default(cuid())
+  id      Int      @id @default(autoincrement())
   created_at      DateTime @default(now())
-  isBusiness      Boolean
-  saleDocument    String
+  isBusiness      Boolean?
+  saleDocument    String?
   resolved        Boolean
   sender          ReturnSender?
   events          ReturnEvent[]
@@ -54,10 +54,12 @@ model ReturnSender {
   id              String @id @default(cuid())
   name            String
   phone           String
-  postCode        String
+  postCode        String  
   street          String
+  city            String
+  country         String
   return          ReturnEntry   @relation(fields: [returnId], references: [id])
-  returnId        String
+  returnId        Int
 }
 
 model ReturnEvent{
@@ -67,7 +69,7 @@ model ReturnEvent{
   created_at  DateTime @default(now())
   userId      String
   user        User @relation(fields: [userId], references: [id])
-  returnId    String
+  returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
@@ -78,7 +80,7 @@ model ReturnNote{
   created_at      DateTime @default(now())
   userId          String
   user            User @relation(fields: [userId], references: [id])
-  returnId        String
+  returnId        Int
   returnEntry     ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
@@ -90,7 +92,7 @@ model ReturnLocation{
   created_at  DateTime @default(now())
   userId      String
   user        User @relation(fields: [userId], references: [id])
-  returnId    String
+  returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
@@ -102,7 +104,7 @@ model ReturnProduct{
   quantity    Int
   group       String
   description String
-  returnId    String
+  returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
@@ -113,7 +115,7 @@ model ReturnImage{
   created_at      DateTime @default(now())
   userId          String
   user            User @relation(fields: [userId], references: [id])
-  returnId    String
+  returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
@@ -121,7 +123,7 @@ model ReturnReason{
   id          String @id @default(cuid())
   reason      String
   description String
-  returnId    String
+  returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 

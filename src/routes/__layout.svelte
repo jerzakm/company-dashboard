@@ -12,7 +12,10 @@
 
 	authStore.subscribe((u) => {
 		user = u;
-		if (!user && typeof window != undefined) goto('/login');
+		if (!user && typeof window != undefined) {
+			const verified = checkStoredLogin();
+			if (!verified) goto('/login');
+		}
 	});
 
 	onMount(() => {
@@ -20,6 +23,14 @@
 	});
 
 	let open = true;
+
+	import { setContext } from 'svelte';
+
+	function notification(type, content) {
+		alert(`${type} ${content}`);
+	}
+
+	setContext('notification', notification);
 </script>
 
 <layout>
