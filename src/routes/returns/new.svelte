@@ -12,16 +12,7 @@
 	let openAddProduct;
 	let clicked = 'Nothing yet.';
 
-	let newReturn = {
-		name: '',
-		street: '',
-		postCode: '',
-		city: '',
-		country: 'PL',
-		products: [],
-		phone: '',
-		notes: ''
-	};
+	let newReturn = defaultCleanReturnEntry();
 
 	import { getContext } from 'svelte';
 	const notification = getContext('notification');
@@ -33,8 +24,27 @@
 	let product;
 
 	async function addNewReturn() {
-		const productsU = await post('returns/new', newReturn);
-		console.log(productsU, newReturn);
+		try {
+			const productsU = await post('returns/new', newReturn);
+			console.log(productsU, newReturn);
+			newReturn = defaultCleanReturnEntry();
+		} catch (e) {
+			console.log(e);
+			alert('Error adding a new return');
+		}
+	}
+
+	function defaultCleanReturnEntry() {
+		return {
+			name: '',
+			street: '',
+			postCode: '',
+			city: '',
+			country: 'PL',
+			products: [],
+			phone: '',
+			notes: ''
+		};
 	}
 </script>
 
@@ -100,6 +110,7 @@
 								><Button
 									touch
 									on:click={() => {
+										console.log('click');
 										newReturn.products = newReturn.products.filter((item, index) => index != i);
 									}}
 									color="secondary"

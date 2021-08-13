@@ -70,8 +70,8 @@
 			on:input={() => filterProducts()}
 			style="width:100%;"
 			on:focus={() => (focused = true)}
-			on:blur={() => setTimeout(() => (focused = false), 200)}
 		>
+			<!-- on:blur={() => setTimeout(() => (focused = false), 200)} -->
 			<HelperText slot="helper">Wybierz produkt</HelperText>
 		</Textfield>
 		{#if focused}
