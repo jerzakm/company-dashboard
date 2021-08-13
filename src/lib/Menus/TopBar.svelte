@@ -2,14 +2,9 @@
 	import { signOut } from '$lib/auth';
 	import Button, { Label, Icon } from '@smui/button';
 	import MenuSurface from '@smui/menu-surface';
-	import { onMount } from 'svelte';
 
 	export let user;
 	let surface;
-
-	onMount(() => {
-		// userName = getUser().name;
-	});
 </script>
 
 <header>
