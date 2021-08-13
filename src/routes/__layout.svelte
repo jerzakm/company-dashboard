@@ -2,6 +2,8 @@
 	import Sidebar from '$lib/Menus/Sidebar.svelte';
 	import TopBar from '$lib/Menus/TopBar.svelte';
 	import Button, { Label, Icon } from '@smui/button';
+	import Fab from '@smui/fab';
+	import IconButton from '@smui/icon-button';
 
 	import '../app.css';
 	import { goto } from '$app/navigation';
@@ -34,12 +36,11 @@
 	}
 
 	setContext('notification', notification);
-	setContext('toggleMenu', toggleMenu);
 </script>
 
 <layout>
 	{#if user}
-		<Drawer variant="dismissible" fixed={false} bind:open>
+		<Drawer variant="dismissible" fixed={false} bind:open style={`${window?.innerWidth < 800 ? 'width: 100%;' : ''}`}>
 			<Header>
 				<Title>Panel</Title>
 				<Subtitle>Środowisko testowe</Subtitle>
@@ -49,8 +50,6 @@
 			</Content>
 		</Drawer>
 	{/if}
-
-	<!-- <Button on:click={() => (open = !open)}><Label>Toggle Drawer</Label></Button> -->
 
 	<AppContent class="app-content">
 		{#if user}
@@ -62,7 +61,25 @@
 	</AppContent>
 </layout>
 
+<menuToggle>
+	{#if open}
+		<Fab on:click={() => toggleMenu()}><Icon class="material-icons">close</Icon></Fab>
+	{:else}
+		<Fab on:click={() => toggleMenu()}><Icon class="material-icons">menu</Icon></Fab>
+	{/if}
+</menuToggle>
+
 <style>
+	menuToggle {
+		position: fixed;
+		right: 1rem;
+		bottom: 1rem;
+	}
+	@media (min-width: 900px) {
+		menuToggle {
+			display: none;
+		}
+	}
 	layout {
 		position: relative;
 		display: flex;
