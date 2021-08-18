@@ -11,10 +11,15 @@
 
 	let openAddProduct;
 	let clicked = 'Nothing yet.';
+	let returnAdded = {
+		id: -1,
+		open: false
+	};
 
 	let newReturn = defaultCleanReturnEntry();
 
 	import { getContext } from 'svelte';
+	import { goto } from '$app/navigation';
 	const notification = getContext('notification');
 
 	let products = [];
@@ -25,8 +30,11 @@
 
 	async function addNewReturn() {
 		try {
-			const productsU = await post('returns/new', newReturn);
-			console.log(productsU, newReturn);
+			const addedReturn = await post('returns/new', newReturn);
+			if (addedReturn.id) {
+				returnAdded.open = true;
+				returnAdded.id = addedReturn.id;
+			}
 			newReturn = defaultCleanReturnEntry();
 		} catch (e) {
 			console.log(e);
@@ -140,9 +148,10 @@
 
 <Dialog bind:open={openAddProduct} aria-labelledby="simple-title" aria-describedby="simple-content" fullscreen>
 	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-	<Title id="simple-title">Dodaj nowy produkt</Title>
-	<Content id="simple-content"
-		><div class="new-product-container">
+
+	<Content id="simple-content">
+		<Title id="simple-title">Dodaj nowy produkt</Title>
+		<div class="new-product-container">
 			<NewProductSearch bind:product />
 		</div></Content
 	>
@@ -161,6 +170,29 @@
 			}}
 		>
 			<Label>Dodaj</Label>
+		</Button>
+	</Actions>
+</Dialog>
+
+<Dialog bind:open={returnAdded.open} aria-labelledby="simple-title" aria-describedby="simple-content" fullscreen>
+	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+
+	<Content id="simple-content">
+		<Title id="simple-title">Dodano zwrot #{returnAdded.id}</Title></Content
+	>
+	<Actions
+		><Button
+			touch
+			on:click={() => {}}
+			variant="raised"
+			on:click={() => {
+				goto(`entry- ${returnAdded.id}`);
+			}}
+		>
+			<Label>Edytuj dalej #{returnAdded.id}</Label>
+		</Button>
+		<Button touch color="secondary" variant="raised" on:click={() => {}}>
+			<Label>Dodaj kolejny nowy zwrot</Label>
 		</Button>
 	</Actions>
 </Dialog>

@@ -6,7 +6,7 @@ export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) 
 	console.log(returnEntry.products);
 
 	try {
-		await prisma.returnEntry.create({
+		return await prisma.returnEntry.create({
 			data: {
 				sender: {
 					create: {
@@ -40,6 +40,7 @@ export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) 
 		});
 	} catch (e) {
 		console.log(e);
+		return null;
 	}
 };
 
