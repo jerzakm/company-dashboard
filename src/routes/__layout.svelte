@@ -13,16 +13,18 @@
 
 	let user = null;
 
-	authStore.subscribe((u) => {
+	authStore.subscribe(async (u) => {
 		user = u;
 		if (!user && typeof window != undefined) {
-			const verified = checkStoredLogin();
+			const verified = await checkStoredLogin();
 			if (!verified) goto('/login');
 		}
 	});
 
-	onMount(() => {
-		checkStoredLogin();
+	onMount(async () => {
+		const verified = await checkStoredLogin();
+		console.log(verified);
+		if (!verified) goto('/login');
 	});
 
 	let open = true;
