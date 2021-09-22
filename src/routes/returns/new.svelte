@@ -132,6 +132,7 @@
 			</DataTable>
 		</container>
 	</Card>
+
 	<Card padded>
 		<Textfield textarea variant="outlined" bind:value={newReturn.notes} label="Notatki" style="width:100%;" class="test" />
 	</Card>

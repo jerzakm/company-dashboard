@@ -42,7 +42,7 @@
 
 <layout>
 	{#if user}
-		<Drawer variant="dismissible" fixed={false} bind:open style={`${window?.innerWidth < 800 ? 'width: 100%;' : ''}`}>
+		<Drawer variant="dismissible" fixed={false} bind:open style={`position: fixed; ${window?.innerWidth < 800 ? 'width: 100%;' : ''}`}>
 			<Header>
 				<Title>Panel</Title>
 				<Subtitle>Środowisko testowe</Subtitle>
@@ -94,13 +94,13 @@
 
 	* :global(.app-content) {
 		flex: auto;
-		overflow: auto;
+		/* overflow: auto; */
 		position: relative;
 		flex-grow: 1;
 	}
 
 	main {
-		overflow: auto;
+		/* overflow: auto; */
 		padding: 16px;
 		height: 100%;
 		box-sizing: border-box;
