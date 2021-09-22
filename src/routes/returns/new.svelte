@@ -1,6 +1,5 @@
 <script lang="ts">
 	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
-	import UploadImage from '$lib/components/UploadImage.svelte';
 	import Textfield from '@smui/textfield';
 	import Icon from '@smui/textfield/icon';
 	import Card from '@smui/card';
@@ -133,10 +132,7 @@
 			</DataTable>
 		</container>
 	</Card>
-	<Card padded>
-		<h2>Zdjęcia</h2>
-		<UploadImage />
-	</Card>
+
 	<Card padded>
 		<Textfield textarea variant="outlined" bind:value={newReturn.notes} label="Notatki" style="width:100%;" class="test" />
 	</Card>
