@@ -32,5 +32,6 @@ export const tokenHasPermission = async (token: string, requiredPermission: stri
 export enum ApiPermission {
 	PRODUCTS_GET = 'products:get',
 	PRODUCTS_POST = 'products:post',
-	ADD_NEW_RETURN = 'retursNew:post'
+	ADD_NEW_RETURN = 'returnsNew:post',
+	GET_RETURN_LIST = 'returnsList:get'
 }
