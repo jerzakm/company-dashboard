@@ -6,13 +6,10 @@ export async function get(request) {
 	let body: any = {};
 
 	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.GET_RETURN_LIST);
+	console.log(permission);
 
 	if (!permission.granted) {
 		status = 401;
-		return { status, body };
-	}
-
-	if (!request.body) {
 		return { status, body };
 	}
 
@@ -23,6 +20,7 @@ export async function get(request) {
 	} catch (e) {}
 
 	return {
-		status
+		status,
+		body
 	};
 }
