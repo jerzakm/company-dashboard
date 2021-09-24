@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { get } from '$lib/api';
-
+	import VirtualList from 'svelte-tiny-virtual-list';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 	import { onMount } from 'svelte';
 
@@ -30,13 +30,26 @@
 		</Row>
 	</Head>
 	<Body>
-		{#each filteredList as entry (entry.id)}
+		<!-- {#each filteredList as entry (entry.id)}
 			<Row>
 				<Cell numeric>{entry.id}</Cell>
 				<Cell>{entry.created_at}</Cell>
 				<Cell>{entry.sender.name}</Cell>
 				<Cell>{entry.products}</Cell>
 			</Row>
-		{/each}
+		{/each} -->
+
+		{#key filteredList}
+			<VirtualList width="100%" height={250} itemCount={filteredList.length} itemSize={33}>
+				<div slot="item" let:index let:style {style}>
+					<Row>
+						<Cell numeric>{filteredList[index].id}</Cell>
+						<Cell>{filteredList[index].created_at}</Cell>
+						<Cell>{filteredList[index].sender.name}</Cell>
+						<Cell>{filteredList[index].products}</Cell>
+					</Row>
+				</div>
+			</VirtualList>
+		{/key}
 	</Body>
 </DataTable>
