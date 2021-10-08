@@ -3,8 +3,6 @@ import { prisma } from '../_prisma';
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
 	const { city, country, name, postCode, phone, street, products, notes } = returnEntry;
 
-	console.log(returnEntry.products);
-
 	try {
 		return await prisma.returnEntry.create({
 			data: {

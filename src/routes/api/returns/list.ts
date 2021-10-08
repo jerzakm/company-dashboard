@@ -6,7 +6,6 @@ export async function get(request) {
 	let body: any = {};
 
 	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.GET_RETURN_LIST);
-	console.log(permission);
 
 	if (!permission.granted) {
 		status = 401;

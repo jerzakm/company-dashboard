@@ -18,7 +18,6 @@ export async function post(request) {
 
 	try {
 		const res = await newReturn(request.body, permission.userId);
-		console.log(res);
 		body = res;
 		status = 200;
 	} catch (e) {}

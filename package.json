@@ -51,6 +51,7 @@
 		"tedious": "^11.0.9",
 		"@smui/button": "^4.2.0",
 		"@smui/card": "^4.2.0",
+		"@smui/common": "^4.2.0",
 		"@smui/data-table": "^4.2.0",
 		"@smui/dialog": "^4.2.0",
 		"@smui/drawer": "^4.2.0",

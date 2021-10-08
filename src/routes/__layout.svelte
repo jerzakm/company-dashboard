@@ -23,7 +23,6 @@
 
 	onMount(async () => {
 		const verified = await checkStoredLogin();
-		console.log(verified);
 		if (!verified) goto('/login');
 	});
 
