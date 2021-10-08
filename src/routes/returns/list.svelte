@@ -6,6 +6,7 @@
 	import IconButton from '@smui/icon-button';
 	import { Label } from '@smui/common';
 	import { onMount } from 'svelte';
+	import { formatListDate } from './_listUtil';
 
 	let filteredList = [];
 
@@ -47,7 +48,7 @@
 		{#each slice as item (item.id)}
 			<Row>
 				<Cell numeric>{item.id}</Cell>
-				<Cell>{item.created_at}</Cell>
+				<Cell>{formatListDate(item.created_at)}</Cell>
 				<Cell>{item.sender.name}</Cell>
 			</Row>
 		{/each}
