@@ -4,11 +4,26 @@
 	import DataTable, { Head, Body, Row, Cell, Pagination } from '@smui/data-table';
 	import Select, { Option } from '@smui/select';
 	import IconButton from '@smui/icon-button';
-	import { Label } from '@smui/common';
+	import Button, { Label, Icon } from '@smui/button';
 	import { onMount } from 'svelte';
-	import { formatListDate } from './_listUtil';
+	import { formatListDate, sortById } from './_listUtil';
+	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
+
+	interface IListFilter {
+		id: {
+			ascending: boolean;
+			includes?: number;
+		};
+	}
 
 	let filteredList = [];
+	let returnsList = [];
+
+	let filterOptions: IListFilter = {
+		id: {
+			ascending: false
+		}
+	};
 
 	let rowsPerPage = 10;
 	let currentPage = 0;
@@ -22,15 +37,23 @@
 		currentPage = lastPage;
 	}
 
+	const applyFilters = () => {
+		filteredList = sortById(returnsList, filterOptions.id.ascending);
+
+		// have to update the slice here for pagination to refresh
+		slice = filteredList.slice(start, end);
+	};
+
+	$: filterOptions && applyFilters();
+
 	const getList = async () => {
 		const list = await get('returns/list');
 		return list;
 	};
 
 	onMount(async () => {
-		const returnsList = await getList();
-		filteredList = returnsList;
-		console.log(returnsList[returnsList.length - 1]);
+		returnsList = await getList();
+		applyFilters();
 	});
 </script>
 
@@ -39,20 +62,27 @@
 <DataTable table$aria-label="Todo list" style="width: 100%;">
 	<Head>
 		<Row>
-			<Cell numeric>#</Cell>
+			<Cell numeric
+				><Button on:click={() => (filterOptions.id.ascending = !filterOptions.id.ascending)}>
+					<Label>Nr</Label>
+					<AscendingIcon ascending={filterOptions.id.ascending} />
+				</Button></Cell
+			>
 			<Cell>Data</Cell>
 			<Cell style="width: 100%;">Nadawca</Cell>
 		</Row>
 	</Head>
-	<Body>
-		{#each slice as item (item.id)}
-			<Row>
-				<Cell numeric>{item.id}</Cell>
-				<Cell>{formatListDate(item.created_at)}</Cell>
-				<Cell>{item.sender.name}</Cell>
-			</Row>
-		{/each}
-	</Body>
+	{#key filteredList}
+		<Body>
+			{#each slice as item (item.id)}
+				<Row>
+					<Cell numeric>{item.id}</Cell>
+					<Cell>{formatListDate(item.created_at)}</Cell>
+					<Cell>{item.sender.name}</Cell>
+				</Row>
+			{/each}
+		</Body>
+	{/key}
 
 	<Pagination slot="paginate">
 		<svelte:fragment slot="rowsPerPage">
