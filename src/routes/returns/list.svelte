@@ -6,20 +6,13 @@
 	import IconButton from '@smui/icon-button';
 	import Button, { Label, Icon } from '@smui/button';
 	import { onMount } from 'svelte';
-	import { formatListDate, sortById } from './_listUtil';
+	import { formatListDate, sortByDate, sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
-
-	interface IListFilter {
-		id: {
-			ascending: boolean;
-			includes?: number;
-		};
-	}
 
 	let filteredList = [];
 	let returnsList = [];
 
-	let filterOptions: IListFilter = {
+	let filterOptions = {
 		id: {
 			ascending: false
 		}
@@ -39,6 +32,7 @@
 
 	const applyFilters = () => {
 		filteredList = sortById(returnsList, filterOptions.id.ascending);
+		// filteredList = sortByDate(returnsList, filterOptions.date.ascending);
 
 		// have to update the slice here for pagination to refresh
 		slice = filteredList.slice(start, end);
@@ -48,6 +42,7 @@
 
 	const getList = async () => {
 		const list = await get('returns/list');
+		console.log(list[list.length - 1].sender);
 		return list;
 	};
 
@@ -62,12 +57,14 @@
 <DataTable table$aria-label="Todo list" style="width: 100%;">
 	<Head>
 		<Row>
-			<Cell numeric
-				><Button on:click={() => (filterOptions.id.ascending = !filterOptions.id.ascending)}>
+			<!-- return Id -->
+			<Cell numeric>
+				<Button on:click={() => (filterOptions.id.ascending = !filterOptions.id.ascending)}>
 					<Label>Nr</Label>
 					<AscendingIcon ascending={filterOptions.id.ascending} />
-				</Button></Cell
-			>
+				</Button>
+			</Cell>
+			<!-- date -->
 			<Cell>Data</Cell>
 			<Cell style="width: 100%;">Nadawca</Cell>
 		</Row>
@@ -78,7 +75,11 @@
 				<Row>
 					<Cell numeric>{item.id}</Cell>
 					<Cell>{formatListDate(item.created_at)}</Cell>
-					<Cell>{item.sender.name}</Cell>
+					<Cell class="sender-cell">
+						<span><b>{item.sender.name}</b></span>
+						<span>{item.sender.street}</span>
+						<span>{item.sender.postCode} {item.sender.city}</span>
+					</Cell>
 				</Row>
 			{/each}
 		</Body>
