@@ -45,12 +45,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" />
 
-	<!-- tailwind -->
-	<link rel="stylesheet" href="/styles/tailwind-output.css" />
 	<!-- smui -->
 	<link rel="stylesheet" href="/smui.css" />
 	<!-- app -->
 	<link rel="stylesheet" href="/styles/app.css" />
+	<!-- tailwind -->
+	<link rel="stylesheet" href="/styles/tailwind-output.css" />
 	<!-- <link rel="stylesheet" href="/smui-dark.css" media="screen and (prefers-color-scheme: dark)" /> -->
 </svelte:head>
 

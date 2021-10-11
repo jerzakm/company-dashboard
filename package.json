@@ -10,8 +10,8 @@
 		"vite-workaround": "node _helper/vite-workaround.js",
 		"smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
 		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
-		"tailwind:watch": "cross-env TAILWIND_MODE=watch cross-env NODE_ENV=development postcss src/styles/tailwind.css -o src/styles/tailwind-output.css -w",
-		"tailwind:build": "cross-env TAILWIND_MODE=build cross-env NODE_ENV=production postcss src/styles/tailwind.css -o src/styles/tailwind-output.css",
+		"tailwind:watch": "cross-env TAILWIND_MODE=watch cross-env NODE_ENV=development postcss src/styles/tailwind.css -o static/styles/tailwind-output.css -w",
+		"tailwind:build": "cross-env TAILWIND_MODE=build cross-env NODE_ENV=production postcss src/styles/tailwind.css -o static/styles/tailwind-output.css",
 		"dev": "concurrently \"npm run dev:only\" \"npm run tailwind:watch\"",
 		"build": "npm run tailwind:build && npm run build:only"
 	},

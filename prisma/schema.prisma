@@ -47,7 +47,7 @@ model ReturnEntry {
   location        ReturnLocation[]
   products        ReturnProduct[]
   images          ReturnImage[]
-  returnReason    ReturnReason?
+  returnReason    ReturnReason[]
 }
 
 model ReturnSender {
@@ -122,9 +122,8 @@ model ReturnImage{
 model ReturnReason{
   id          String @id @default(cuid())
   reason      String
-  description String
-  returnId    Int
-  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+  description String  
+  returnEntry ReturnEntry[]
 }
 
 model ApplicationLog {
