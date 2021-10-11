@@ -12,10 +12,6 @@ export async function get(request) {
 		return { status, body };
 	}
 
-	if (!request.body) {
-		return { status, body };
-	}
-
 	try {
 		const res = await getReturnsList();
 		body = res;
@@ -23,6 +19,7 @@ export async function get(request) {
 	} catch (e) {}
 
 	return {
-		status
+		status,
+		body
 	};
 }

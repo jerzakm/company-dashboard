@@ -3,27 +3,26 @@
 	import TopBar from '$lib/Menus/TopBar.svelte';
 	import Button, { Label, Icon } from '@smui/button';
 	import Fab from '@smui/fab';
-	import IconButton from '@smui/icon-button';
 
-	import '../app.css';
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';
 	import { onMount, setContext } from 'svelte';
 
 	let user = null;
+	let mounted = false;
 
 	authStore.subscribe(async (u) => {
 		user = u;
-		if (!user && typeof window != undefined) {
+		if (!user && typeof window != undefined && mounted) {
 			const verified = await checkStoredLogin();
 			if (!verified) goto('/login');
 		}
 	});
 
 	onMount(async () => {
+		mounted = true;
 		const verified = await checkStoredLogin();
-		console.log(verified);
 		if (!verified) goto('/login');
 	});
 
@@ -39,6 +38,21 @@
 
 	setContext('notification', notification);
 </script>
+
+<svelte:head>
+	<!-- Fonts and CSS -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" />
+
+	<!-- smui -->
+	<link rel="stylesheet" href="/smui.css" />
+	<!-- app -->
+	<link rel="stylesheet" href="/styles/app.css" />
+	<!-- tailwind -->
+	<link rel="stylesheet" href="/styles/tailwind-output.css" />
+	<!-- <link rel="stylesheet" href="/smui-dark.css" media="screen and (prefers-color-scheme: dark)" /> -->
+</svelte:head>
 
 <layout>
 	{#if user}

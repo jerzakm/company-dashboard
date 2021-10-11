@@ -10,7 +10,6 @@
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 
 	let openAddProduct;
-	let clicked = 'Nothing yet.';
 	let returnAdded = {
 		id: -1,
 		open: false
@@ -18,13 +17,7 @@
 
 	let newReturn = defaultCleanReturnEntry();
 
-	import { getContext } from 'svelte';
 	import { goto } from '$app/navigation';
-	const notification = getContext('notification');
-
-	let products = [];
-
-	// $: console.log(newReturn);
 
 	let product;
 
@@ -56,12 +49,12 @@
 	}
 </script>
 
-<h1>Nowy zwrot</h1>
+<h1 class="mb-12">Nowy zwrot</h1>
 
 <newReturn>
 	<Card padded>
 		<container>
-			<h2>Nadawca</h2>
+			<h3>Nadawca</h3>
 			<!-- name -->
 			<div>
 				<Textfield variant="outlined" bind:value={newReturn.name} label="Imię i nazwisko / Firma" style="width:100%;" class="test">
@@ -89,11 +82,7 @@
 	</Card>
 	<Card padded>
 		<container>
-			<h2>
-				Produkty <Button on:click={() => (openAddProduct = true)}>
-					<Label>Dodaj</Label>
-				</Button>
-			</h2>
+			<h3>Produkty</h3>
 
 			<DataTable table$aria-label="People list" style="width: 100%;">
 				<Head>
@@ -128,6 +117,11 @@
 							>
 						</Row>
 					{/each}
+					<Row>
+						<Button on:click={() => (openAddProduct = true)} class="w-full">
+							<Label>Dodaj</Label>
+						</Button>
+					</Row>
 				</Body>
 			</DataTable>
 		</container>
