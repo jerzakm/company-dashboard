@@ -6,6 +6,8 @@
 	import IconButton from '@smui/icon-button';
 
 	import '../app.css';
+	import '../styles/tailwind-output.css';
+
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/auth';
 	import Drawer, { AppContent, Content, Header, Title, Subtitle } from '@smui/drawer';

@@ -54,7 +54,7 @@
 
 <h1>Lista zwrotów</h1>
 
-<DataTable table$aria-label="Todo list" style="width: 100%;">
+<DataTable table$aria-label="Lista zwrotów">
 	<Head>
 		<Row>
 			<!-- return Id -->
@@ -68,6 +68,13 @@
 			<Cell>Data</Cell>
 			<Cell style="width: 100%;">Nadawca</Cell>
 		</Row>
+		<Row>
+			<!-- return Id -->
+			<Cell numeric />
+			<!-- date -->
+			<Cell />
+			<Cell />
+		</Row>
 	</Head>
 	{#key filteredList}
 		<Body>
@@ -75,7 +82,7 @@
 				<Row>
 					<Cell numeric>{item.id}</Cell>
 					<Cell>{formatListDate(item.created_at)}</Cell>
-					<Cell class="sender-cell">
+					<Cell class="flex flex-col mb-2 overflow-visible">
 						<span><b>{item.sender.name}</b></span>
 						<span>{item.sender.street}</span>
 						<span>{item.sender.postCode} {item.sender.city}</span>
