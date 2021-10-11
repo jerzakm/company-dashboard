@@ -5,8 +5,8 @@
 	import Fab from '@smui/fab';
 	import IconButton from '@smui/icon-button';
 
-	import '../app.css';
 	import '../styles/tailwind-output.css';
+	import '../app.css';
 
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/auth';
@@ -14,16 +14,18 @@
 	import { onMount, setContext } from 'svelte';
 
 	let user = null;
+	let mounted = false;
 
 	authStore.subscribe(async (u) => {
 		user = u;
-		if (!user && typeof window != undefined) {
+		if (!user && typeof window != undefined && mounted) {
 			const verified = await checkStoredLogin();
 			if (!verified) goto('/login');
 		}
 	});
 
 	onMount(async () => {
+		mounted = true;
 		const verified = await checkStoredLogin();
 		if (!verified) goto('/login');
 	});

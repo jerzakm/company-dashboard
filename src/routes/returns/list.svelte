@@ -2,12 +2,12 @@
 	import { get } from '$lib/api';
 
 	import DataTable, { Head, Body, Row, Cell, Pagination } from '@smui/data-table';
-	import Select, { Option } from '@smui/select';
 	import IconButton from '@smui/icon-button';
-	import Button, { Label } from '@smui/button';
+	import Button, { Label, Icon } from '@smui/button';
 	import { onMount } from 'svelte';
 	import { formatListDate, sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
+	import ReturnStatusBadges from './_components/ReturnStatusBadges.svelte';
 
 	let filteredList = [];
 	let returnsList = [];
@@ -42,6 +42,7 @@
 
 	const getList = async () => {
 		const list = await get('returns/list');
+		console.log(list[list.length - 1]);
 		console.log(list[list.length - 1].products);
 		return list;
 	};
@@ -54,7 +55,7 @@
 	let valueA = '';
 </script>
 
-<h1>Lista zwrotów</h1>
+<h1 class="mb-12">Lista zwrotów</h1>
 
 <DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>
@@ -79,27 +80,31 @@
 	</Head>
 	{#key filteredList}
 		<Body>
-			{#each slice as item (item.id)}
+			{#each slice as entry (entry.id)}
 				<Row>
-					<Cell numeric>{item.id}</Cell>
-					<Cell>{formatListDate(item.created_at)}</Cell>
+					<Cell numeric>
+						<a href={`/returns/entry-${entry.id}`} class="return-link">{entry.id} </a>
+					</Cell>
+					<Cell>{formatListDate(entry.created_at)}</Cell>
 					<Cell class="flex flex-col mb-2 overflow-visible">
-						<span><b>{item.sender.name}</b></span>
-						<span>{item.sender.street}</span>
-						<span>{item.sender.postCode} {item.sender.city}</span>
+						<span><b>{entry.sender.name}</b></span>
+						<span>{entry.sender.street}</span>
+						<span>{entry.sender.postCode} {entry.sender.city}</span>
 					</Cell>
 					<Cell>
 						<ul>
-							{#each item.products as product}
+							{#each entry.products as product}
 								<li><b>{product.quantity}x</b> [{product.symbol}] {product.name}</li>
 							{/each}
 						</ul>
 					</Cell>
-					<Cell>MAG_A32</Cell>
+					<Cell>A32(test)</Cell>
 					<Cell />
 					<Cell>Odstąpienie</Cell>
 					<Cell>Brak</Cell>
-					<Cell>Zakończono</Cell>
+					<Cell>
+						<ReturnStatusBadges {entry} />
+					</Cell>
 				</Row>
 			{/each}
 		</Body>
@@ -147,6 +152,10 @@
 
 <style>
 	:global(.mdc-data-table__table-container) {
-		overflow: hidden;
+		overflow-y: hidden;
+	}
+	.return-link {
+		color: var(--primary);
+		font-weight: 700;
 	}
 </style>

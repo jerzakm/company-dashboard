@@ -1,28 +1,44 @@
 @import '@fontsource/fira-mono';
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap');
 
 :root {
-	font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+	font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
 		sans-serif;
 	--font-mono: 'Fira Mono', monospace;
-	--content-bg-color: #ffffff;
-	--background-color: #eef3f8;
-	--primary: #ee5740;
-	--primary-light: #f0ae94;
-	--primary-lighter: #fdf6ed;
-	--correct: #69bdb8;
-	--warning: #fde181;
-	--error: #f98381;
+	--color-content-bg-color: #ffffff;
+	--color-background-color: #eef3f8;
+	--color-primary: #ee5740;
+	--color-primary-light: #f0ae94;
+	--color-primary-lighter: #fdf6ed;
+	--color-correct: #69bdb8;
+	--color-warning: #fde181;
+	--color-error: #f98381;
+	--color-text: #000000de;
 }
 
 body {
 	min-height: 100vh;
 	margin: 0;
 	background-color: var(--background-color);
-	/* overflow: hidden; */
+	color: var(--color-text);
 }
 
 h1,
 h2,
+h3 {
+	font-family: 'Merriweather', serif;
+	font-weight: 900;
+}
+h1 {
+	@apply text-3xl;
+}
+h2 {
+	@apply text-2xl;
+}
+h3 {
+	@apply text-xl;
+}
+
 p {
 	font-weight: 400;
 	color: var(--heading-color);
@@ -37,13 +53,11 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
-	text-decoration: underline;
+a:visited {
+	color: var(--accent-color);
+	text-decoration: none;
 }
 
-h1 {
-	text-transform: uppercase;
-	font-weight: 900;
-	opacity: 0.7;
-	letter-spacing: 2px;
+a:hover {
+	text-decoration: underline;
 }
