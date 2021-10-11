@@ -4,9 +4,9 @@
 	import DataTable, { Head, Body, Row, Cell, Pagination } from '@smui/data-table';
 	import Select, { Option } from '@smui/select';
 	import IconButton from '@smui/icon-button';
-	import Button, { Label, Icon } from '@smui/button';
+	import Button, { Label } from '@smui/button';
 	import { onMount } from 'svelte';
-	import { formatListDate, sortByDate, sortById } from './_listUtil';
+	import { formatListDate, sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
 
 	let filteredList = [];
@@ -42,7 +42,7 @@
 
 	const getList = async () => {
 		const list = await get('returns/list');
-		console.log(list[list.length - 1].sender);
+		console.log(list[list.length - 1].products);
 		return list;
 	};
 
@@ -50,6 +50,8 @@
 		returnsList = await getList();
 		applyFilters();
 	});
+
+	let valueA = '';
 </script>
 
 <h1>Lista zwrotów</h1>
@@ -66,14 +68,8 @@
 			</Cell>
 			<!-- date -->
 			<Cell>Data</Cell>
-			<Cell style="width: 100%;">Nadawca</Cell>
-		</Row>
-		<Row>
-			<!-- return Id -->
-			<Cell numeric />
-			<!-- date -->
-			<Cell />
-			<Cell />
+			<Cell>Nadawca</Cell>
+			<Cell>Produkty</Cell>
 		</Row>
 	</Head>
 	{#key filteredList}
@@ -86,6 +82,13 @@
 						<span><b>{item.sender.name}</b></span>
 						<span>{item.sender.street}</span>
 						<span>{item.sender.postCode} {item.sender.city}</span>
+					</Cell>
+					<Cell>
+						<ul>
+							{#each item.products as product}
+								<li><b>{product.quantity}x</b> [{product.symbol}] {product.name}</li>
+							{/each}
+						</ul>
 					</Cell>
 				</Row>
 			{/each}
