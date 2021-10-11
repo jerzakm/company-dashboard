@@ -56,7 +56,7 @@
 
 <h1>Lista zwrotów</h1>
 
-<DataTable table$aria-label="Lista zwrotów">
+<DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>
 		<Row>
 			<!-- return Id -->
@@ -69,7 +69,12 @@
 			<!-- date -->
 			<Cell>Data</Cell>
 			<Cell>Nadawca</Cell>
-			<Cell>Produkty</Cell>
+			<Cell class="w-full">Produkty</Cell>
+			<Cell>Lokalizacja</Cell>
+			<Cell>Dokumenty</Cell>
+			<Cell>Powód zwrotu</Cell>
+			<Cell>Zdjęcia</Cell>
+			<Cell>Status</Cell>
 		</Row>
 	</Head>
 	{#key filteredList}
@@ -90,6 +95,11 @@
 							{/each}
 						</ul>
 					</Cell>
+					<Cell>MAG_A32</Cell>
+					<Cell />
+					<Cell>Odstąpienie</Cell>
+					<Cell>Brak</Cell>
+					<Cell>Zakończono</Cell>
 				</Row>
 			{/each}
 		</Body>
@@ -134,3 +144,9 @@
 		>
 	</Pagination>
 </DataTable>
+
+<style>
+	:global(mdc-data-table__table-container) {
+		overflow: hidden;
+	}
+</style>
