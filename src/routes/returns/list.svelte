@@ -18,7 +18,7 @@
 		}
 	};
 
-	let rowsPerPage = 10;
+	let rowsPerPage = 50;
 	let currentPage = 0;
 
 	$: start = currentPage * rowsPerPage;
@@ -106,14 +106,14 @@
 	{/key}
 
 	<Pagination slot="paginate">
-		<svelte:fragment slot="rowsPerPage">
+		<!-- <svelte:fragment slot="rowsPerPage">
 			<Label>Rows Per Page</Label>
 			<Select variant="outlined" bind:value={rowsPerPage} noLabel>
 				<Option value={10}>10</Option>
 				<Option value={25}>25</Option>
 				<Option value={100}>100</Option>
 			</Select>
-		</svelte:fragment>
+		</svelte:fragment> -->
 		<svelte:fragment slot="total">
 			{start + 1}-{end} of {filteredList.length}
 		</svelte:fragment>
@@ -146,7 +146,7 @@
 </DataTable>
 
 <style>
-	:global(mdc-data-table__table-container) {
+	:global(.mdc-data-table__table-container) {
 		overflow: hidden;
 	}
 </style>
