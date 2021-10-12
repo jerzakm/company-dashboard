@@ -8,9 +8,11 @@
 	import { formatListDate, sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
 	import ReturnStatusBadges from './_components/ReturnStatusBadges.svelte';
+	import AddNewReturnButton from './_components/AddNewReturnButton.svelte';
+	import type { ReturnEntry } from '.prisma/client';
 
-	let filteredList = [];
-	let returnsList = [];
+	let filteredList: any[] = [];
+	let returnsList: any[] = [];
 
 	let filterOptions = {
 		id: {
@@ -32,9 +34,6 @@
 
 	const applyFilters = () => {
 		filteredList = sortById(returnsList, filterOptions.id.ascending);
-		// filteredList = sortByDate(returnsList, filterOptions.date.ascending);
-
-		// have to update the slice here for pagination to refresh
 		slice = filteredList.slice(start, end);
 	};
 
@@ -51,11 +50,11 @@
 		returnsList = await getList();
 		applyFilters();
 	});
-
-	let valueA = '';
 </script>
 
 <h1 class="mb-12">Lista zwrotów</h1>
+
+<AddNewReturnButton />
 
 <DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>

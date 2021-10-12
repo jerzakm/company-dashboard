@@ -39,3 +39,16 @@ export const boolToggle = (value: boolean) => {
 	if (value) return false;
 	if (!value) return true;
 };
+
+export const defaultCleanReturnEntry = () => {
+	return {
+		name: '',
+		street: '',
+		postCode: '',
+		city: '',
+		country: 'PL',
+		products: [],
+		phone: '',
+		notes: ''
+	};
+};
