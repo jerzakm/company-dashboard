@@ -3,14 +3,17 @@
 	import { goto } from '$app/navigation';
 	import { post } from '$lib/api';
 	import { defaultCleanReturnEntry } from '../_listUtil';
-	import { createEventDispatcher } from 'svelte';
-	import '@lottiefiles/lottie-player';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
 	let display = false;
 	let addedId = 0;
-	let clicked = 0;
+	let mounted = false;
+
+	onMount(async () => {
+		const lottie = await import('@lottiefiles/lottie-player');
+	});
 
 	const addNewReturn = async () => {
 		console.log('adding new return');
@@ -34,7 +37,7 @@
 	<Label>Dodaj nowy</Label>
 </Button>
 
-{#if typeof window != 'undefined' && display}
+{#if mounted && display}
 	<popupContainer class="flex-col lg:flex-row">
 		<lottie-player autoplay mode="normal" src="/lottie/confirmAnim.json" />
 		<div>
