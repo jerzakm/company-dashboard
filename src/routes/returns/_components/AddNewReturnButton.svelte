@@ -36,7 +36,7 @@
 
 {#if typeof window != 'undefined' && display}
 	<popupContainer class="flex-col lg:flex-row">
-		<lottie-player autoplay mode="normal" src="https://assets1.lottiefiles.com/packages/lf20_y2hxPc.json" />
+		<lottie-player autoplay mode="normal" src="/lottie/confirmAnim.json" />
 		<div>
 			<h1>Dodano zwrot #{addedId}</h1>
 			<buttons>
