@@ -9,7 +9,6 @@
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
 	import ReturnStatusBadges from './_components/ReturnStatusBadges.svelte';
 	import AddNewReturnButton from './_components/AddNewReturnButton.svelte';
-	import type { ReturnEntry } from '.prisma/client';
 
 	let filteredList: any[] = [];
 	let returnsList: any[] = [];
@@ -46,15 +45,23 @@
 		return list;
 	};
 
-	onMount(async () => {
+	const refreshList = async () => {
 		returnsList = await getList();
 		applyFilters();
+	};
+
+	onMount(async () => {
+		await refreshList();
 	});
 </script>
 
 <h1 class="mb-12">Lista zwrotów</h1>
 
-<AddNewReturnButton />
+<AddNewReturnButton
+	on:newReturnAdded={() => {
+		refreshList();
+	}}
+/>
 
 <DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>
