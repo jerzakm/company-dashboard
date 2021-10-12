@@ -57,6 +57,26 @@
 .border {
     border-width: 1px
 }
+.blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-filter)
+}
 .filter {
     filter: var(--tw-filter)
+}
+.backdrop-filter {
+    -webkit-backdrop-filter: var(--tw-backdrop-filter);
+            backdrop-filter: var(--tw-backdrop-filter)
+}
+.transition {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms
+}
+@media (min-width: 1024px) {
+    .lg\:flex-row {
+        flex-direction: row
+    }
 }

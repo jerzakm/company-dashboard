@@ -18,7 +18,7 @@
 	let newReturn = defaultCleanReturnEntry();
 
 	import { goto } from '$app/navigation';
-	import { defaultCleanReturnEntry } from './_listUtil';
+	import { defaultCleanReturnEntry } from '.../_listUtil';
 
 	let product;
 

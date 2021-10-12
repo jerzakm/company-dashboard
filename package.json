@@ -47,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@lottiefiles/lottie-player": "^1.4.1",
 		"@smui/button": "^4.2.0",
 		"@smui/card": "^4.2.0",
 		"@smui/common": "^4.2.0",

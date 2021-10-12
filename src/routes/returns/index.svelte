@@ -89,7 +89,7 @@
 			{#each slice as entry (entry.id)}
 				<Row>
 					<Cell numeric>
-						<a href={`/returns/entry-${entry.id}`} class="return-link">{entry.id} </a>
+						<a href={`/returns/${entry.id}`} class="return-link">{entry.id} </a>
 					</Cell>
 					<Cell>{formatListDate(entry.created_at)}</Cell>
 					<Cell class="flex flex-col mb-2 overflow-visible">
