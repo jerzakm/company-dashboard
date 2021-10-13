@@ -33,5 +33,6 @@ export enum ApiPermission {
 	PRODUCTS_GET = 'products:get',
 	PRODUCTS_POST = 'products:post',
 	ADD_NEW_RETURN = 'returnsNew:post',
-	GET_RETURN_LIST = 'returnsList:get'
+	GET_RETURN_LIST = 'returnsList:get',
+	EDIT_RETURN = 'returnsList:edit'
 }

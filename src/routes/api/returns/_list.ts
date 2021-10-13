@@ -1,3 +1,4 @@
+import type { ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const getReturnsList = async () => {

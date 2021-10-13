@@ -1,3 +1,4 @@
+import type { ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
@@ -42,7 +43,19 @@ export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) 
 	}
 };
 
-export const changeReturn = () => {};
+export const updateSender = async (data: ReturnSender) => {
+	try {
+		return await prisma.returnSender.update({
+			where: {
+				id: data.id
+			},
+			data
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
 
 export interface IReturnEntryBasic {
 	city: string;

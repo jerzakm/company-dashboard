@@ -13,9 +13,11 @@
 
 <script>
 	import Paper, { Title, Content } from '@smui/paper';
+	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
-	import { get } from '$lib/api';
+	import { get, put } from '$lib/api';
 	import { onMount } from 'svelte';
+	import SaveChangesButton from './_components/SaveChangesButton.svelte';
 
 	export let returnId;
 	let data;
@@ -23,7 +25,20 @@
 
 	const updateReturnEntry = async () => {
 		data = await get(`returns/list?id=${returnId}`);
-		Object.assign(originalData, data);
+		originalData = JSON.parse(JSON.stringify(data));
+	};
+
+	const saveSenderChanges = async () => {
+		let success = false;
+		try {
+			const changedSender = await put('returns/edit/sender', data.sender);
+			originalData.sender = changedSender;
+			success = true;
+		} catch (e) {
+			console.log(e);
+			alert('Err');
+		}
+		return success;
 	};
 
 	onMount(async () => {
@@ -36,7 +51,7 @@
 
 <grid>
 	<Paper class="col-span-2" elevation={4}>
-		<Content>
+		<Content class="relative">
 			{#if data}
 				<div class="content-grid">
 					<span class="text-lg font-bold">Nadawca</span>
@@ -56,9 +71,11 @@
 						<Textfield bind:value={data.sender.city} label="Miejscowość" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
 				</div>
+				<SaveChangesButton action={saveSenderChanges} visible={JSON.stringify(data.sender) != JSON.stringify(originalData.sender)} />
 			{/if}
 		</Content>
 	</Paper>
+	<div class="col-span-2" />
 </grid>
 
 <style lang="scss">
@@ -70,5 +87,10 @@
 	.content-grid {
 		@apply grid;
 		@apply grid-cols-3;
+	}
+	saveBtn {
+		position: absolute;
+		bottom: -2.7rem;
+		right: 20px;
 	}
 </style>

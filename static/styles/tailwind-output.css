@@ -27,11 +27,20 @@
         max-width: 1536px
     }
 }
+.pointer-events-none {
+    pointer-events: none
+}
+.visible {
+    visibility: visible
+}
 .static {
     position: static
 }
 .fixed {
     position: fixed
+}
+.relative {
+    position: relative
 }
 .col-span-2 {
     grid-column: span 2 / span 2
@@ -42,11 +51,17 @@
 .mb-2 {
     margin-bottom: 0.5rem
 }
+.block {
+    display: block
+}
 .flex {
     display: flex
 }
 .grid {
     display: grid
+}
+.hidden {
+    display: none
 }
 .w-full {
     width: 100%
@@ -69,6 +84,12 @@
 }
 .font-bold {
     font-weight: 700
+}
+.opacity-100 {
+    opacity: 1
+}
+.opacity-0 {
+    opacity: 0
 }
 .blur {
     --tw-blur: blur(8px);
