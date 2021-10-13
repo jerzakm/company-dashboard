@@ -13,20 +13,20 @@ async function start() {
 	await deleteAll();
 
 	for (let i = 0; i < data.length; i++) {
-		await upsertEntry(data[i]);
+		// await upsertEntry(data[i]);
 		// await updateProducts(data[i]);
 	}
 }
 
 async function deleteAll() {
 	await prisma.returnEvent.deleteMany({});
-	await prisma.returnImage.deleteMany({});
-	await prisma.returnLocation.deleteMany({});
-	await prisma.returnNote.deleteMany({});
-	await prisma.returnProduct.deleteMany({});
-	await prisma.returnReason.deleteMany({});
-	await prisma.returnSender.deleteMany({});
-	await prisma.returnEntry.deleteMany({});
+	// await prisma.returnImage.deleteMany({});
+	// await prisma.returnLocation.deleteMany({});
+	// await prisma.returnNote.deleteMany({});
+	// await prisma.returnProduct.deleteMany({});
+	// await prisma.returnReason.deleteMany({});
+	// await prisma.returnSender.deleteMany({});
+	// await prisma.returnEntry.deleteMany({});
 }
 
 async function upsertEntry(entry) {

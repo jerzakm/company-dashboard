@@ -1,4 +1,4 @@
-import type { ReturnSender } from '@prisma/client';
+import type { ReturnProduct, ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
@@ -50,6 +50,24 @@ export const updateSender = async (data: ReturnSender) => {
 				id: data.id
 			},
 			data
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const addProduct = async (data: ReturnProduct, userId: string, returnId: number) => {
+	try {
+		return await prisma.returnProduct.create({
+			data: {
+				...data
+				// returnEntry: {
+				// 	connect: {
+				// 		id: returnId
+				// 	}
+				// }
+			}
 		});
 	} catch (e) {
 		console.log(e);

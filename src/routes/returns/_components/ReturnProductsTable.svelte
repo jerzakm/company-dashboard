@@ -4,9 +4,9 @@
 	import Button, { Label } from '@smui/button';
 	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
 	import { onMount } from 'svelte';
-	import { get } from '$lib/api';
+	import { get, post } from '$lib/api';
 
-	export let returnEntry;
+	export let returnEntry: any;
 
 	let openAddProduct = false;
 	let product;
@@ -15,6 +15,8 @@
 
 	const addNewProduct = async () => {
 		console.log('adding new product', product);
+		product.returnId = returnEntry.id;
+		const addProduct = await post(`returns/edit/product`, product);
 	};
 
 	onMount(async () => {

@@ -78,9 +78,6 @@
 .w-full {
     width: 100%
 }
-.min-w-full {
-    min-width: 100%
-}
 .flex-grow {
     flex-grow: 1
 }
@@ -92,16 +89,6 @@
 }
 .border {
     border-width: 1px
-}
-.border-b-4 {
-    border-bottom-width: 4px
-}
-.border-solid {
-    border-style: solid
-}
-.border-black {
-    --tw-border-opacity: 1;
-    border-color: rgba(0, 0, 0, var(--tw-border-opacity))
 }
 .text-lg {
     font-size: 1.125rem;
