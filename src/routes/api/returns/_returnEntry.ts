@@ -57,6 +57,31 @@ export const updateSender = async (data: ReturnSender) => {
 	}
 };
 
+export const createReturnEvent = async (returnId, userId, type, description, diff = '') => {
+	try {
+		return await prisma.returnEvent.create({
+			data: {
+				returnEntry: {
+					connect: {
+						id: returnId
+					}
+				},
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				type,
+				description,
+				diff
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export interface IReturnEntryBasic {
 	city: string;
 	country: string;

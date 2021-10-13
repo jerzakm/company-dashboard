@@ -1,6 +1,9 @@
 import type { ReturnSender } from '@prisma/client';
+import { diff } from 'deep-object-diff';
 import { ApiPermission, tokenHasPermission } from '../../_authUtil';
-import { updateSender } from '../_returnEntry';
+import { prisma } from '../../_prisma';
+import { getReturn } from '../_list';
+import { createReturnEvent, updateSender } from '../_returnEntry';
 
 export async function put(request) {
 	let status = 400;
@@ -15,7 +18,17 @@ export async function put(request) {
 
 	try {
 		const sender: ReturnSender = request.body;
+		const originalSender = await prisma.returnSender.findFirst({
+			where: {
+				id: sender.id
+			}
+		});
 		const updatedSender = await updateSender(sender);
+
+		if (updateSender) {
+			const senderDiff = diff(originalSender, updatedSender);
+			await createReturnEvent(sender.returnId, permission.userId, 'Edit', 'Nadawca', JSON.stringify(senderDiff));
+		}
 
 		status = 200;
 		body = updatedSender;
