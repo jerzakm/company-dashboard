@@ -1,24 +1,15 @@
 <script lang="ts">
 	import { getProducts } from '$lib/products';
-	import MenuSurface from '@smui/menu-surface';
 	import Textfield from '@smui/textfield';
 	import HelperText from '@smui/textfield/helper-text/index';
 
-	let productSearchString = '';
-
-	// ReturnProduct
-	// id          String @id @default(cuid())
-	// name        String
-	// symbol      String
-	// price       Decimal
-	// quantity    Int
-	// group       String
-	// description String
-
 	import Button, { Label } from '@smui/button';
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 
 	import VirtualList from 'svelte-tiny-virtual-list';
+	import { get } from '$lib/api';
+
+	let productSearchString = '';
 
 	let products = [];
 	let filteredProducts = [];
@@ -35,8 +26,10 @@
 	let focused = false;
 
 	onMount(async () => {
-		const dbProducts = await getProducts();
-		if (dbProducts) products = dbProducts;
+		// const dbProducts = await getProducts();
+		const dbProducts = await get('subiekt/products');
+		if (dbProducts?.data) products = dbProducts.data;
+		console.log(products);
 		filterProducts();
 	});
 
@@ -49,8 +42,7 @@
 	}
 
 	function filterProducts() {
-		console.log('filtering');
-		filteredProducts = products.filter((p) => {
+		filteredProducts = products?.filter((p) => {
 			return (
 				p.symbol.toLowerCase().includes(productSearchString.toLowerCase()) ||
 				p.name.toLowerCase().includes(productSearchString.toLowerCase())
@@ -96,9 +88,6 @@
 </div>
 
 <style>
-	.product-qty {
-		/* width: 3rem; */
-	}
 	.add-product-container {
 		margin: 1rem;
 		display: grid;

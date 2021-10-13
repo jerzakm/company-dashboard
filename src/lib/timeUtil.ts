@@ -5,7 +5,7 @@ export const formatListDate = (dateString: string) => {
 	return parsedDate;
 };
 
-export const toDateHour = (dateString: string) => {
+export const formatToDateHour = (dateString: string) => {
 	const parsedDate = dayjs(dateString).format('DD-MM-YYYY hh:mm:ss');
 	return parsedDate;
 };

@@ -18,6 +18,8 @@
 	import { get, put } from '$lib/api';
 	import { onMount } from 'svelte';
 	import SaveChangesButton from './_components/SaveChangesButton.svelte';
+	import ReturnEventsTable from './_components/ReturnEventsTable.svelte';
+	import ReturnProductsTable from './_components/ReturnProductsTable.svelte';
 
 	export let returnId;
 	let data;
@@ -53,21 +55,21 @@
 	<Paper class="col-span-2" elevation={4}>
 		<Content class="relative">
 			{#if data}
-				<div class="content-grid">
+				<div class="flex flex-col">
 					<span class="text-lg font-bold">Nadawca</span>
-					<div class="col-span-2">
+					<div>
 						<Textfield bind:value={data.sender.name} label="Imie i Nazwisko / Firma" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
-					<filler />
-					<div class="col-span-2">
+
+					<div>
 						<Textfield bind:value={data.sender.street} label="Ulica" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
-					<filler />
-					<div class="col-span-2">
+
+					<div>
 						<Textfield bind:value={data.sender.postCode} label="Kod pocztowy" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
-					<filler />
-					<div class="col-span-2">
+
+					<div>
 						<Textfield bind:value={data.sender.city} label="Miejscowość" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
 				</div>
@@ -75,19 +77,32 @@
 			{/if}
 		</Content>
 	</Paper>
-	<div class="col-span-2" />
+	<Paper class="col-span-4" elevation={4}>
+		<Content class="relative h-full">
+			<span class="text-lg font-bold">Produkty</span>
+
+			{#if data}
+				<ReturnProductsTable returnEntry={data} />
+			{/if}
+		</Content>
+	</Paper>
+	<Paper class="col-span-6" elevation={4}>
+		<Content class="relative">
+			<span class="text-lg font-bold">Historia zmian</span>
+			{#if data}
+				<ReturnEventsTable returnEvents={data.events} />
+			{/if}
+		</Content>
+	</Paper>
 </grid>
 
 <style lang="scss">
 	grid {
 		@apply grid;
 		@apply grid-cols-6;
-		@apply gap-2;
+		@apply gap-10;
 	}
-	.content-grid {
-		@apply grid;
-		@apply grid-cols-3;
-	}
+
 	saveBtn {
 		position: absolute;
 		bottom: -2.7rem;

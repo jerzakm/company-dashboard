@@ -13,7 +13,7 @@ export async function get(request) {
 	let status = 0;
 	let body = {};
 
-	createAppLogEntry(AppLogStatus.INFO, 'User requested products update', permission.userId);
+	createAppLogEntry(AppLogStatus.INFO, 'User requested products get', permission.userId);
 
 	if (permission.granted) {
 		try {
@@ -44,7 +44,7 @@ export async function post(request) {
 	let status = 0;
 	let body = {};
 
-	createAppLogEntry(AppLogStatus.INFO, 'User requested products update', permission.userId);
+	createAppLogEntry(AppLogStatus.INFO, 'User requested products post', permission.userId);
 
 	if (permission.granted) {
 		try {

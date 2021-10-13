@@ -1,7 +1,7 @@
 import { get } from './api';
 import { minutesSince } from './timeUtil';
 
-let lastProductsFetch = 0;
+let lastProductsFetch = 90;
 let products = [];
 
 export const getProducts = async () => {
@@ -12,7 +12,7 @@ export const getProducts = async () => {
 		products = [...subiektProducts.products];
 	}
 	// if not or update was later than X minutes ago, get them from Api and put in local storage for later
-	if (minutesSince(lastProductsFetch) > 360) {
+	if (minutesSince(lastProductsFetch) > 60) {
 		try {
 			const apiProducts = await get('subiekt/products');
 			products = apiProducts.data;

@@ -11,7 +11,10 @@
 
 		if (success) {
 			lottieSuccess.play();
-			lottieSuccess.addEventListener('complete', () => (success = false));
+			lottieSuccess.addEventListener('complete', () => {
+				success = false;
+				lottieSuccess.seek(0);
+			});
 		} else {
 			alert(`update err`);
 		}
