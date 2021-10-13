@@ -12,7 +12,7 @@
 	let mounted = false;
 
 	onMount(async () => {
-		const lottie = await import('@lottiefiles/lottie-player');
+		mounted = true;
 	});
 
 	const addNewReturn = async () => {
