@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { get } from '$lib/api';
+	import { formatListDate } from '$lib/timeUtil';
 
 	import DataTable, { Head, Body, Row, Cell, Pagination } from '@smui/data-table';
 	import IconButton from '@smui/icon-button';
 	import Button, { Label, Icon } from '@smui/button';
 	import { onMount } from 'svelte';
-	import { formatListDate, sortById } from './_listUtil';
+	import { sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
 	import ReturnStatusBadges from './_components/ReturnStatusBadges.svelte';
 	import AddNewReturnButton from './_components/AddNewReturnButton.svelte';
