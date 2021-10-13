@@ -73,7 +73,11 @@
 						<Textfield bind:value={data.sender.city} label="Miejscowość" style="width: 100%;" helperLine$style="width: 100%;" />
 					</div>
 				</div>
-				<SaveChangesButton action={saveSenderChanges} visible={JSON.stringify(data.sender) != JSON.stringify(originalData.sender)} />
+				<SaveChangesButton
+					action={saveSenderChanges}
+					visible={JSON.stringify(data.sender) != JSON.stringify(originalData.sender)}
+					label={'Zapisz zmiany w nadawcy'}
+				/>
 			{/if}
 		</Content>
 	</Paper>

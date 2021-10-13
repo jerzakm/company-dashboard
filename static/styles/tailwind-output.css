@@ -60,6 +60,9 @@
 .mb-4 {
     margin-bottom: 1rem
 }
+.mb-10 {
+    margin-bottom: 2.5rem
+}
 .block {
     display: block
 }
@@ -89,6 +92,9 @@
 }
 .border {
     border-width: 1px
+}
+.pb-10 {
+    padding-bottom: 2.5rem
 }
 .text-lg {
     font-size: 1.125rem;

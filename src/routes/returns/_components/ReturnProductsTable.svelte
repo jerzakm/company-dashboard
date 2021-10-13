@@ -5,6 +5,7 @@
 	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
 	import { onMount } from 'svelte';
 	import { get, post } from '$lib/api';
+	import SaveChangesButton from './SaveChangesButton.svelte';
 
 	export let returnEntry: any;
 
@@ -14,16 +15,20 @@
 	let productList = [];
 
 	const addNewProduct = async () => {
-		console.log('adding new product', product);
 		product.returnId = returnEntry.id;
 		const addProduct = await post(`returns/edit/product`, product);
+
+		if (addProduct) {
+			setTimeout(() => (openAddProduct = false), 1000);
+		}
+
+		return addProduct ? true : false;
 	};
 
 	onMount(async () => {
 		// const dbProducts = await getProducts();
 		const dbProducts = await get('subiekt/products');
 		if (dbProducts?.data) productList = dbProducts.data;
-		console.log(productList);
 	});
 </script>
 
@@ -68,24 +73,11 @@
 
 	<Content id="simple-content" class="add-new-dialog">
 		<Title id="simple-title">Dodaj nowy produkt</Title>
-		<div class="new-product-container">
+		<div class="new-product-container relative mb-10 pb-10">
+			<SaveChangesButton action={addNewProduct} visible={true} label={'Dodaj nowy produkt'} />
 			<NewProductSearch bind:product />
 		</div>
 	</Content>
-	<Actions
-		><Button touch on:click={() => {}} color="secondary">
-			<Label>Anuluj</Label>
-		</Button>
-		<Button
-			touch
-			variant="raised"
-			on:click={() => {
-				addNewProduct();
-			}}
-		>
-			<Label>Dodaj</Label>
-		</Button>
-	</Actions>
 </Dialog>
 
 <style lang="scss">

@@ -2,6 +2,7 @@
 	import Button, { Label } from '@smui/button';
 	export let action;
 	export let visible;
+	export let label = 'Zapisz';
 	let success = false;
 
 	let lottieSuccess;
@@ -23,7 +24,7 @@
 
 <saveBtn>
 	<Button variant="raised" on:click={() => save()} class={`${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-		<Label>Zapisz</Label>
+		<Label>{label}</Label>
 	</Button>
 	<lottie-player bind:this={lottieSuccess} mode="normal" src="/lottie/confirmAnim.json" class={`${success ? 'block' : 'hidden'}`} />
 </saveBtn>
