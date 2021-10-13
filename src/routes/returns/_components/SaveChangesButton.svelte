@@ -4,12 +4,16 @@
 	export let visible;
 	let success = false;
 
-	let lottie;
+	let lottieSuccess;
 
 	const save = async () => {
 		success = await action();
+
 		if (success) {
-			lottie.play();
+			lottieSuccess.play();
+			lottieSuccess.addEventListener('complete', () => (success = false));
+		} else {
+			alert(`update err`);
 		}
 	};
 </script>
@@ -18,7 +22,7 @@
 	<Button variant="raised" on:click={() => save()} class={`${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 		<Label>Zapisz</Label>
 	</Button>
-	<lottie-player bind:this={lottie} mode="normal" src="/lottie/confirmAnim.json" />
+	<lottie-player bind:this={lottieSuccess} mode="normal" src="/lottie/confirmAnim.json" class={`${success ? 'block' : 'hidden'}`} />
 </saveBtn>
 
 <style>
