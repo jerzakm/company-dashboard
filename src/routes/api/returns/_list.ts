@@ -27,7 +27,16 @@ export const getReturn = async (id: string) => {
 				id: parseInt(id)
 			},
 			include: {
-				events: true,
+				events: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								name: true
+							}
+						}
+					}
+				},
 				images: true,
 				location: true,
 				notes: true,
