@@ -3,7 +3,7 @@
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 	import { get, post } from '$lib/api';
 	import SaveChangesButton from './SaveChangesButton.svelte';
 
@@ -14,12 +14,17 @@
 
 	let productList = [];
 
+	const dispatch = createEventDispatcher();
+
 	const addNewProduct = async () => {
 		product.returnId = returnEntry.id;
 		const addProduct = await post(`returns/edit/product`, product);
 
 		if (addProduct) {
-			setTimeout(() => (openAddProduct = false), 1000);
+			setTimeout(() => {
+				openAddProduct = false;
+				dispatch('change');
+			}, 1000);
 		}
 
 		return addProduct ? true : false;
@@ -37,7 +42,6 @@
 		<DataTable table$aria-label="Lista produktów" style="width: 100%;">
 			<Head>
 				<Row>
-					<Cell>#</Cell>
 					<Cell numeric>Ilość</Cell>
 					<Cell>Symbol</Cell>
 					<Cell>Nazwa</Cell>
@@ -48,7 +52,6 @@
 			<Body>
 				{#each returnEntry.products as product, i}
 					<Row>
-						<Cell numeric>{i + 1}</Cell>
 						<Cell numeric>{product.quantity}</Cell>
 						<Cell>{product.symbol}</Cell>
 						<Cell>{product.name}</Cell>
@@ -73,7 +76,7 @@
 
 	<Content id="simple-content" class="add-new-dialog">
 		<Title id="simple-title">Dodaj nowy produkt</Title>
-		<div class="new-product-container relative mb-10 pb-10">
+		<div class="new-product-container relative mb-10 pb-10 z-50">
 			<SaveChangesButton action={addNewProduct} visible={true} label={'Dodaj nowy produkt'} />
 			<NewProductSearch bind:product />
 		</div>

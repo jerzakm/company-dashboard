@@ -73,8 +73,10 @@
 						<Button
 							on:click={() => {
 								focused = true;
-								productSearchString = `[${filteredProducts[index].symbol}] ${filteredProducts[index].name}`;
+								productSearchString = '';
+								// productSearchString = `[${filteredProducts[index].symbol}] ${filteredProducts[index].name}`;
 								assignProduct(filteredProducts[index]);
+								focused = false;
 							}}>[{filteredProducts[index].symbol}] {filteredProducts[index].name}</Button
 						>
 					</div>
@@ -84,6 +86,7 @@
 	</div>
 </div>
 <div class="desc-container">
+	<h3>Wybrano [{product.symbol}] {product.name}</h3>
 	<Textfield bind:value={product.description} label="Opis / Uwagi" style="width:100%" textarea />
 </div>
 

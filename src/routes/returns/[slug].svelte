@@ -86,7 +86,7 @@
 			<span class="text-lg font-bold">Produkty</span>
 
 			{#if data}
-				<ReturnProductsTable returnEntry={data} />
+				<ReturnProductsTable returnEntry={data} on:change={() => updateReturnEntry()} />
 			{/if}
 		</Content>
 	</Paper>
