@@ -83,6 +83,22 @@ export const delProduct = async (data: ReturnProduct) => {
 	}
 };
 
+export const addImage = async (imgSrc: string, userId, returnId) => {
+	try {
+		return await prisma.returnImage.create({
+			data: {
+				imgSrc,
+				description: '',
+				userId,
+				returnId
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export const createReturnEvent = async (returnId, userId, type, description, diff = '') => {
 	try {
 		return await prisma.returnEvent.create({
