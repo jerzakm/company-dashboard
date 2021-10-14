@@ -5,7 +5,7 @@ export async function post(request) {
 	let status = 400;
 	let body: any = {};
 
-	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.ADD_NEW_RETURN);
+	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.EDIT_RETURN);
 
 	if (!permission.granted) {
 		status = 401;

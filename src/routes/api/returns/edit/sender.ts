@@ -9,7 +9,7 @@ export async function put(request) {
 	let status = 400;
 	let body: any = {};
 
-	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.GET_RETURN_LIST);
+	const permission = await tokenHasPermission(request.headers.authorization, ApiPermission.EDIT_RETURN);
 
 	if (!permission.granted) {
 		status = 401;
