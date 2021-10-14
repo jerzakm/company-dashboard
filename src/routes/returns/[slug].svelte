@@ -18,8 +18,10 @@
 	import { get, put } from '$lib/api';
 	import { onMount } from 'svelte';
 	import SaveChangesButton from './_components/SaveChangesButton.svelte';
+	import ReturnImageGallery from './_components/ReturnImageGallery.svelte';
 	import ReturnEventsTable from './_components/ReturnEventsTable.svelte';
 	import ReturnProductsTable from './_components/ReturnProductsTable.svelte';
+	import AddNewFile from './_components/AddNewFile.svelte';
 
 	export let returnId;
 	let data;
@@ -28,6 +30,7 @@
 	const updateReturnEntry = async () => {
 		data = await get(`returns/list?id=${returnId}`);
 		originalData = JSON.parse(JSON.stringify(data));
+		console.log(data);
 	};
 
 	const saveSenderChanges = async () => {
@@ -89,6 +92,26 @@
 			{/if}
 		</Content>
 	</Paper>
+
+	<!-- Upload image -->
+	<!-- <Paper class="col-span-1" elevation={4}>
+		<Content class="relative">
+			<span class="text-lg font-bold">Dodaj zdjęcie</span>
+			<AddNewFile returnEntry={data} on:change={() => updateReturnEntry()} />
+		</Content>
+	</Paper> -->
+
+	<!-- FILE GALLERY -->
+	<Paper class="col-span-6" elevation={4}>
+		<Content class="relative">
+			<span class="text-lg font-bold">Galeria</span>
+			{#if data}
+				<ReturnImageGallery returnEntry={data} on:change={() => updateReturnEntry()} />
+			{/if}
+		</Content>
+	</Paper>
+
+	<!-- EVENTS HISTORY -->
 	<Paper class="col-span-6" elevation={4}>
 		<Content class="relative">
 			<span class="text-lg font-bold">Historia zmian</span>
