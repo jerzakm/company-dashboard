@@ -62,11 +62,19 @@ export const addProduct = async (data: ReturnProduct, userId: string, returnId: 
 		return await prisma.returnProduct.create({
 			data: {
 				...data
-				// returnEntry: {
-				// 	connect: {
-				// 		id: returnId
-				// 	}
-				// }
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const delProduct = async (data: ReturnProduct) => {
+	try {
+		return await prisma.returnProduct.delete({
+			where: {
+				id: data.id
 			}
 		});
 	} catch (e) {

@@ -61,7 +61,11 @@
 			label="Wyszukaj"
 			on:input={() => filterProducts()}
 			style="width:100%;"
-			on:focus={() => (focused = true)}
+			on:focus={() => {
+				focused = true;
+				productSearchString = '';
+				filterProducts();
+			}}
 		>
 			<!-- on:blur={() => setTimeout(() => (focused = false), 200)} -->
 			<HelperText slot="helper">Wybierz produkt</HelperText>
@@ -71,10 +75,10 @@
 				<VirtualList width="100%" height={250} itemCount={filteredProducts.length} itemSize={33}>
 					<div slot="item" let:index let:style {style}>
 						<Button
+							style="font-size: 0.75rem;"
 							on:click={() => {
 								focused = true;
-								productSearchString = '';
-								// productSearchString = `[${filteredProducts[index].symbol}] ${filteredProducts[index].name}`;
+								productSearchString = `[${filteredProducts[index].symbol}] ${filteredProducts[index].name}`;
 								assignProduct(filteredProducts[index]);
 								focused = false;
 							}}>[{filteredProducts[index].symbol}] {filteredProducts[index].name}</Button
@@ -86,7 +90,7 @@
 	</div>
 </div>
 <div class="desc-container">
-	<h3>Wybrano [{product.symbol}] {product.name}</h3>
+	<span><b>Wybrano</b> [{product.symbol}] {product.name}</span>
 	<Textfield bind:value={product.description} label="Opis / Uwagi" style="width:100%" textarea />
 </div>
 

@@ -102,9 +102,14 @@
 
 <style lang="scss">
 	grid {
-		@apply grid;
-		@apply grid-cols-6;
+		@apply flex;
+		@apply flex-col;
 		@apply gap-10;
+
+		@media (min-width: 1024px) {
+			display: grid;
+			grid-template-columns: repeat(6, minmax(0, 1fr));
+		}
 	}
 
 	saveBtn {

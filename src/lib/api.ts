@@ -35,8 +35,8 @@ export function get(path) {
 	return send({ method: 'GET', path });
 }
 
-export function del(path) {
-	return send({ method: 'DELETE', path });
+export function del(path, data?) {
+	return send({ method: 'DELETE', path, data });
 }
 
 export function post(path, data?) {

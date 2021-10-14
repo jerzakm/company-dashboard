@@ -1,5 +1,6 @@
 import type { ReturnSender } from '@prisma/client';
 import { diff } from 'deep-object-diff';
+import { AppLogStatus, createAppLogEntry } from '../../_applicationLog';
 import { ApiPermission, tokenHasPermission } from '../../_authUtil';
 import { prisma } from '../../_prisma';
 import { getReturn } from '../_list';
@@ -33,7 +34,7 @@ export async function put(request) {
 		status = 200;
 		body = updatedSender;
 	} catch (e) {
-		console.log(e);
+		createAppLogEntry(AppLogStatus.CRITICAL, JSON.stringify(e), permission.userId);
 	}
 
 	return {

@@ -4,8 +4,9 @@
 	import Button, { Label } from '@smui/button';
 	import NewProductSearch from '$lib/components/NewProductSearch.svelte';
 	import { onMount, createEventDispatcher } from 'svelte';
-	import { get, post } from '$lib/api';
+	import { get, post, del } from '$lib/api';
 	import SaveChangesButton from './SaveChangesButton.svelte';
+	import type { ReturnProduct } from '.prisma/client';
 
 	export let returnEntry: any;
 
@@ -30,6 +31,13 @@
 		return addProduct ? true : false;
 	};
 
+	const deleteProduct = async (product: ReturnProduct) => {
+		const deleted = await del('returns/edit/product', product);
+		if (deleted) {
+			dispatch('change');
+		}
+	};
+
 	onMount(async () => {
 		// const dbProducts = await getProducts();
 		const dbProducts = await get('subiekt/products');
@@ -45,7 +53,7 @@
 					<Cell numeric>Ilość</Cell>
 					<Cell>Symbol</Cell>
 					<Cell>Nazwa</Cell>
-					<Cell>Uwagi</Cell>
+					<Cell style="width: 100%">Uwagi</Cell>
 					<Cell />
 				</Row>
 			</Head>
@@ -56,11 +64,15 @@
 						<Cell>{product.symbol}</Cell>
 						<Cell>{product.name}</Cell>
 						<Cell>{product.description}</Cell>
-						<Cell
-							><Button touch color="secondary">
+						<Cell>
+							<Button
+								on:click={() => {
+									deleteProduct(product);
+								}}
+							>
 								<Label>Usuń</Label>
-							</Button></Cell
-						>
+							</Button>
+						</Cell>
 					</Row>
 				{/each}
 			</Body>
