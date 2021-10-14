@@ -8,7 +8,6 @@
 
 	let open = false;
 	let imgOpen = {};
-	let clicked = 'Nothing yet.';
 
 	import AddNewFile from './AddNewFile.svelte';
 	export let returnEntry;
@@ -37,15 +36,10 @@
 
 <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content">
 	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-	<Title id="simple-title">Dialog Title</Title>
+
 	<Content id="simple-content">
 		<img src={imgOpen.imgSrc} />
 	</Content>
-	<Actions>
-		<Button on:click={() => (clicked = 'No')}>
-			<Label>No</Label>
-		</Button>
-	</Actions>
 </Dialog>
 
 <style lang="scss">
