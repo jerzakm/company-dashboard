@@ -18,7 +18,6 @@ export async function post(request) {
 	}
 
 	try {
-		console.log(request.body);
 		const res = await addProduct(request.body, permission.userId, request.body.returnId);
 		if (res) {
 			await createReturnEvent(res.returnId, permission.userId, 'Add', 'Dodano produkt', JSON.stringify(res));

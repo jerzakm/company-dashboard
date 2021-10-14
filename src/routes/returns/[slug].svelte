@@ -45,7 +45,6 @@
 
 	onMount(async () => {
 		await updateReturnEntry();
-		console.log(data);
 	});
 </script>
 

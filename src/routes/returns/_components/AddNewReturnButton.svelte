@@ -16,11 +16,9 @@
 	});
 
 	const addNewReturn = async () => {
-		console.log('adding new return');
 		try {
 			const addedReturn = await post('returns/new', defaultCleanReturnEntry());
 			if (addedReturn.id) {
-				console.log(addedReturn.id);
 				addedId = addedReturn.id;
 				dispatch('newReturnAdded', { id: addedReturn.id });
 				display = true;

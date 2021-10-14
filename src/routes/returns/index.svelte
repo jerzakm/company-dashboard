@@ -41,8 +41,6 @@
 
 	const getList = async () => {
 		const list = await get('returns/list');
-		console.log(list[list.length - 1]);
-		console.log(list[list.length - 1]?.products);
 		return list;
 	};
 

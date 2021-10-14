@@ -29,7 +29,6 @@
 		// const dbProducts = await getProducts();
 		const dbProducts = await get('subiekt/products');
 		if (dbProducts?.data) products = dbProducts.data;
-		console.log(products);
 		filterProducts();
 	});
 
