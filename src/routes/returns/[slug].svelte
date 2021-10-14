@@ -93,13 +93,55 @@
 		</Content>
 	</Paper>
 
-	<!-- Upload image -->
-	<!-- <Paper class="col-span-1" elevation={4}>
+	<Paper class="col-span-1" elevation={4}>
 		<Content class="relative">
-			<span class="text-lg font-bold">Dodaj zdjęcie</span>
-			<AddNewFile returnEntry={data} on:change={() => updateReturnEntry()} />
+			{#if data}
+				<div class="flex flex-col">
+					<span class="text-lg font-bold">Źródło sprzedaży</span>
+				</div>
+			{/if}
 		</Content>
-	</Paper> -->
+	</Paper>
+	<Paper class="col-span-1" elevation={4}>
+		<Content class="relative">
+			{#if data}
+				<div class="flex flex-col">
+					<span class="text-lg font-bold">Powód zwrotu</span>
+				</div>
+			{/if}
+		</Content>
+	</Paper>
+	<Paper class="col-span-4 row-span-2 " elevation={4}>
+		<Content class="relative">
+			{#if data}
+				<div class="flex flex-col">
+					<span class="text-lg font-bold">Notatki</span>
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime eveniet eius cupiditate deleniti iure mollitia laboriosam, maiores
+					inventore. Doloremque beatae in commodi labore maiores ipsam harum eos, sed, molestiae praesentium molestias. Natus itaque aliquid
+					nulla mollitia suscipit. Fugit eaque, tenetur, voluptate facilis, debitis veritatis a non sed dolores alias unde! Nisi nemo quaerat
+					dolorum assumenda et, illo magni amet suscipit.
+				</div>
+			{/if}
+		</Content>
+	</Paper>
+	<Paper class="col-span-1" elevation={4}>
+		<Content class="relative">
+			{#if data}
+				<div class="flex flex-col">
+					<span class="text-lg font-bold">Lokalizacja</span>
+				</div>
+			{/if}
+		</Content>
+	</Paper>
+	<Paper class="col-span-1" elevation={4}>
+		<Content class="relative">
+			{#if data}
+				<div class="flex flex-col">
+					<span class="text-lg font-bold">Status</span>
+				</div>
+			{/if}
+		</Content>
+	</Paper>
 
 	<!-- FILE GALLERY -->
 	<Paper class="col-span-6" elevation={4}>

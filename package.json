@@ -2,7 +2,7 @@
 	"name": "company-dashboard",
 	"version": "0.0.1",
 	"scripts": {
-		"dev:only": "svelte-kit dev",
+		"dev:only": "svelte-kit dev --host",
 		"build:only": "svelte-kit build",
 		"start": "svelte-kit start",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
