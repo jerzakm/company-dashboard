@@ -47,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@lottiefiles/lottie-player": "^1.4.1",
 		"@smui/button": "^4.2.0",
 		"@smui/card": "^4.2.0",
 		"@smui/common": "^4.2.0",
@@ -66,6 +67,7 @@
 		"@smui/top-app-bar": "^4.2.0",
 		"cookie": "^0.4.1",
 		"dayjs": "^1.10.7",
+		"deep-object-diff": "^1.1.0",
 		"dotenv": "^10.0.0",
 		"filepond": "^4.29.1",
 		"filepond-plugin-file-validate-type": "^1.2.6",

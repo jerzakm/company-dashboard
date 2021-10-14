@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { get } from '$lib/api';
+	import { formatListDate } from '$lib/timeUtil';
 
 	import DataTable, { Head, Body, Row, Cell, Pagination } from '@smui/data-table';
 	import IconButton from '@smui/icon-button';
 	import Button, { Label, Icon } from '@smui/button';
 	import { onMount } from 'svelte';
-	import { formatListDate, sortById } from './_listUtil';
+	import { sortById } from './_listUtil';
 	import AscendingIcon from '$lib/components/small/AscendingIcon.svelte';
 	import ReturnStatusBadges from './_components/ReturnStatusBadges.svelte';
 	import AddNewReturnButton from './_components/AddNewReturnButton.svelte';
-	import type { ReturnEntry } from '.prisma/client';
 
 	let filteredList: any[] = [];
 	let returnsList: any[] = [];
@@ -41,20 +41,26 @@
 
 	const getList = async () => {
 		const list = await get('returns/list');
-		console.log(list[list.length - 1]);
-		console.log(list[list.length - 1]?.products);
 		return list;
 	};
 
-	onMount(async () => {
+	const refreshList = async () => {
 		returnsList = await getList();
 		applyFilters();
+	};
+
+	onMount(async () => {
+		await refreshList();
 	});
 </script>
 
 <h1 class="mb-12">Lista zwrotów</h1>
 
-<AddNewReturnButton />
+<AddNewReturnButton
+	on:newReturnAdded={() => {
+		refreshList();
+	}}
+/>
 
 <DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>
@@ -82,7 +88,7 @@
 			{#each slice as entry (entry.id)}
 				<Row>
 					<Cell numeric>
-						<a href={`/returns/entry-${entry.id}`} class="return-link">{entry.id} </a>
+						<a href={`/returns/${entry.id}`} class="return-link">{entry.id} </a>
 					</Cell>
 					<Cell>{formatListDate(entry.created_at)}</Cell>
 					<Cell class="flex flex-col mb-2 overflow-visible">

@@ -1,3 +1,4 @@
+import type { ReturnProduct, ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
@@ -42,7 +43,70 @@ export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) 
 	}
 };
 
-export const changeReturn = () => {};
+export const updateSender = async (data: ReturnSender) => {
+	try {
+		return await prisma.returnSender.update({
+			where: {
+				id: data.id
+			},
+			data
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const addProduct = async (data: ReturnProduct, userId: string, returnId: number) => {
+	try {
+		return await prisma.returnProduct.create({
+			data: {
+				...data
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const delProduct = async (data: ReturnProduct) => {
+	try {
+		return await prisma.returnProduct.delete({
+			where: {
+				id: data.id
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const createReturnEvent = async (returnId, userId, type, description, diff = '') => {
+	try {
+		return await prisma.returnEvent.create({
+			data: {
+				returnEntry: {
+					connect: {
+						id: returnId
+					}
+				},
+				user: {
+					connect: {
+						id: userId
+					}
+				},
+				type,
+				description,
+				diff
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
 
 export interface IReturnEntryBasic {
 	city: string;

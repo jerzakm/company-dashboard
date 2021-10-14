@@ -1,5 +1,5 @@
 import { ApiPermission, tokenHasPermission } from '../_authUtil';
-import { getReturnsList } from './_list';
+import { getReturn, getReturnsList } from './_list';
 
 export async function get(request) {
 	let status = 400;
@@ -13,9 +13,20 @@ export async function get(request) {
 	}
 
 	try {
-		const res = await getReturnsList();
-		body = res;
-		status = 200;
+		const searchParams = request.query;
+
+		// get one return if query ?id=xxxx
+		if (searchParams.has('id')) {
+			const res = await getReturn(searchParams.get('id'));
+			body = res;
+			status = 200;
+		}
+		// get entire list
+		else {
+			const res = await getReturnsList();
+			body = res;
+			status = 200;
+		}
 	} catch (e) {}
 
 	return {

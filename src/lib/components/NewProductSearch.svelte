@@ -1,24 +1,15 @@
 <script lang="ts">
 	import { getProducts } from '$lib/products';
-	import MenuSurface from '@smui/menu-surface';
 	import Textfield from '@smui/textfield';
 	import HelperText from '@smui/textfield/helper-text/index';
 
-	let productSearchString = '';
-
-	// ReturnProduct
-	// id          String @id @default(cuid())
-	// name        String
-	// symbol      String
-	// price       Decimal
-	// quantity    Int
-	// group       String
-	// description String
-
 	import Button, { Label } from '@smui/button';
-	import { onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 
 	import VirtualList from 'svelte-tiny-virtual-list';
+	import { get } from '$lib/api';
+
+	let productSearchString = '';
 
 	let products = [];
 	let filteredProducts = [];
@@ -35,8 +26,9 @@
 	let focused = false;
 
 	onMount(async () => {
-		const dbProducts = await getProducts();
-		if (dbProducts) products = dbProducts;
+		// const dbProducts = await getProducts();
+		const dbProducts = await get('subiekt/products');
+		if (dbProducts?.data) products = dbProducts.data;
 		filterProducts();
 	});
 
@@ -49,8 +41,7 @@
 	}
 
 	function filterProducts() {
-		console.log('filtering');
-		filteredProducts = products.filter((p) => {
+		filteredProducts = products?.filter((p) => {
 			return (
 				p.symbol.toLowerCase().includes(productSearchString.toLowerCase()) ||
 				p.name.toLowerCase().includes(productSearchString.toLowerCase())
@@ -69,7 +60,11 @@
 			label="Wyszukaj"
 			on:input={() => filterProducts()}
 			style="width:100%;"
-			on:focus={() => (focused = true)}
+			on:focus={() => {
+				focused = true;
+				productSearchString = '';
+				filterProducts();
+			}}
 		>
 			<!-- on:blur={() => setTimeout(() => (focused = false), 200)} -->
 			<HelperText slot="helper">Wybierz produkt</HelperText>
@@ -79,10 +74,12 @@
 				<VirtualList width="100%" height={250} itemCount={filteredProducts.length} itemSize={33}>
 					<div slot="item" let:index let:style {style}>
 						<Button
+							style="font-size: 0.75rem;"
 							on:click={() => {
 								focused = true;
 								productSearchString = `[${filteredProducts[index].symbol}] ${filteredProducts[index].name}`;
 								assignProduct(filteredProducts[index]);
+								focused = false;
 							}}>[{filteredProducts[index].symbol}] {filteredProducts[index].name}</Button
 						>
 					</div>
@@ -92,13 +89,11 @@
 	</div>
 </div>
 <div class="desc-container">
+	<span><b>Wybrano</b> [{product.symbol}] {product.name}</span>
 	<Textfield bind:value={product.description} label="Opis / Uwagi" style="width:100%" textarea />
 </div>
 
 <style>
-	.product-qty {
-		/* width: 3rem; */
-	}
 	.add-product-container {
 		margin: 1rem;
 		display: grid;

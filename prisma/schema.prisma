@@ -67,7 +67,8 @@ model ReturnEvent{
   type        String
   description String
   created_at  DateTime @default(now())
-  userId      String
+  userId      String  
+  diff        String?
   user        User @relation(fields: [userId], references: [id])
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])

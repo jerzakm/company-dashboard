@@ -22,6 +22,7 @@
 
 	onMount(async () => {
 		mounted = true;
+		const lottie = await import('@lottiefiles/lottie-player');
 		const verified = await checkStoredLogin();
 		if (!verified) goto('/login');
 	});

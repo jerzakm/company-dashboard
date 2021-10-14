@@ -1,3 +1,4 @@
+import type { ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const getReturnsList = async () => {
@@ -5,6 +6,37 @@ export const getReturnsList = async () => {
 		return await prisma.returnEntry.findMany({
 			include: {
 				events: true,
+				images: true,
+				location: true,
+				notes: true,
+				products: true,
+				returnReason: true,
+				sender: true
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const getReturn = async (id: string) => {
+	try {
+		return await prisma.returnEntry.findUnique({
+			where: {
+				id: parseInt(id)
+			},
+			include: {
+				events: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								name: true
+							}
+						}
+					}
+				},
 				images: true,
 				location: true,
 				notes: true,

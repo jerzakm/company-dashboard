@@ -27,11 +27,32 @@
         max-width: 1536px
     }
 }
+.pointer-events-none {
+    pointer-events: none
+}
+.visible {
+    visibility: visible
+}
 .static {
     position: static
 }
 .fixed {
     position: fixed
+}
+.relative {
+    position: relative
+}
+.z-50 {
+    z-index: 50
+}
+.col-span-2 {
+    grid-column: span 2 / span 2
+}
+.col-span-4 {
+    grid-column: span 4 / span 4
+}
+.col-span-6 {
+    grid-column: span 6 / span 6
 }
 .mb-12 {
     margin-bottom: 3rem
@@ -39,8 +60,26 @@
 .mb-2 {
     margin-bottom: 0.5rem
 }
+.mb-4 {
+    margin-bottom: 1rem
+}
+.mb-10 {
+    margin-bottom: 2.5rem
+}
+.block {
+    display: block
+}
 .flex {
     display: flex
+}
+.grid {
+    display: grid
+}
+.hidden {
+    display: none
+}
+.h-full {
+    height: 100%
 }
 .w-full {
     width: 100%
@@ -57,6 +96,50 @@
 .border {
     border-width: 1px
 }
+.pb-10 {
+    padding-bottom: 2.5rem
+}
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem
+}
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem
+}
+.text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem
+}
+.font-bold {
+    font-weight: 700
+}
+.opacity-100 {
+    opacity: 1
+}
+.opacity-0 {
+    opacity: 0
+}
+.blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-filter)
+}
 .filter {
     filter: var(--tw-filter)
+}
+.backdrop-filter {
+    -webkit-backdrop-filter: var(--tw-backdrop-filter);
+            backdrop-filter: var(--tw-backdrop-filter)
+}
+.transition {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms
+}
+@media (min-width: 1024px) {
+    .lg\:flex-row {
+        flex-direction: row
+    }
 }

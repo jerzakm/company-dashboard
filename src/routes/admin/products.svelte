@@ -5,9 +5,7 @@
 
 	const updateProducts = async () => {
 		const products = await get('subiekt/products');
-		console.log(products);
 		const productsU = await post('subiekt/products', {});
-		console.log(productsU);
 	};
 </script>
 
