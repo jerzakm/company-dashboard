@@ -40,6 +40,7 @@ model ReturnEntry {
   created_at      DateTime @default(now())
   isBusiness      Boolean?
   saleDocument    String?
+  saleSource      SaleSource[]
   resolved        Boolean
   sender          ReturnSender?
   events          ReturnEvent[]
@@ -47,7 +48,7 @@ model ReturnEntry {
   location        ReturnLocation[]
   products        ReturnProduct[]
   images          ReturnImage[]
-  returnReason    ReturnReason[]
+  returnReason    ReturnReason[]  
 }
 
 model ReturnSender {
@@ -124,6 +125,12 @@ model ReturnReason{
   id          String @id @default(cuid())
   reason      String
   description String  
+  returnEntry ReturnEntry[]
+}
+
+model SaleSource{
+  id          String @id @default(cuid())
+  name        String
   returnEntry ReturnEntry[]
 }
 
