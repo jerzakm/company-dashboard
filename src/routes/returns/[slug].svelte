@@ -22,6 +22,7 @@
 	import ReturnEventsTable from './_components/ReturnEventsTable.svelte';
 	import ReturnProductsTable from './_components/ReturnProductsTable.svelte';
 	import AddNewFile from './_components/AddNewFile.svelte';
+	import ReturnNotes from './_components/ReturnNotes.svelte';
 
 	export let returnId;
 	let data;
@@ -115,11 +116,7 @@
 		<Content class="relative">
 			{#if data}
 				<div class="flex flex-col">
-					<span class="text-lg font-bold">Notatki</span>
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime eveniet eius cupiditate deleniti iure mollitia laboriosam, maiores
-					inventore. Doloremque beatae in commodi labore maiores ipsam harum eos, sed, molestiae praesentium molestias. Natus itaque aliquid
-					nulla mollitia suscipit. Fugit eaque, tenetur, voluptate facilis, debitis veritatis a non sed dolores alias unde! Nisi nemo quaerat
-					dolorum assumenda et, illo magni amet suscipit.
+					<ReturnNotes returnEntry={data} on:change={() => updateReturnEntry()} />
 				</div>
 			{/if}
 		</Content>

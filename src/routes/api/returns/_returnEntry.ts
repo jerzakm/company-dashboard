@@ -2,7 +2,7 @@ import type { ReturnProduct, ReturnSender } from '@prisma/client';
 import { prisma } from '../_prisma';
 
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
-	const { city, country, name, postCode, phone, street, products, notes } = returnEntry;
+	const { city, country, name, postCode, phone, street, products } = returnEntry;
 
 	try {
 		return await prisma.returnEntry.create({
@@ -23,8 +23,8 @@ export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) 
 				},
 				notes: {
 					create: {
-						content: notes,
-						type: 'Return created - notes',
+						content: 'Zwrot utworzony',
+						type: 'Return created note',
 						userId
 					}
 				},
@@ -91,6 +91,22 @@ export const addImage = async (imgSrc: string, userId, returnId) => {
 				description: '',
 				userId,
 				returnId
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
+export const addNote = async (content: string, userId, returnId) => {
+	try {
+		return await prisma.returnNote.create({
+			data: {
+				content,
+				type: 'Return note',
+				returnId,
+				userId
 			}
 		});
 	} catch (e) {

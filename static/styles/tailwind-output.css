@@ -44,6 +44,9 @@
 .mb-10 {
     margin-bottom: 2.5rem
 }
+.-mt-2 {
+    margin-top: -0.5rem
+}
 .block {
     display: block
 }
@@ -68,6 +71,12 @@
 .flex-col {
     flex-direction: column
 }
+.content-between {
+    align-content: space-between
+}
+.justify-between {
+    justify-content: space-between
+}
 .overflow-visible {
     overflow: visible
 }
@@ -77,12 +86,26 @@
 .pb-10 {
     padding-bottom: 2.5rem
 }
+.text-right {
+    text-align: right
+}
 .text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem
 }
 .font-bold {
     font-weight: 700
+}
+.italic {
+    font-style: italic
+}
+.text-yellow-500 {
+    --tw-text-opacity: 1;
+    color: rgba(245, 158, 11, var(--tw-text-opacity))
+}
+.text-gray-700 {
+    --tw-text-opacity: 1;
+    color: rgba(55, 65, 81, var(--tw-text-opacity))
 }
 .opacity-100 {
     opacity: 1

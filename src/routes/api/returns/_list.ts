@@ -39,7 +39,16 @@ export const getReturn = async (id: string) => {
 				},
 				images: true,
 				location: true,
-				notes: true,
+				notes: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								name: true
+							}
+						}
+					}
+				},
 				products: true,
 				returnReason: true,
 				sender: true
