@@ -76,6 +76,7 @@
 		"filepond-plugin-image-preview": "^4.6.10",
 		"knex": "^0.95.6",
 		"svelte-filepond": "^0.2.0",
+		"svelte-markdown": "^0.1.12",
 		"svelte-tiny-virtual-list": "^1.1.6",
 		"tedious": "^11.0.9"
 	}
