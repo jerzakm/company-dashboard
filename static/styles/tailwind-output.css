@@ -11,6 +11,9 @@
 .fixed {
     position: fixed
 }
+.absolute {
+    position: absolute
+}
 .relative {
     position: relative
 }
@@ -56,14 +59,32 @@
 .h-full {
     height: 100%
 }
+.h-8 {
+    height: 2rem
+}
+.h-32 {
+    height: 8rem
+}
 .w-full {
     width: 100%
 }
 .flex-grow {
     flex-grow: 1
 }
+.transform {
+    transform: var(--tw-transform)
+}
 .flex-col {
     flex-direction: column
+}
+.content-center {
+    align-content: center
+}
+.items-center {
+    align-items: center
+}
+.justify-center {
+    justify-content: center
 }
 .justify-between {
     justify-content: space-between
@@ -73,6 +94,9 @@
 }
 .gap-2 {
     gap: 0.5rem
+}
+.overflow-hidden {
+    overflow: hidden
 }
 .overflow-visible {
     overflow: visible
