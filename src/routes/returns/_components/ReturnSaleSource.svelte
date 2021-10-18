@@ -8,7 +8,6 @@
 
 	let surface;
 	let value;
-	let visible = true;
 	let dictionary;
 
 	const dispatch = createEventDispatcher();
@@ -17,15 +16,11 @@
 
 	const getDictionary = async () => {
 		dictionary = await get('returns/dictionary');
-		console.log(dictionary);
 	};
-
-	$: console.log(value);
 
 	const setSaleSource = async () => {
 		const res = await post('returns/edit/saleSource', { saleSource: value, returnId: returnEntry.id });
 		dispatch('change');
-
 		return res ? true : false;
 	};
 
