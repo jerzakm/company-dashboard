@@ -51,7 +51,8 @@ export const getReturn = async (id: string) => {
 				},
 				products: true,
 				returnReason: true,
-				sender: true
+				sender: true,
+				saleSource: true
 			}
 		});
 	} catch (e) {

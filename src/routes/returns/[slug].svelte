@@ -23,6 +23,7 @@
 	import ReturnProductsTable from './_components/ReturnProductsTable.svelte';
 	import AddNewFile from './_components/AddNewFile.svelte';
 	import ReturnNotes from './_components/ReturnNotes.svelte';
+	import ReturnSaleSource from './_components/ReturnSaleSource.svelte';
 
 	export let returnId;
 	let data;
@@ -94,61 +95,66 @@
 		</Content>
 	</Paper>
 
-	<Paper class="col-span-1" elevation={4}>
-		<Content class="relative">
-			{#if data}
-				<div class="flex flex-col">
-					<span class="text-lg font-bold">Źródło sprzedaży</span>
-				</div>
-			{/if}
-		</Content>
-	</Paper>
-	<Paper class="col-span-1" elevation={4}>
-		<Content class="relative">
-			{#if data}
-				<div class="flex flex-col">
-					<span class="text-lg font-bold">Powód zwrotu</span>
-				</div>
-			{/if}
-		</Content>
-	</Paper>
-	<Paper class="col-span-4 row-span-2 " elevation={4}>
-		<Content class="relative">
-			{#if data}
-				<div class="flex flex-col">
-					<ReturnNotes returnEntry={data} on:change={() => updateReturnEntry()} />
-				</div>
-			{/if}
-		</Content>
-	</Paper>
-	<Paper class="col-span-1" elevation={4}>
-		<Content class="relative">
-			{#if data}
-				<div class="flex flex-col">
-					<span class="text-lg font-bold">Lokalizacja</span>
-				</div>
-			{/if}
-		</Content>
-	</Paper>
-	<Paper class="col-span-1" elevation={4}>
-		<Content class="relative">
-			{#if data}
-				<div class="flex flex-col">
-					<span class="text-lg font-bold">Status</span>
-				</div>
-			{/if}
-		</Content>
-	</Paper>
+	<div class="flex flex-col gap-10 col-span-2">
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold">Źródło sprzedaży</span>
+						<ReturnSaleSource returnEntry={data} on:change={() => updateReturnEntry()} />
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold">Powód zwrotu</span>
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold">Lokalizacja</span>
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold">Status</span>
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+	</div>
 
-	<!-- FILE GALLERY -->
-	<Paper class="col-span-6" elevation={4}>
-		<Content class="relative">
-			<span class="text-lg font-bold">Galeria</span>
-			{#if data}
-				<ReturnImageGallery returnEntry={data} on:change={() => updateReturnEntry()} />
-			{/if}
-		</Content>
-	</Paper>
+	<div class="col-span-4 flex flex-col gap-10">
+		<Paper class="col-span-4 " elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<ReturnNotes returnEntry={data} on:change={() => updateReturnEntry()} />
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+		<!-- FILE GALLERY -->
+		<Paper class="col-span-4" elevation={4}>
+			<Content class="relative">
+				<span class="text-lg font-bold">Galeria</span>
+				{#if data}
+					<ReturnImageGallery returnEntry={data} on:change={() => updateReturnEntry()} />
+				{/if}
+			</Content>
+		</Paper>
+	</div>
 
 	<!-- EVENTS HISTORY -->
 	<Paper class="col-span-6" elevation={4}>

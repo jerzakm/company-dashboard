@@ -23,14 +23,8 @@
 .col-span-4 {
     grid-column: span 4 / span 4
 }
-.col-span-1 {
-    grid-column: span 1 / span 1
-}
 .col-span-6 {
     grid-column: span 6 / span 6
-}
-.row-span-2 {
-    grid-row: span 2 / span 2
 }
 .mb-12 {
     margin-bottom: 3rem
@@ -38,14 +32,14 @@
 .mb-2 {
     margin-bottom: 0.5rem
 }
+.-mt-2 {
+    margin-top: -0.5rem
+}
 .mb-4 {
     margin-bottom: 1rem
 }
 .mb-10 {
     margin-bottom: 2.5rem
-}
-.-mt-2 {
-    margin-top: -0.5rem
 }
 .block {
     display: block
@@ -71,17 +65,23 @@
 .flex-col {
     flex-direction: column
 }
-.content-between {
-    align-content: space-between
-}
 .justify-between {
     justify-content: space-between
+}
+.gap-10 {
+    gap: 2.5rem
+}
+.gap-2 {
+    gap: 0.5rem
 }
 .overflow-visible {
     overflow: visible
 }
 .border {
     border-width: 1px
+}
+.p-4 {
+    padding: 1rem
 }
 .pb-10 {
     padding-bottom: 2.5rem
@@ -98,10 +98,6 @@
 }
 .italic {
     font-style: italic
-}
-.text-yellow-500 {
-    --tw-text-opacity: 1;
-    color: rgba(245, 158, 11, var(--tw-text-opacity))
 }
 .text-gray-700 {
     --tw-text-opacity: 1;

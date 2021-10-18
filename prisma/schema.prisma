@@ -40,7 +40,8 @@ model ReturnEntry {
   created_at      DateTime @default(now())
   isBusiness      Boolean?
   saleDocument    String?
-  saleSource      SaleSource[]
+  saleSource      SaleSource? @relation(fields: [saleSourceId], references: [id])
+  saleSourceId    String?
   resolved        Boolean
   sender          ReturnSender?
   events          ReturnEvent[]
@@ -131,6 +132,7 @@ model ReturnReason{
 model SaleSource{
   id          String @id @default(cuid())
   name        String
+  subCategory String?
   returnEntry ReturnEntry[]
 }
 
