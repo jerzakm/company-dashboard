@@ -140,6 +140,27 @@ export const createReturnEvent = async (returnId, userId, type, description, dif
 	}
 };
 
+export const updateSaleSource = async (data) => {
+	console.log(data);
+	try {
+		return await prisma.returnEntry.update({
+			where: {
+				id: data.returnId
+			},
+			data: {
+				saleSource: {
+					connect: {
+						id: data.saleSource.id
+					}
+				}
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export interface IReturnEntryBasic {
 	city: string;
 	country: string;
