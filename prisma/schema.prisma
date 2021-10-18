@@ -45,8 +45,7 @@ model ReturnEntry {
   resolved        Boolean
   sender          ReturnSender?
   events          ReturnEvent[]
-  notes           ReturnNote[]
-  location        ReturnLocation[]
+  notes           ReturnNote[]  
   products        ReturnProduct[]
   images          ReturnImage[]
   returnReason    ReturnReason[]  
@@ -60,7 +59,7 @@ model ReturnSender {
   street          String
   city            String
   country         String
-  return          ReturnEntry   @relation(fields: [returnId], references: [id])
+  return          ReturnEntry @relation(fields: [returnId], references: [id])
   returnId        Int
 }
 
@@ -87,16 +86,23 @@ model ReturnNote{
   returnEntry     ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnLocation{
+model PhysicalLocation {
   id          String @id @default(cuid())
-  location    String
-  subLocation String
+  name        String
+  subName     String
+  products    ReturnLocation[]	
+}
+
+model ReturnLocation{
+  id          String @id @default(cuid())  
   description String
   created_at  DateTime @default(now())
   userId      String
   user        User @relation(fields: [userId], references: [id])
-  returnId    Int
-  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+  product     ReturnProduct @relation(fields: [productId], references: [id])
+  productId   String
+  locationInfo    PhysicalLocation @relation(fields: [locationId], references: [id])
+  locationId  String
 }
 
 model ReturnProduct{
@@ -106,9 +112,10 @@ model ReturnProduct{
   price       Decimal
   quantity    Int
   group       String
-  description String
+  description String  
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+  location    ReturnLocation?  
 }
 
 model ReturnImage{
