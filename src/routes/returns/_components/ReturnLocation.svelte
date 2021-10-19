@@ -2,21 +2,35 @@
 	import Dialog, { Title, Content } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text } from '@smui/list';
-	import { onMount } from 'svelte';
-	import { get } from '$lib/api';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { get, post } from '$lib/api';
 
 	let open = false;
-	let clicked = 'Nothing yet.';
 
 	let locations;
 
-	let lottieSuccess;
+	let lottieWarning;
 
 	export let product;
+
+	const dispatch = createEventDispatcher();
 
 	const getLocations = async () => {
 		locations = await get('returns/locations');
 		console.log(locations);
+	};
+
+	const setProductLocation = async (location) => {
+		const request = {
+			id: product.id,
+			locationId: location.id
+		};
+
+		const productLoc = await post('returns/edit/productLocation', request);
+
+		if (productLoc) {
+			dispatch('change');
+		}
 	};
 
 	onMount(() => {
@@ -33,7 +47,8 @@
 				{#each locations as location}
 					<Item
 						on:click={() => {
-							clicked = item;
+							// clicked = item;
+							setProductLocation(location);
 							open = false;
 						}}
 					>
@@ -47,14 +62,16 @@
 
 <div class="flex items-center">
 	<Button on:click={() => (open = true)}>
-		<Label>{product.location ? 'lok' : 'BRAK!'}</Label>
+		<Label>{product.location ? `${product.location.locationInfo.name} ${product.location.locationInfo.subName}` : 'BRAK!'}</Label>
 	</Button>
-	<lottie-player
-		bind:this={lottieSuccess}
-		mode="normal"
-		src="/lottie/warningAnim.json"
-		autoplay
-		loop
-		style="width: 48px; margin: -1.5rem; transform: translateX(10px); margin-right: 5px;"
-	/>
+	{#if !product.location}
+		<lottie-player
+			bind:this={lottieWarning}
+			mode="normal"
+			src="/lottie/warningAnim.json"
+			autoplay
+			loop
+			style="width: 48px; margin: -1.5rem; transform: translateX(10px); margin-right: 5px;"
+		/>
+	{/if}
 </div>

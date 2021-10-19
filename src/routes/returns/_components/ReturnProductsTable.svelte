@@ -61,7 +61,14 @@
 					<Row>
 						<Cell numeric>{product.quantity}</Cell>
 						<Cell class="flex flex-col justify-center"><span class="font-bold">{product.symbol}</span><span>{product.name}</span></Cell>
-						<Cell><ReturnLocation {product} /></Cell>
+						<Cell
+							><ReturnLocation
+								{product}
+								on:change={() => {
+									dispatch('change');
+								}}
+							/></Cell
+						>
 						<Cell>{product.description}</Cell>
 						<Cell>
 							<Button

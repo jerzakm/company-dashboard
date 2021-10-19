@@ -99,7 +99,7 @@ model ReturnLocation{
   created_at  DateTime @default(now())
   userId      String
   user        User @relation(fields: [userId], references: [id])
-  product     ReturnProduct @relation(fields: [productId], references: [id])
+  product     ReturnProduct? @relation(fields: [productId], references: [id])
   productId   String
   locationInfo    PhysicalLocation @relation(fields: [locationId], references: [id])
   locationId  String
