@@ -32,7 +32,6 @@
 	const updateReturnEntry = async () => {
 		data = await get(`returns/list?id=${returnId}`);
 		originalData = JSON.parse(JSON.stringify(data));
-		console.log(data);
 	};
 
 	const saveSenderChanges = async () => {

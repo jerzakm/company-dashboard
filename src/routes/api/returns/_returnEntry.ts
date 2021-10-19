@@ -72,9 +72,17 @@ export const addProduct = async (data: ReturnProduct, userId: string, returnId: 
 
 export const delProduct = async (data: ReturnProduct) => {
 	try {
+		await prisma.returnProduct.update({
+			where: { id: data.id },
+			data: { location: { delete: true } }
+		});
+
 		return await prisma.returnProduct.delete({
 			where: {
 				id: data.id
+			},
+			include: {
+				location: true
 			}
 		});
 	} catch (e) {
