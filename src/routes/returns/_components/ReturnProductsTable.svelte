@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
@@ -6,9 +6,9 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { get, post, del } from '$lib/api';
 	import SaveChangesButton from './SaveChangesButton.svelte';
-	import type { ReturnProduct } from '.prisma/client';
+	import ReturnLocation from './ReturnLocation.svelte';
 
-	export let returnEntry: any;
+	export let returnEntry;
 
 	let openAddProduct = false;
 	let product;
@@ -31,7 +31,7 @@
 		return addProduct ? true : false;
 	};
 
-	const deleteProduct = async (product: ReturnProduct) => {
+	const deleteProduct = async (product) => {
 		const deleted = await del('returns/edit/product', product);
 		if (deleted) {
 			dispatch('change');
@@ -39,7 +39,6 @@
 	};
 
 	onMount(async () => {
-		// const dbProducts = await getProducts();
 		const dbProducts = await get('subiekt/products');
 		if (dbProducts?.data) productList = dbProducts.data;
 	});
@@ -51,8 +50,8 @@
 			<Head>
 				<Row>
 					<Cell numeric>Ilość</Cell>
-					<Cell>Symbol</Cell>
 					<Cell>Nazwa</Cell>
+					<Cell>Lokalizacja</Cell>
 					<Cell style="width: 100%">Uwagi</Cell>
 					<Cell />
 				</Row>
@@ -61,8 +60,15 @@
 				{#each returnEntry.products as product, i}
 					<Row>
 						<Cell numeric>{product.quantity}</Cell>
-						<Cell>{product.symbol}</Cell>
-						<Cell>{product.name}</Cell>
+						<Cell class="flex flex-col justify-center"><span class="font-bold">{product.symbol}</span><span>{product.name}</span></Cell>
+						<Cell
+							><ReturnLocation
+								{product}
+								on:change={() => {
+									dispatch('change');
+								}}
+							/></Cell
+						>
 						<Cell>{product.description}</Cell>
 						<Cell>
 							<Button

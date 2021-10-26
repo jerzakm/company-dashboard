@@ -37,17 +37,16 @@ model Permissions {
 }
 
 model ReturnEntry {
-  id           Int              @id @default(autoincrement())
-  created_at   DateTime         @default(now())
+  id           Int             @id @default(autoincrement())
+  created_at   DateTime        @default(now())
   isBusiness   Boolean?
   saleDocument String?
-  saleSource   SaleSource?      @relation(fields: [saleSourceId], references: [id])
+  saleSource   SaleSource?     @relation(fields: [saleSourceId], references: [id])
   saleSourceId String?
   resolved     Boolean
   sender       ReturnSender?
   events       ReturnEvent[]
   notes        ReturnNote[]
-  location     ReturnLocation[]
   products     ReturnProduct[]
   images       ReturnImage[]
   returnReason ReturnReason[]
@@ -88,20 +87,27 @@ model ReturnNote {
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
+model PhysicalLocation {
+  id       String           @id @default(cuid())
+  name     String
+  subName  String
+  products ReturnLocation[]
+}
+
 model ReturnLocation {
-  id          String      @id @default(cuid())
-  location    String
-  subLocation String
-  description String
-  created_at  DateTime    @default(now())
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  returnId    Int
-  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+  id           String           @id @default(cuid())
+  description  String
+  created_at   DateTime         @default(now())
+  userId       String
+  user         User             @relation(fields: [userId], references: [id])
+  product      ReturnProduct?   @relation(fields: [productId], references: [id])
+  productId    String           @unique
+  locationInfo PhysicalLocation @relation(fields: [locationId], references: [id])
+  locationId   String
 }
 
 model ReturnProduct {
-  id          String      @id @default(cuid())
+  id          String          @id @default(cuid())
   name        String
   symbol      String
   price       Decimal
@@ -109,7 +115,8 @@ model ReturnProduct {
   group       String
   description String
   returnId    Int
-  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
+  returnEntry ReturnEntry     @relation(fields: [returnId], references: [id])
+  location    ReturnLocation?
 }
 
 model ReturnImage {

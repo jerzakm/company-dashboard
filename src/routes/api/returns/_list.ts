@@ -7,7 +7,6 @@ export const getReturnsList = async () => {
 			include: {
 				events: true,
 				images: true,
-				location: true,
 				notes: true,
 				products: true,
 				returnReason: true,
@@ -38,7 +37,6 @@ export const getReturn = async (id: string) => {
 					}
 				},
 				images: true,
-				location: true,
 				notes: {
 					include: {
 						user: {
@@ -49,7 +47,17 @@ export const getReturn = async (id: string) => {
 						}
 					}
 				},
-				products: true,
+				products: {
+					include: {
+						location: {
+							include: {
+								locationInfo: true,
+								product: true,
+								user: true
+							}
+						}
+					}
+				},
 				returnReason: true,
 				sender: true,
 				saleSource: true
