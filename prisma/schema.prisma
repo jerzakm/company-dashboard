@@ -11,20 +11,20 @@ generator client {
 }
 
 model User {
-  id              String @id @default(cuid())
-  login           String @unique
+  id              String           @id @default(cuid())
+  login           String           @unique
   name            String
   password        String
   email           String?
   phone           String?
   permissions     Permissions[]
-  created_at      DateTime @default(now())
+  created_at      DateTime         @default(now())
   returnEvents    ReturnEvent[]
   returnNotes     ReturnNote[]
   returnLocations ReturnLocation[]
   returnImages    ReturnImage[]
   applicationLogs ApplicationLog[]
-  active          Boolean @default(false)
+  active          Boolean          @default(false)
 }
 
 model Permissions {
@@ -32,75 +32,76 @@ model Permissions {
   name        String
   description String
   users       User[]
-	@@map("Role")
+
+  @@map("Role")
 }
 
 model ReturnEntry {
-  id      Int      @id @default(autoincrement())
-  created_at      DateTime @default(now())
-  isBusiness      Boolean?
-  saleDocument    String?
-  saleSource      SaleSource? @relation(fields: [saleSourceId], references: [id])
-  saleSourceId    String?
-  resolved        Boolean
-  sender          ReturnSender?
-  events          ReturnEvent[]
-  notes           ReturnNote[]
-  location        ReturnLocation[]
-  products        ReturnProduct[]
-  images          ReturnImage[]
-  returnReason    ReturnReason[]  
+  id           Int              @id @default(autoincrement())
+  created_at   DateTime         @default(now())
+  isBusiness   Boolean?
+  saleDocument String?
+  saleSource   SaleSource?      @relation(fields: [saleSourceId], references: [id])
+  saleSourceId String?
+  resolved     Boolean
+  sender       ReturnSender?
+  events       ReturnEvent[]
+  notes        ReturnNote[]
+  location     ReturnLocation[]
+  products     ReturnProduct[]
+  images       ReturnImage[]
+  returnReason ReturnReason[]
 }
 
 model ReturnSender {
-  id              String @id @default(cuid())
-  name            String
-  phone           String
-  postCode        String  
-  street          String
-  city            String
-  country         String
-  return          ReturnEntry   @relation(fields: [returnId], references: [id])
-  returnId        Int
+  id       String      @id @default(cuid())
+  name     String
+  phone    String
+  postCode String
+  street   String
+  city     String
+  country  String
+  return   ReturnEntry @relation(fields: [returnId], references: [id])
+  returnId Int         @unique
 }
 
-model ReturnEvent{
-  id          String @id @default(cuid())
+model ReturnEvent {
+  id          String      @id @default(cuid())
   type        String
   description String
-  created_at  DateTime @default(now())
-  userId      String  
+  created_at  DateTime    @default(now())
+  userId      String
   diff        String?
-  user        User @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnNote{
-  id              String @id @default(cuid())
-  type            String
-  content         String
-  created_at      DateTime @default(now())
-  userId          String
-  user            User @relation(fields: [userId], references: [id])
-  returnId        Int
-  returnEntry     ReturnEntry @relation(fields: [returnId], references: [id])
+model ReturnNote {
+  id          String      @id @default(cuid())
+  type        String
+  content     String
+  created_at  DateTime    @default(now())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  returnId    Int
+  returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnLocation{
-  id          String @id @default(cuid())
+model ReturnLocation {
+  id          String      @id @default(cuid())
   location    String
   subLocation String
   description String
-  created_at  DateTime @default(now())
+  created_at  DateTime    @default(now())
   userId      String
-  user        User @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnProduct{
-  id          String @id @default(cuid())
+model ReturnProduct {
+  id          String      @id @default(cuid())
   name        String
   symbol      String
   price       Decimal
@@ -111,48 +112,48 @@ model ReturnProduct{
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnImage{
-  id              String @id @default(cuid())
-  imgSrc          String
-  description     String
-  created_at      DateTime @default(now())
-  userId          String
-  user            User @relation(fields: [userId], references: [id])
+model ReturnImage {
+  id          String      @id @default(cuid())
+  imgSrc      String
+  description String
+  created_at  DateTime    @default(now())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
 }
 
-model ReturnReason{
-  id          String @id @default(cuid())
+model ReturnReason {
+  id          String        @id @default(cuid())
   reason      String
-  description String  
+  description String
   returnEntry ReturnEntry[]
 }
 
-model SaleSource{
-  id          String @id @default(cuid())
+model SaleSource {
+  id          String        @id @default(cuid())
   name        String
   subCategory String?
   returnEntry ReturnEntry[]
 }
 
 model ApplicationLog {
-  id String @id @default(cuid())
+  id          String   @id @default(cuid())
   created_at  DateTime @default(now())
-  status String
+  status      String
   description String
-  userId          String
-  user            User @relation(fields: [userId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Product {
-  id String @id @default(cuid())
+  id        String  @id @default(cuid())
   subiektId Decimal @unique
-  symbol String
-  name String
-  isSet Boolean
-  volume Decimal
-  weight Decimal
-  buyPrice Decimal
-  group String
+  symbol    String
+  name      String
+  isSet     Boolean
+  volume    Decimal
+  weight    Decimal
+  buyPrice  Decimal
+  group     String
 }

@@ -16,6 +16,7 @@
 
 	const getDictionary = async () => {
 		dictionary = await get('returns/dictionary');
+		console.log(dictionary);
 	};
 
 	const setSaleSource = async () => {

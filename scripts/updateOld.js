@@ -10,11 +10,11 @@ async function start() {
 	const file = fs.readFileSync('oldData.json');
 	const data = JSON.parse(file);
 
-	await deleteAll();
+	// await deleteAll();
 
 	for (let i = 0; i < data.length; i++) {
-		// await upsertEntry(data[i]);
-		// await updateProducts(data[i]);
+		await upsertEntry(data[i]);
+		await updateProducts(data[i]);
 	}
 }
 
