@@ -1,6 +1,6 @@
 import { ApiPermission, tokenHasPermission } from '../_authUtil';
-import { getReturn, getReturnsList } from './_list';
-import { getSaleSources } from './_util';
+
+import { getReturnReasons, getSaleSources } from './_util';
 
 export async function get(request) {
 	let status = 400;
@@ -15,9 +15,12 @@ export async function get(request) {
 
 	try {
 		const saleSources = await getSaleSources();
-		body = { saleSources };
+		const returnReasons = await getReturnReasons();
+		body = { saleSources, returnReasons };
 		status = 200;
-	} catch (e) {}
+	} catch (e) {
+		status = 500;
+	}
 
 	return {
 		status,
