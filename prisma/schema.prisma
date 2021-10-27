@@ -133,6 +133,7 @@ model ReturnImage {
 model ReturnReason {
   id          String        @id @default(cuid())
   reason      String
+  category    String
   description String
   returnEntry ReturnEntry[]
 }
