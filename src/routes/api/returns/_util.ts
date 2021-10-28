@@ -8,3 +8,12 @@ export const getSaleSources = async () => {
 		return null;
 	}
 };
+
+export const getReturnReasons = async () => {
+	try {
+		return await prisma.returnReason.findMany({});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};

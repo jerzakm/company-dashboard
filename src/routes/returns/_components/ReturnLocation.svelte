@@ -17,7 +17,6 @@
 
 	const getLocations = async () => {
 		locations = await get('returns/locations');
-		console.log(locations);
 	};
 
 	const setProductLocation = async (location) => {
@@ -34,7 +33,6 @@
 	};
 
 	onMount(() => {
-		console.log(product);
 		getLocations();
 	});
 </script>

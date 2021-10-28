@@ -16,40 +16,43 @@
 
 	const getDictionary = async () => {
 		dictionary = await get('returns/dictionary');
+		console.log(dictionary);
 	};
 
-	const setSaleSource = async () => {
-		const res = await post('returns/edit/saleSource', { saleSource: value, returnId: returnEntry.id });
+	const setReturnReason = async () => {
+		const res = await post('returns/edit/returnReason', { returnReason: value, returnId: returnEntry.id });
 		dispatch('change');
 		return res ? true : false;
 	};
 
 	onMount(() => {
 		getDictionary();
-		value = returnEntry.saleSource;
+		value = returnEntry.returnReason;
+		console.log(value);
 	});
 </script>
 
 <div>
 	<div style="min-width: 100px;">
 		<Button on:click={() => surface.setOpen(true)}
-			>{value ? `${value?.name} ${value?.subCategory ? `- ${value.subCategory}` : ''}` : 'brak źródła sprzedaży'}</Button
+			>{value ? `${value?.category ? `${value.category} - ` : ''} ${value?.reason}` : 'brak'}</Button
 		>
 		<MenuSurface bind:this={surface} anchorCorner="BOTTOM_LEFT" style="width:400px;">
-			{#if dictionary?.saleSources}
+			{#if dictionary?.returnReasons}
 				<div class="flex flex-col p-4 gap-2">
-					{#each dictionary.saleSources as source}
+					{#each dictionary.returnReasons as reason}
 						<Button
 							on:click={() => {
-								value = source;
+								value = reason;
 								surface.setOpen(false);
-							}}>{source.name} {source?.subCategory ? `- ${source.subCategory}` : ''}</Button
-						>
+							}}
+							>{reason?.category ? `${reason.category} - ` : ''} {reason.reason}
+						</Button>
 					{/each}
 				</div>
 			{/if}
 		</MenuSurface>
 	</div>
 
-	<SaveChangesButton action={setSaleSource} visible={JSON.stringify(value) != JSON.stringify(returnEntry.saleSource)} />
+	<SaveChangesButton action={setReturnReason} visible={JSON.stringify(value) != JSON.stringify(returnEntry.returnReason)} />
 </div>

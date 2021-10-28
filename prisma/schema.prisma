@@ -37,19 +37,20 @@ model Permissions {
 }
 
 model ReturnEntry {
-  id           Int             @id @default(autoincrement())
-  created_at   DateTime        @default(now())
-  isBusiness   Boolean?
-  saleDocument String?
-  saleSource   SaleSource?     @relation(fields: [saleSourceId], references: [id])
-  saleSourceId String?
-  resolved     Boolean
-  sender       ReturnSender?
-  events       ReturnEvent[]
-  notes        ReturnNote[]
-  products     ReturnProduct[]
-  images       ReturnImage[]
-  returnReason ReturnReason[]
+  id             Int             @id @default(autoincrement())
+  created_at     DateTime        @default(now())
+  isBusiness     Boolean?
+  saleDocument   String?
+  saleSource     SaleSource?     @relation(fields: [saleSourceId], references: [id])
+  saleSourceId   String?
+  resolved       Boolean
+  sender         ReturnSender?
+  events         ReturnEvent[]
+  notes          ReturnNote[]
+  products       ReturnProduct[]
+  images         ReturnImage[]
+  returnReason   ReturnReason?   @relation(fields: [returnReasonId], references: [id])
+  returnReasonId String?
 }
 
 model ReturnSender {
@@ -133,6 +134,7 @@ model ReturnImage {
 model ReturnReason {
   id          String        @id @default(cuid())
   reason      String
+  category    String
   description String
   returnEntry ReturnEntry[]
 }

@@ -1,6 +1,6 @@
 import { AppLogStatus, createAppLogEntry } from '../../_applicationLog';
 import { ApiPermission, tokenHasPermission } from '../../_authUtil';
-import { createReturnEvent, updateSaleSource } from '../_returnEntry';
+import { createReturnEvent, updateReturnReason } from '../_returnEntry';
 
 export async function post(request) {
 	let status = 400;
@@ -18,9 +18,9 @@ export async function post(request) {
 	}
 
 	try {
-		const res = await updateSaleSource(request.body);
+		const res = await updateReturnReason(request.body);
 		if (res) {
-			await createReturnEvent(res.id, permission.userId, 'Edit', 'Zmienono źródło sprzedaży', JSON.stringify(request.body.saleSource));
+			await createReturnEvent(res.id, permission.userId, 'Edit', 'Zmienono powód zwrotu', JSON.stringify(request.body.returnReason));
 		}
 		body = res;
 		status = 200;
