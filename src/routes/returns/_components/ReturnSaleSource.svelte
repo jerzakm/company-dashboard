@@ -16,7 +16,6 @@
 
 	const getDictionary = async () => {
 		dictionary = await get('returns/dictionary');
-		console.log(dictionary);
 	};
 
 	const setSaleSource = async () => {
@@ -36,7 +35,7 @@
 		<Button on:click={() => surface.setOpen(true)}
 			>{value ? `${value?.name} ${value?.subCategory ? `- ${value.subCategory}` : ''}` : 'brak źródła sprzedaży'}</Button
 		>
-		<MenuSurface bind:this={surface} anchorCorner="BOTTOM_LEFT">
+		<MenuSurface bind:this={surface} anchorCorner="BOTTOM_LEFT" style="width:400px;">
 			{#if dictionary?.saleSources}
 				<div class="flex flex-col p-4 gap-2">
 					{#each dictionary.saleSources as source}

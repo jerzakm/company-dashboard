@@ -1,6 +1,6 @@
 import { AppLogStatus, createAppLogEntry } from '../../_applicationLog';
 import { ApiPermission, tokenHasPermission } from '../../_authUtil';
-import { addProduct, createReturnEvent, delProduct, updateSaleSource } from '../_returnEntry';
+import { createReturnEvent, updateSaleSource } from '../_returnEntry';
 
 export async function post(request) {
 	let status = 400;
