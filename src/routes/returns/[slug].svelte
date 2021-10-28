@@ -12,8 +12,7 @@
 </script>
 
 <script>
-	import Paper, { Title, Content } from '@smui/paper';
-	import Button, { Label } from '@smui/button';
+	import Paper, { Content } from '@smui/paper';
 	import Textfield from '@smui/textfield';
 	import { get, put } from '$lib/api';
 	import { onMount } from 'svelte';
@@ -21,9 +20,9 @@
 	import ReturnImageGallery from './_components/ReturnImageGallery.svelte';
 	import ReturnEventsTable from './_components/ReturnEventsTable.svelte';
 	import ReturnProductsTable from './_components/ReturnProductsTable.svelte';
-	import AddNewFile from './_components/AddNewFile.svelte';
 	import ReturnNotes from './_components/ReturnNotes.svelte';
 	import ReturnSaleSource from './_components/ReturnSaleSource.svelte';
+	import ReturnReason from './_components/ReturnReason.svelte';
 
 	export let returnId;
 	let data;
@@ -32,6 +31,7 @@
 	const updateReturnEntry = async () => {
 		data = await get(`returns/list?id=${returnId}`);
 		originalData = JSON.parse(JSON.stringify(data));
+		console.log(data);
 	};
 
 	const saveSenderChanges = async () => {
@@ -94,12 +94,12 @@
 		</Content>
 	</Paper>
 
-	<div class="flex flex-col gap-10 col-span-2">
+	<div class="flex flex-col gap-10 col-span-1">
 		<Paper elevation={4}>
 			<Content class="relative">
 				{#if data}
 					<div class="flex flex-col">
-						<span class="text-lg font-bold">Źródło sprzedaży</span>
+						<span class="text-lg font-bold mb-2">Źródło sprzedaży</span>
 						<ReturnSaleSource returnEntry={data} on:change={() => updateReturnEntry()} />
 					</div>
 				{/if}
@@ -109,25 +109,20 @@
 			<Content class="relative">
 				{#if data}
 					<div class="flex flex-col">
-						<span class="text-lg font-bold">Powód zwrotu</span>
-					</div>
-				{/if}
-			</Content>
-		</Paper>
-		<Paper elevation={4}>
-			<Content class="relative">
-				{#if data}
-					<div class="flex flex-col">
-						<span class="text-lg font-bold">Lokalizacja</span>
-					</div>
-				{/if}
-			</Content>
-		</Paper>
-		<Paper elevation={4}>
-			<Content class="relative">
-				{#if data}
-					<div class="flex flex-col">
 						<span class="text-lg font-bold">Status</span>
+					</div>
+				{/if}
+			</Content>
+		</Paper>
+	</div>
+
+	<div class="flex flex-col gap-10 col-span-1">
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold mb-2">Powód zwrotu</span>
+						<ReturnReason returnEntry={data} on:change={() => updateReturnEntry()} />
 					</div>
 				{/if}
 			</Content>
