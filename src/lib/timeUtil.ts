@@ -13,3 +13,11 @@ export const formatToDateHour = (dateString: string) => {
 export const minutesSince = (timestamp: number) => {
 	return (Date.now() - timestamp) / 1000 / 60;
 };
+
+export const daysSince = (timestamp: number) => {
+	return (Date.now() - timestamp) / 1000 / 60 / 60 / 24;
+};
+
+export const dateToTimestamp = (date: string) => {
+	return dayjs(date).unix() * 1000;
+};

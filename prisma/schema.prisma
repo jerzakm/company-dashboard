@@ -51,6 +51,7 @@ model ReturnEntry {
   images         ReturnImage[]
   returnReason   ReturnReason?   @relation(fields: [returnReasonId], references: [id])
   returnReasonId String?
+
 }
 
 model ReturnSender {
