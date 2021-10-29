@@ -188,6 +188,22 @@ export const updateReturnReason = async (data) => {
 	}
 };
 
+export const updateResolvedStatus = async (data) => {
+	try {
+		return await prisma.returnEntry.update({
+			where: {
+				id: data.returnId
+			},
+			data: {
+				resolved: data.resolved
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export interface IReturnEntryBasic {
 	city: string;
 	country: string;

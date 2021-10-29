@@ -1,11 +1,8 @@
 <script>
-	import Dialog, { Title, Content } from '@smui/dialog';
-	import Button, { Label } from '@smui/button';
-	import List, { Item, Text } from '@smui/list';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { get, post } from '$lib/api';
+	import Button, { Label } from '@smui/button';
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-	import dayjs from 'dayjs';
 	import { dateToTimestamp, daysSince } from '$lib/timeUtil';
 	import ReturnStatusBadges from './ReturnStatusBadges.svelte';
 
@@ -13,37 +10,51 @@
 
 	export let returnEntry;
 
+	let requiredFields = [];
+
+	const checkResolveConditions = (returnEntry) => {
+		requiredFields = [];
+
+		if (returnEntry.images.length < 1) {
+			requiredFields.push('dodaj co najmniej jedno zdjęcie');
+		}
+		if (returnEntry.products.length < 1) {
+			requiredFields.push('dodaj co najmniej jeden produkt');
+		}
+		if (!returnEntry.returnReason) {
+			requiredFields.push('uzupełnij powód zwrotu');
+		}
+		if (!returnEntry.saleSource) {
+			requiredFields.push('uzupełnij źródło sprzedaży');
+		}
+		if (
+			returnEntry.sender.name.length < 5 ||
+			returnEntry.sender.city.length < 3 ||
+			returnEntry.sender.postCode.length < 3 ||
+			returnEntry.sender.street.length < 3
+		) {
+			requiredFields.push('uzupełnij dane nadawcy');
+		}
+
+		for (const product of returnEntry.products) {
+			if (!product.location) {
+				requiredFields.push(`dodaj lokalizację dla ${product.name}`);
+			}
+		}
+	};
+
+	$: checkResolveConditions(returnEntry);
+
 	const dispatch = createEventDispatcher();
 
-	onMount(() => {});
+	const setResolvedStatus = async (resolved = true) => {
+		const res = await post('returns/edit/resolvedStatus', { resolved, returnId: returnEntry.id });
+		dispatch('change');
+		return res ? true : false;
+	};
 </script>
 
-<Dialog bind:open selection aria-labelledby="list-title" aria-describedby="list-content">
-	<Title id="list-title">Przenieś produkt do:</Title>
-	<Content id="list-content">
-		<List>
-			<!-- {#if locations}
-				{#each locations as location}
-					<Item
-						on:click={() => {
-							// clicked = item;
-							setProductLocation(location);
-							open = false;
-						}}
-					>
-						<Text>{location.name} - {location.subName}</Text>
-					</Item>
-				{/each}
-			{/if} -->
-		</List>
-	</Content>
-</Dialog>
-
-<div class="flex items-center">
-	<!-- <Button on:click={() => (open = true)}>
-		<Label>{product.location ? `${product.location.locationInfo.name} ${product.location.locationInfo.subName}` : 'BRAK!'}</Label>
-	</Button> -->
-
+<div class="flex flex-col">
 	<DataTable table$aria-label="People list" style="width: 100%;">
 		<Head>
 			<Row>
@@ -66,4 +77,27 @@
 			</Row>
 		</Body>
 	</DataTable>
+
+	{#if !returnEntry.resolved}
+		{#if requiredFields.length > 0}
+			<span class="font-bold mt-2">Przed zakończeniem zwrotu:</span>
+			<ul>
+				{#each requiredFields as requirement}
+					<li>{requirement}</li>
+				{/each}
+			</ul>
+		{/if}
+		{#if requiredFields.length == 0}
+			<filler class="mt-2 w-full" />
+			<Button on:click={() => setResolvedStatus()} variant="raised">
+				<Label>Zakończ</Label>
+			</Button>
+		{/if}
+	{/if}
+	{#if returnEntry.resolved}
+		<filler class="mt-2 w-full" />
+		<Button on:click={() => setResolvedStatus(false)} variant="outlined" color="secondary">
+			<Label>Otwórz ponownie</Label>
+		</Button>
+	{/if}
 </div>
