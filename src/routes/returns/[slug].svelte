@@ -23,6 +23,7 @@
 	import ReturnNotes from './_components/ReturnNotes.svelte';
 	import ReturnSaleSource from './_components/ReturnSaleSource.svelte';
 	import ReturnReason from './_components/ReturnReason.svelte';
+	import ReturnStatus from './_components/ReturnStatus.svelte';
 
 	export let returnId;
 	let data;
@@ -94,7 +95,17 @@
 		</Content>
 	</Paper>
 
-	<div class="flex flex-col gap-10 col-span-1">
+	<div class="flex flex-col gap-10 col-span-2">
+		<Paper elevation={4}>
+			<Content class="relative">
+				{#if data}
+					<div class="flex flex-col">
+						<span class="text-lg font-bold">Status i zadania</span>
+						<ReturnStatus returnEntry={data} on:change={() => updateReturnEntry()} />
+					</div>
+				{/if}
+			</Content>
+		</Paper>
 		<Paper elevation={4}>
 			<Content class="relative">
 				{#if data}
@@ -105,18 +116,7 @@
 				{/if}
 			</Content>
 		</Paper>
-		<Paper elevation={4}>
-			<Content class="relative">
-				{#if data}
-					<div class="flex flex-col">
-						<span class="text-lg font-bold">Status</span>
-					</div>
-				{/if}
-			</Content>
-		</Paper>
-	</div>
 
-	<div class="flex flex-col gap-10 col-span-1">
 		<Paper elevation={4}>
 			<Content class="relative">
 				{#if data}
