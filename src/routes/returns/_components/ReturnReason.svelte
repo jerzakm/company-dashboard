@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { get, post } from '$lib/api';
 	import { onMount, createEventDispatcher } from 'svelte';
 	import SaveChangesButton from './SaveChangesButton.svelte';
@@ -55,4 +55,4 @@
 	</div>
 
 	<SaveChangesButton action={setReturnReason} visible={JSON.stringify(value) != JSON.stringify(returnEntry.returnReason)} />
-</div>
+</div> -->

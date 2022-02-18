@@ -1,4 +1,4 @@
-<script context="module">
+<!-- <script context="module">
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
@@ -9,9 +9,9 @@
 			}
 		};
 	}
-</script>
+</script> -->
 
-<script>
+<!-- <script>
 	import Paper, { Content } from '@smui/paper';
 	import Textfield from '@smui/textfield';
 	import { get, put } from '$lib/api';
@@ -51,8 +51,8 @@
 	onMount(async () => {
 		await updateReturnEntry();
 	});
-</script>
-
+</script> -->
+<!-- 
 <h1>#{returnId}</h1>
 
 <grid>
@@ -139,7 +139,7 @@
 				{/if}
 			</Content>
 		</Paper>
-		<!-- FILE GALLERY -->
+
 		<Paper class="col-span-4" elevation={4}>
 			<Content class="relative">
 				<span class="text-lg font-bold">Galeria</span>
@@ -150,7 +150,6 @@
 		</Paper>
 	</div>
 
-	<!-- EVENTS HISTORY -->
 	<Paper class="col-span-6" elevation={4}>
 		<Content class="relative">
 			<span class="text-lg font-bold">Historia zmian</span>
@@ -178,4 +177,4 @@
 		bottom: -2.7rem;
 		right: 20px;
 	}
-</style>
+</style> -->

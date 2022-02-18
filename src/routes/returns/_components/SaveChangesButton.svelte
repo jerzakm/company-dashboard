@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Button, { Label } from '@smui/button';
 	export let action;
 	export let visible;
@@ -36,4 +36,4 @@
 		right: 20px;
 		transition: 0.1s linear all;
 	}
-</style>
+</style> -->

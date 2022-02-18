@@ -1,8 +1,6 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Button, { Label, Icon } from '@smui/button';
 	export let entry;
-
-	// todo front-end side status logic to prevent incorrectly finished returns
 </script>
 
 <badges>
@@ -25,4 +23,4 @@
 	.in-progress {
 		background-color: var(--color-warning);
 	}
-</style>
+</style> -->

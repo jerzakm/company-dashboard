@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Sidebar from '$lib/Menus/Sidebar.svelte';
 	import TopBar from '$lib/Menus/TopBar.svelte';
 	import Button, { Label, Icon } from '@smui/button';
@@ -41,18 +41,13 @@
 </script>
 
 <svelte:head>
-	<!-- Fonts and CSS -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" />
 
-	<!-- smui -->
 	<link rel="stylesheet" href="/smui.css" />
-	<!-- app -->
 	<link rel="stylesheet" href="/styles/app.css" />
-	<!-- tailwind -->
 	<link rel="stylesheet" href="/styles/tailwind-output.css" />
-	<!-- <link rel="stylesheet" href="/smui-dark.css" media="screen and (prefers-color-scheme: dark)" /> -->
 </svelte:head>
 
 <layout>
@@ -120,4 +115,4 @@
 		height: 100%;
 		box-sizing: border-box;
 	}
-</style>
+</style> -->

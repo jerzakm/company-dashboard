@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Button, { Label, Icon } from '@smui/button';
 	import { goto } from '$app/navigation';
 	import { post } from '$lib/api';
@@ -86,4 +86,4 @@
 		@apply gap-2;
 		@apply items-center;
 	}
-</style>
+</style> -->

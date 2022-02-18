@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
 	import Textfield from '@smui/textfield';
@@ -23,8 +23,8 @@
 			loginError = true;
 		}
 	}
-</script>
-
+</script> -->
+<!-- 
 <svelte:head>
 	<title>Logowanie</title>
 </svelte:head>
@@ -33,11 +33,9 @@
 	<Card>
 		<Content>
 			<Textfield variant="outlined" bind:value={user} label="Użytkownik" name="username">
-				<!-- <HelperText slot="helper">Helper Text</HelperText> -->
 			</Textfield>
 			<div style="width:100%; height: 1rem" />
 			<Textfield variant="outlined" bind:value={password} type="password" label="Hasło" name="password">
-				<!-- <HelperText slot="helper">Helper Text</HelperText> -->
 			</Textfield>
 		</Content>
 		<Actions fullBleed>
@@ -50,9 +48,9 @@
 	{#if loginError}
 		<p>Błąd</p>
 	{/if}
-</form>
+</form> -->
 
-<style>
+<!-- <style>
 	form {
 		width: 100%;
 		min-height: 500px;
@@ -66,4 +64,4 @@
 	p {
 		color: red;
 	}
-</style>
+</style> -->

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { get, post } from '$lib/api';
 	import Button, { Label } from '@smui/button';
@@ -100,4 +100,4 @@
 			<Label>Otwórz ponownie</Label>
 		</Button>
 	{/if}
-</div>
+</div> -->

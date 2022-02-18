@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { formatToDateHour } from '$lib/timeUtil';
 	import dayjs from 'dayjs';
 
@@ -48,4 +48,4 @@
 			{/each}
 		</Body>
 	{/if}
-</DataTable>
+</DataTable> -->

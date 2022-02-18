@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import Dialog, { Title, Content } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 	import List, { Item, Text } from '@smui/list';
@@ -72,4 +72,4 @@
 			style="width: 48px; margin: -1.5rem; transform: translateX(10px); margin-right: 5px;"
 		/>
 	{/if}
-</div>
+</div> -->

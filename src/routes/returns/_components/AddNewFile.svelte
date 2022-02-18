@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { post } from '$lib/api';
 
 	import Button, { Label } from '@smui/button';
@@ -73,4 +73,4 @@
 		width: 100%;
 		cursor: pointer;
 	}
-</style>
+</style> -->

@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { get } from '$lib/api';
 	import { formatListDate } from '$lib/timeUtil';
 
@@ -65,14 +65,12 @@
 <DataTable table$aria-label="Lista zwrotów" class="w-full">
 	<Head>
 		<Row>
-			<!-- return Id -->
 			<Cell numeric>
 				<Button on:click={() => (filterOptions.id.ascending = !filterOptions.id.ascending)}>
 					<Label>Nr</Label>
 					<AscendingIcon ascending={filterOptions.id.ascending} />
 				</Button>
 			</Cell>
-			<!-- date -->
 			<Cell>Data</Cell>
 			<Cell>Nadawca</Cell>
 			<Cell class="w-full">Produkty</Cell>
@@ -116,14 +114,6 @@
 	{/key}
 
 	<Pagination slot="paginate">
-		<!-- <svelte:fragment slot="rowsPerPage">
-			<Label>Rows Per Page</Label>
-			<Select variant="outlined" bind:value={rowsPerPage} noLabel>
-				<Option value={10}>10</Option>
-				<Option value={25}>25</Option>
-				<Option value={100}>100</Option>
-			</Select>
-		</svelte:fragment> -->
 		<svelte:fragment slot="total">
 			{start + 1}-{end} of {filteredList.length}
 		</svelte:fragment>
@@ -163,4 +153,4 @@
 		color: var(--primary);
 		font-weight: 700;
 	}
-</style>
+</style> -->

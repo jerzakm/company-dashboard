@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import Textfield from '@smui/textfield';
 	import SvelteMarkdown from 'svelte-markdown';
 	import dayjs from 'dayjs';
@@ -43,8 +43,6 @@
 	let open = false;
 
 	$: notes = sortNotes(returnEntry.notes);
-
-	// $: notes = returnEntry.notes;
 </script>
 
 <div class="flex justify-between">
@@ -67,7 +65,6 @@
 {/each}
 
 <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content" fullscreen style="min-height: 200px; max-width: unset;">
-	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
 	<Title>Nowa notatka</Title>
 	<Content style="min-width:450px;">
 		<Textfield
@@ -104,4 +101,4 @@
 			@apply -mb-2;
 		}
 	}
-</style>
+</style> -->

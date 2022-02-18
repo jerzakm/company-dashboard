@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
@@ -90,8 +90,6 @@
 {/if}
 
 <Dialog bind:open={openAddProduct} aria-labelledby="Dodawanie produktu" aria-describedby="simple-content" fullscreen class="add-new-dialog">
-	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-
 	<Content id="simple-content" class="add-new-dialog">
 		<Title id="simple-title">Dodaj nowy produkt</Title>
 		<div class="new-product-container relative mb-10 pb-10 z-50">
@@ -112,4 +110,4 @@
 		min-width: 80%;
 		max-width: unset;
 	}
-</style>
+</style> -->

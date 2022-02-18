@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import Dialog, { Title, Content, Actions } from '@smui/dialog';
 	import Button, { Label } from '@smui/button';
 
@@ -35,8 +35,6 @@
 </gallery>
 
 <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content">
-	<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-
 	<Content id="simple-content">
 		<img src={imgOpen.imgSrc} />
 	</Content>
@@ -54,4 +52,4 @@
 	img {
 		width: 100%;
 	}
-</style>
+</style> -->
