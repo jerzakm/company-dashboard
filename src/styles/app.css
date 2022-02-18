@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--surface-border-light: #2a2a2a;
+	--text-color-light: #555;
+	--text-color-strong: #eeeaee;
+}
+
+body {
+	background: #181818;
+	color: #fefefe;
+}
+
+* {
+	border-color: var(--surface-border-light);
+}
