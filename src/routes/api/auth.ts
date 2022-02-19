@@ -1,10 +1,16 @@
 import { dbAuthCheck } from './_prisma';
 
-export async function post(request) {
+export async function post({ request }) {
 	let user;
-	if (request.body.user && request.body.password) {
-		const dbUser = await dbAuthCheck(request.body.user, request.body.password);
-		if (dbUser.password == request.body.password) user = dbUser;
+
+	const body = await request.json();
+
+	console.log(body);
+
+	if (body.user && body.password) {
+		const dbUser = await dbAuthCheck(body.user, body.password);
+
+		if (dbUser.password == body.password) user = dbUser;
 	}
 
 	return {
