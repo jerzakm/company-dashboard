@@ -4,15 +4,17 @@
 
 :root {
 	--surface-border-light: #2a2a2a;
-	--text-color-light: #555;
-	--text-color-strong: #eeeaee;
+	--text-color-light: #666;
+	--text-color-strong: #fff;
 }
 
 body {
 	background: #181818;
-	color: #fefefe;
+	color: var(--text-color-strong);
+	font-family: Circular Std, -apple-system, Roboto, sans-serif;
 }
 
 * {
 	border-color: var(--surface-border-light);
+	letter-spacing: 0.025em;
 }
