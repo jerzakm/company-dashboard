@@ -1,0 +1,6 @@
+<div>
+	<input type="text" name="username" placeholder="username" />
+	<input type="password" name="password" placeholder="password" />
+
+	<button>Login</button>
+</div>

@@ -3,6 +3,28 @@
 
 	import SideIcons from '$lib/components/Nav/SideIcons.svelte';
 	import '../styles/app.css';
+
+	import { goto } from '$app/navigation';
+	import { authStore, checkStoredLogin } from '$lib/core/auth';
+	import { onMount } from 'svelte';
+
+	let user = null;
+	let mounted = false;
+
+	authStore.subscribe(async (u) => {
+		user = u;
+		if (!user && typeof window != undefined && mounted) {
+			const verified = await checkStoredLogin();
+			if (!verified) goto('/login');
+		}
+	});
+
+	onMount(async () => {
+		mounted = true;
+		const verified = await checkStoredLogin();
+
+		if (!verified) goto('/login');
+	});
 </script>
 
 <div class="flex h-full">
