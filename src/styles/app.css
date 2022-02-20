@@ -6,10 +6,11 @@
 	--surface-border-light: #2a2a2a;
 	--text-color-light: #666;
 	--text-color-strong: #fff;
+	--background-color: #181818;
 }
 
 body {
-	background: #181818;
+	background: var(--background-color);
 	color: var(--text-color-strong);
 	font-family: Circular Std, -apple-system, Roboto, sans-serif;
 }
