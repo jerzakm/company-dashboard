@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
+	import Button from '$lib/components/core/Button.svelte';
 	import { authenticateUser, authStore } from '$lib/core/auth';
 
 	let user = '';
@@ -26,7 +26,7 @@
 	<input type="text" name="username" placeholder="username" bind:value={user} />
 	<input type="password" name="password" placeholder="password" bind:value={password} />
 
-	<button>Login</button>
+	<Button size="normal">Login</Button>
 
 	{#if loginError}
 		<p>err</p>
