@@ -78,38 +78,4 @@
 			>
 		</SideIcon>
 	</ul>
-	<ul class="flex flex-col space-y-2">
-		<button
-			type="button"
-			id="radix-id-138632516-71"
-			aria-haspopup="menu"
-			data-state="closed"
-			class="sbui-dropdown__trigger"
-			><span class="sbui-btn-container"
-				><span class="sbui-btn sbui-btn-text sbui-btn--tiny sbui-btn--text-align-center"
-					><span
-						><div class="py-1">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="18"
-								height="18"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="sbui-icon "
-								><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle
-									cx="12"
-									cy="7"
-									r="4"
-								/></svg
-							>
-						</div></span
-					></span
-				></span
-			></button
-		>
-	</ul>
 </div>
