@@ -30,8 +30,8 @@
 <div class="flex h-full">
 	{#if user}
 		<SideIcons />
+		<Sidebar />
 	{/if}
-	<Sidebar />
 	<main class="w-full flex flex-col flex-1 overflow-x-hidden" style="max-height: 100vh;">
 		<Topbar {user} />
 		<div class="flex flex-col flex-1 overflow-y-auto">
