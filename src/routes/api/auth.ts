@@ -5,8 +5,6 @@ export async function post({ request }) {
 
 	const body = await request.json();
 
-	console.log(body);
-
 	if (body.user && body.password) {
 		const dbUser = await dbAuthCheck(body.user, body.password);
 
