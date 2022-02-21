@@ -1,0 +1,9 @@
+{
+	"login": {
+		"pageTitle": "Log in",
+		"username": "User name",
+		"password": "Password",
+		"login": "Sign in",
+		"loginError": "Sign in error. Enter the correct username and password or contact the administrator."
+	}
+}

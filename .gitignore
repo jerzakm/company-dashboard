@@ -1,12 +1,9 @@
 .DS_Store
 node_modules
-/.svelte-kit
 /build
-/functions
+/.svelte-kit
+/package
 .env
-firebase-adminsdk.json
-firebase-appsdk.json
-dashboard-config.json
-prisma/dev.db
-prisma/dev.db-journal
-oldData.json
+.env.*
+!.env.example
+*.db
