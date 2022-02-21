@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/core/Button.svelte';
+	import Input from '$lib/components/core/Input.svelte';
 	import { authenticateUser, authStore } from '$lib/core/auth';
 
 	let user = '';
@@ -23,8 +24,10 @@
 </script>
 
 <form on:submit|preventDefault={submit}>
-	<input type="text" name="username" placeholder="username" bind:value={user} />
-	<input type="password" name="password" placeholder="password" bind:value={password} />
+	<!-- <input type="text" name="username" placeholder="username" bind:value={user} /> -->
+	<!-- <input type="password" name="password" placeholder="password" bind:value={password} /> -->
+	<Input bind:value={user} placeholder="User" />
+	<Input bind:value={password} placeholder="Password" type="password" />
 
 	<Button size="normal">Login</Button>
 
@@ -46,8 +49,5 @@
 	}
 	p {
 		color: red;
-	}
-	input {
-		background-color: black;
 	}
 </style>

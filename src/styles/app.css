@@ -7,6 +7,8 @@
 	--text-color-light: #666;
 	--text-color-strong: #fff;
 	--background-color: #181818;
+	--primary-color: rgb(255, 62, 0);
+	--secondary-color: pink;
 }
 
 body {

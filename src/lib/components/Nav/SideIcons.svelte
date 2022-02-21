@@ -1,5 +1,5 @@
 <script>
-	import Divider from '../Layout/Divider.svelte';
+	import Divider from '../core/Divider.svelte';
 	import SideIcon from './SideIcon.svelte';
 </script>
 

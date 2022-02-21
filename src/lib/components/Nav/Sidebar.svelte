@@ -1,5 +1,5 @@
 <script>
-	import Divider from '../Layout/Divider.svelte';
+	import Divider from '../core/Divider.svelte';
 </script>
 
 <div class="w-64 h-screen flex flex-col border-r ">
