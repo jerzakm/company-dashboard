@@ -13,7 +13,7 @@
 	}
 </script>
 
-<div style="grid-template-rows: {placeholderStyle};">
+<div style="grid-template-rows: {placeholderStyle};" class={`${$$props.class}`}>
 	{#if showPlaceholder}
 		<span class="title">{placeholder}</span>
 	{/if}

@@ -3,6 +3,7 @@
 	export let flat = false;
 	export let inverse = false;
 	export let size = 'normal';
+	export let fullwidth = false;
 </script>
 
 <button
@@ -11,6 +12,7 @@
 	class:small={size == 'small'}
 	class:normal={size == 'normal'}
 	class:large={size == 'large'}
+	class:fullwidth
 	on:click
 >
 	<slot />
@@ -60,5 +62,9 @@
 		padding: 0.85rem 1rem;
 		font-size: 1.75rem;
 		line-height: 1rem;
+	}
+
+	.fullwidth {
+		width: 100%;
 	}
 </style>
