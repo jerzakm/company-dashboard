@@ -3,6 +3,7 @@
 	import Button from '$lib/components/core/Button.svelte';
 	import Input from '$lib/components/core/Input.svelte';
 	import { authenticateUser, authStore } from '$lib/core/auth';
+	import { _ } from 'svelte-i18n';
 
 	let user = '';
 	let password = '';
@@ -23,36 +24,39 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{$_('login.pageTitle')}</title>
+</svelte:head>
+
 <div>
 	<form on:submit|preventDefault={submit}>
-		<h1 class="text-4xl font-bold mb-4">Log in</h1>
-		<!-- <input type="text" name="username" placeholder="username" bind:value={user} /> -->
-		<!-- <input type="password" name="password" placeholder="password" bind:value={password} /> -->
-		<Input bind:value={user} placeholder="User" class="mb-2" />
-		<Input bind:value={password} placeholder="Password" type="password" class="mb-4" />
+		<h1 class="text-4xl font-bold mb-4">{$_('login.pageTitle')}</h1>
+		<Input bind:value={user} placeholder={$_('login.username')} class="mb-2" />
+		<Input bind:value={password} placeholder={$_('login.password')} type="password" class="mb-4" />
 
-		<Button size="normal" fullwidth>Login</Button>
+		<Button size="normal" fullwidth>{$_('login.login')}</Button>
 
-		{#if loginError}
-			<p>err</p>
-		{/if}
+		<p class={loginError ? 'opacity-100' : 'opacity-0 scale-90'}>{$_('login.loginError')}</p>
 	</form>
 </div>
 
 <style>
 	div {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-items: center;
-		align-content: center;
-		justify-content: center;
-		width: 100%;
+		@apply flex items-center flex-col justify-center;
+		@apply w-full;
 		min-height: 70vh;
 	}
 
+	form {
+		@apply w-full;
+		max-width: 300px;
+		@apply flex;
+		@apply flex-col;
+	}
+
 	p {
-		color: red;
-		position: absolute;
+		@apply mt-2;
+		transition: ease-in-out 0.1s;
+		color: var(--error-color);
 	}
 </style>

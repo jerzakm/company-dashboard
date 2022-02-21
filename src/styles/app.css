@@ -9,6 +9,7 @@
 	--background-color: #181818;
 	--primary-color: rgb(255, 62, 0);
 	--secondary-color: pink;
+	--error-color: rgb(255, 92, 92);
 }
 
 body {

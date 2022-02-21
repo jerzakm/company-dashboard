@@ -1,0 +1,9 @@
+{
+	"login": {
+		"pageTitle": "Zaloguj się",
+		"username": "Użytkownik",
+		"password": "Hasło",
+		"login": "Zaloguj się",
+		"loginError": "Błąd logowania. Wpisz poprawną nazwę użytkownika i hasło lub skontaktuj się z administratorem."
+	}
+}

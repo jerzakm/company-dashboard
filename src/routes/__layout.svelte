@@ -8,6 +8,8 @@
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
 	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
 
+	import '$lib/locale/i18n';
+
 	let user = null;
 	let mounted = false;
 
