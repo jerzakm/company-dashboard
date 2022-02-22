@@ -1,9 +1,19 @@
 {
-	"login": {
-		"pageTitle": "Zaloguj się",
-		"username": "Użytkownik",
-		"password": "Hasło",
-		"login": "Zaloguj się",
-		"loginError": "Błąd logowania. Wpisz poprawną nazwę użytkownika i hasło lub skontaktuj się z administratorem."
-	}
+  "login": {
+    "pageTitle": "Zaloguj się",
+    "username": "Użytkownik",
+    "password": "Hasło",
+    "login": "Zaloguj się",
+    "loginError": "Błąd logowania. Wpisz poprawną nazwę użytkownika i hasło lub skontaktuj się z administratorem."
+  },
+  "returns.main.pageTitle": "Zwroty",
+  "returns.list.pageTitle": "Lista zwrotów",
+  "returns.list.table.date": "Data",
+  "returns.list.table.returnReason": "Powód zwrotu",
+  "returns.list.table.products": "Produkt",
+  "returns.list.table.status": "Status",
+  "returns.list.table.sender": "Nadawca",
+  "returns.locations.pageTitle": "Lokalizacje",
+  "returns.outlet.pageTitle": "Outlet",
+  "returns.todo.pageTitle": "Do zrobienia"
 }

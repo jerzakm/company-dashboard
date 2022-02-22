@@ -1,6 +1,7 @@
 <script>
 	import Layout from '$lib/components/Layout.svelte';
 	import ReturnsSidebar from '../_sidebar.svelte';
+	import { _ } from 'svelte-i18n';
 
 	import { get } from '$lib/core/api';
 
@@ -40,7 +41,14 @@
 		const returnsTable = new Handsontable(returnsListEl, {
 			data: returnsList,
 			rowHeaders: false,
-			colHeaders: ['#', 'Date', 'Sender', 'Products', 'Return Reason', 'Status'],
+			colHeaders: [
+				'#',
+				$_('returns.list.table.date'),
+				$_('returns.list.table.sender'),
+				$_('returns.list.table.products'),
+				$_('returns.list.table.returnReason'),
+				$_('returns.list.table.status')
+			],
 			columns: [
 				{ data: 'id' },
 				{ data: 'date', renderer: 'dateRenderer' },
@@ -71,6 +79,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<title>{$_('returns.list.pageTitle')}</title>
+</svelte:head>
 
 <Layout>
 	<div slot="sidebar">

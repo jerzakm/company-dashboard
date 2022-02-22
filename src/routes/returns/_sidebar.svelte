@@ -2,6 +2,8 @@
 	import Divider from '$lib/components/core/Divider.svelte';
 	import { onMount } from 'svelte';
 
+	import { _ } from 'svelte-i18n';
+
 	export let active = '';
 
 	let underline;
@@ -9,19 +11,19 @@
 	const links = [
 		{
 			href: '/returns/list',
-			label: 'All returns'
+			label: $_('returns.list.pageTitle')
 		},
 		{
 			href: '/returns/todo',
-			label: 'Need attention'
+			label: $_('returns.todo.pageTitle')
 		},
 		{
 			href: '/returns/locations',
-			label: 'By location'
+			label: $_('returns.locations.pageTitle')
 		},
 		{
 			href: '/returns/outlet',
-			label: 'Outlet'
+			label: $_('returns.outlet.pageTitle')
 		}
 	];
 
@@ -69,6 +71,6 @@
 		@apply px-1;
 	}
 	a:hover {
-		background-size: 0 18px, 100% 3px;
+		background-size: 0 18px, 100% 32px;
 	}
 </style>
