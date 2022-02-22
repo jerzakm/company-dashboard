@@ -2,7 +2,7 @@ import { ApiPermission } from '$lib/core/auth';
 import { prisma, tokenHasPermission } from '../_prisma';
 
 export async function get({ params, request }) {
-	let res;
+	let data;
 	const authorization = await request.headers.get('authorization');
 
 	if (!authorization) {
@@ -14,7 +14,7 @@ export async function get({ params, request }) {
 	const permission = await tokenHasPermission(authorization, ApiPermission.returns.get);
 
 	try {
-		res = await prisma.returnEntry.findMany({
+		data = await prisma.returnEntry.findMany({
 			include: {
 				images: true,
 				notes: true,
@@ -29,6 +29,6 @@ export async function get({ params, request }) {
 
 	return {
 		status: permission.granted ? 200 : 401,
-		body: { res }
+		body: { data }
 	};
 }

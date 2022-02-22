@@ -1,4 +1,6 @@
 <script>
+	import Layout from '$lib/components/Layout.svelte';
+
 	import { get } from '$lib/core/api';
 
 	import Handsontable from 'handsontable';
@@ -751,60 +753,16 @@
 		]
 	];
 
-	const SELECTED_CLASS = 'selected';
-	const DEFAULT_ALIGNMENT_CLASS = 'htLeft';
-	const ODD_ROW_CLASS = 'odd';
-
 	onMount(async () => {
-		const list = await getList();
-		console.log(list);
+		const { data } = await getList();
 
 		const container = document.getElementById('example');
 		const hot = new Handsontable(container, {
-			data: data,
+			data,
 			rowHeaders: false,
-			colHeaders: [
-				'Company name',
-				'Name',
-				'Sell date',
-				'In stock',
-				'Qty',
-				'Progress',
-				'Rating',
-				'Order ID',
-				'Country'
-			],
-			columns: [
-				{ data: 1, type: 'text' },
-				{ data: 3, type: 'text' },
-				{
-					data: 4,
-					type: 'date',
-					allowInvalid: false
-				},
-				{
-					data: 6,
-					type: 'checkbox',
-					className: 'htCenter'
-				},
-				{
-					data: 7,
-					type: 'numeric'
-				},
-				{
-					data: 8,
-					readOnly: true,
-					className: 'htMiddle'
-				},
-				{
-					data: 9,
-					readOnly: true,
-					className: 'star htCenter'
-				},
-				{ data: 5, type: 'text' },
-				{ data: 2, type: 'text' }
-			],
-			height: 'auto',
+			colHeaders: true,
+
+			height: '500px',
 			dropdownMenu: true,
 			hiddenColumns: {
 				indicators: true
@@ -817,4 +775,10 @@
 	});
 </script>
 
-<div id="example" />
+<Layout>
+	<div slot="content">
+		<h1>Returns list</h1>
+
+		<div id="example" />
+	</div>
+</Layout>

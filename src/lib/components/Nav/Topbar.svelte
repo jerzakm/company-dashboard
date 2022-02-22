@@ -5,7 +5,7 @@
 	export let user;
 </script>
 
-<div class="flex justify-between items-center p-2 max-h-12 h-12 border-b">
+<div class="flex justify-between items-center p-2 max-h-12 h-12 border-b w-full">
 	<div class="text-sm flex items-center">topbar</div>
 	<div class="flex space-x-1 md:space-x-2 items-center">
 		{#if user}

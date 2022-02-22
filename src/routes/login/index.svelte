@@ -30,7 +30,7 @@
 
 <div>
 	<form on:submit|preventDefault={submit}>
-		<h1 class="text-4xl font-bold mb-4">{$_('login.pageTitle')}</h1>
+		<h1 class="font-bold mb-4">{$_('login.pageTitle')}</h1>
 		<Input bind:value={user} placeholder={$_('login.username')} class="mb-2" />
 		<Input bind:value={password} placeholder={$_('login.password')} type="password" class="mb-4" />
 
