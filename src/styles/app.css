@@ -9,7 +9,13 @@
 	--background-color: #181818;
 	--surface-background-color: rgba(31, 31, 31);
 	--primary-color: rgb(255, 62, 0);
-	--secondary-color: pink;
+	--primary-color-10: rgba(var(--primary-color), 0.1);
+	--primary-color-25: rgba(var(--primary-color), 0.25);
+	--primary-color-50: rgba(var(--primary-color), 0.5);
+	--primary-color-75: rgba(var(--primary-color), 0.75);
+	--secondary-color: rgba(0, 62, 255, 1);
+	--accent-color: rgba(255, 0, 180, 1);
+
 	--error-color: rgb(255, 92, 92);
 }
 

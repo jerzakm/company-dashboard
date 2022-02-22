@@ -5,7 +5,6 @@
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/core/auth';
 	import { onMount } from 'svelte';
-	import Topbar from '$lib/components/Nav/Topbar.svelte';
 
 	import '$lib/locale/i18n';
 

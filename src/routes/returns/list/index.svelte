@@ -1,5 +1,6 @@
 <script>
 	import Layout from '$lib/components/Layout.svelte';
+	import ReturnsSidebar from '../_sidebar.svelte';
 
 	import { get } from '$lib/core/api';
 
@@ -60,12 +61,21 @@
 			allowInsertColumn: false,
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
-			readOnly: true
+			readOnly: true,
+			columnSorting: {
+				initialConfig: {
+					column: 0,
+					sortOrder: 'desc'
+				}
+			}
 		});
 	});
 </script>
 
 <Layout>
+	<div slot="sidebar">
+		<ReturnsSidebar />
+	</div>
 	<div slot="content" class="w-full ">
 		<div bind:this={returnsListEl} id="returnsList" />
 	</div>
