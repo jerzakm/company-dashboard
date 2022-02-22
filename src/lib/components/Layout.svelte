@@ -24,9 +24,7 @@
 
 <main class="w-full flex flex-col flex-1 overflow-x-hidden" style="max-height: 100vh;">
 	<Topbar {user} />
-	<div class="flex flex-col flex-1 overflow-y-auto">
-		<content class="flex-1 overflow-y-auto" style="max-height: 100vh;">
-			<slot name="content" />
-		</content>
-	</div>
+	<content class="flex flex-1 overflow-y-auto " style="max-height: 100vh;">
+		<slot name="content" />
+	</content>
 </main>
