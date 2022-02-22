@@ -7,6 +7,10 @@
 	font-family: Circular Std, -apple-system, Roboto, sans-serif;
 }
 
+.colHeader {
+	@apply my-2;
+}
+
 #returnsList {
 	border-top: thin solid var(--surface-border-light);
 	border-bottom: thin solid var(--surface-border-light);
@@ -20,6 +24,7 @@
 #returnsList .handsontable th {
 	background-color: var(--surface-background-color);
 	color: var(--text-color-strong);
+	@apply font-bold;
 }
 
 /* Row headers */
