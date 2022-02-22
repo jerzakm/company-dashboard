@@ -22,3 +22,13 @@ body {
 	border-color: var(--surface-border-light);
 	letter-spacing: 0.025em;
 }
+
+h1 {
+	@apply text-4xl font-bold;
+}
+h2 {
+	@apply text-3xl font-bold;
+}
+h3 {
+	@apply text-2xl font-bold;
+}
