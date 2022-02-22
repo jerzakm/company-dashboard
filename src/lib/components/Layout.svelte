@@ -1,10 +1,7 @@
 <script>
 	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
-	import SideIcons from '$lib/components/Nav/SideIcons.svelte';
 
-	import { goto } from '$app/navigation';
-	import { authStore, checkStoredLogin } from '$lib/core/auth';
-	import { onMount } from 'svelte';
+	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
 
 	export let sidebar = true;
