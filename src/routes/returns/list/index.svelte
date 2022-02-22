@@ -74,7 +74,7 @@
 
 <Layout>
 	<div slot="sidebar">
-		<ReturnsSidebar />
+		<ReturnsSidebar active="/returns/list" />
 	</div>
 	<div slot="content" class="w-full ">
 		<div bind:this={returnsListEl} id="returnsList" />
