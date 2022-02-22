@@ -5,6 +5,7 @@
 
 	import Handsontable from 'handsontable';
 	import 'handsontable/dist/handsontable.full.css';
+	import './_table.css';
 	import './_cellRenderers';
 	import { onMount } from 'svelte';
 
@@ -19,12 +20,18 @@
 		const returnsList = [];
 
 		const { data } = await getList();
+		console.log(data);
 
 		data.map((entry) => {
 			returnsList.push({
 				id: entry.id,
 				date: entry.created_at,
-				sender: `${entry.sender.name}\n${entry.sender.street}\n${entry.sender.postCode} ${entry.sender.city}`
+				sender: `${entry.sender.name}\n${entry.sender.street}\n${entry.sender.postCode} ${entry.sender.city}`,
+				products: JSON.stringify(entry.products),
+				returnReason: entry.returnReason
+					? `${entry.returnReason.category} - ${entry.returnReason.reason}`
+					: '',
+				status: entry.resolved
 			});
 		});
 		console.log(returnsList);
@@ -32,9 +39,16 @@
 		const returnsTable = new Handsontable(returnsListEl, {
 			data: returnsList,
 			rowHeaders: false,
-			colHeaders: ['#', 'Date', 'Sender'],
-			columns: [{ data: 'id' }, { data: 'date', renderer: 'dateRenderer' }, { data: 'sender' }],
-			height: '500px',
+			colHeaders: ['#', 'Date', 'Sender', 'Products', 'Return Reason', 'Status'],
+			columns: [
+				{ data: 'id' },
+				{ data: 'date', renderer: 'dateRenderer' },
+				{ data: 'sender' },
+				{ data: 'products', renderer: 'productsRenderer' },
+				{ data: 'returnReason' },
+				{ data: 'status' }
+			],
+			height: '100%',
 			dropdownMenu: true,
 			hiddenColumns: {
 				indicators: true
@@ -43,15 +57,19 @@
 			contextMenu: true,
 			multiColumnSorting: true,
 			filters: true,
-			licenseKey: 'non-commercial-and-evaluation'
+			allowInsertColumn: false,
+			allowInsertRow: false,
+			licenseKey: 'non-commercial-and-evaluation',
+			readOnly: true
 		});
 	});
 </script>
 
 <Layout>
-	<div slot="content" class="w-full">
-		<h1>Returns list</h1>
-
-		<div bind:this={returnsListEl} />
+	<div slot="content" class="w-full ">
+		<div bind:this={returnsListEl} id="returnsList" />
 	</div>
 </Layout>
+
+<style>
+</style>
