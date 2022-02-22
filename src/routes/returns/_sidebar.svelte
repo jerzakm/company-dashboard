@@ -53,6 +53,7 @@
 
 <style>
 	a {
+		align-self: flex-start;
 		text-decoration: none;
 		cursor: pointer;
 		background: linear-gradient(to right, rgba(100, 200, 200, 0), rgba(100, 200, 200, 0)),
