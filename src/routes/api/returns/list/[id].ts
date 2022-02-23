@@ -1,5 +1,5 @@
 import { ApiPermission } from '$lib/core/auth';
-import { prisma, tokenHasPermission } from '../_prisma';
+import { prisma, tokenHasPermission } from '../../_prisma';
 
 export async function get({ params, request }) {
 	let data;
@@ -13,8 +13,13 @@ export async function get({ params, request }) {
 
 	const permission = await tokenHasPermission(authorization, ApiPermission.returns.get);
 
+	const id = parseInt(params.id);
+
 	try {
-		data = await prisma.returnEntry.findMany({
+		data = await prisma.returnEntry.findUnique({
+			where: {
+				id
+			},
 			include: {
 				images: true,
 				notes: true,
