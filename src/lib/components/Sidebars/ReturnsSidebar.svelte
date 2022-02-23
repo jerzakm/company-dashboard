@@ -2,7 +2,9 @@
 	import Button from '$lib/components/core/Button.svelte';
 	import Divider from '$lib/components/core/Divider.svelte';
 	import { post } from '$lib/core/api';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	import { _ } from 'svelte-i18n';
 
@@ -49,7 +51,9 @@
 			on:click={async () => {
 				try {
 					const addedReturn = await post('returns/new');
-					console.log(addedReturn);
+					dispatch('newReturnEvent', {
+						data: addedReturn.data
+					});
 				} catch (e) {
 					console.log(e);
 				}
