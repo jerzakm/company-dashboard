@@ -1,6 +1,4 @@
 <script>
-	import Layout from '$lib/components/Layout.svelte';
-	import ReturnsSidebar from '../_sidebar.svelte';
 	import { _ } from 'svelte-i18n';
 
 	import { get } from '$lib/core/api';
@@ -84,14 +82,7 @@
 	<title>{$_('returns.list.pageTitle')}</title>
 </svelte:head>
 
-<Layout>
-	<div slot="sidebar">
-		<ReturnsSidebar active="/returns/list" />
-	</div>
-	<div slot="content" class="w-full ">
-		<div bind:this={returnsListEl} id="returnsList" />
-	</div>
-</Layout>
+<div bind:this={returnsListEl} id="returnsList" />
 
 <style>
 </style>

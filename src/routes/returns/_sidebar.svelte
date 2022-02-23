@@ -1,5 +1,7 @@
 <script>
+	import Button from '$lib/components/core/Button.svelte';
 	import Divider from '$lib/components/core/Divider.svelte';
+	import { post } from '$lib/core/api';
 	import { onMount } from 'svelte';
 
 	import { _ } from 'svelte-i18n';
@@ -26,16 +28,9 @@
 			label: $_('returns.outlet.pageTitle')
 		}
 	];
-
-	onMount(() => {
-		const aEls = document.querySelectorAll('.sidebarlink');
-		const links = [];
-
-		const underline = document.querySelector('.underline');
-	});
 </script>
 
-<div class="space-y-4 bg-">
+<div class="space-y-4">
 	<div class="mx-4 space-y-2 ">
 		<div class="space-y-1 flex flex-col">
 			{#each links as { href, label }}
@@ -48,6 +43,19 @@
 		</div>
 	</div>
 	<Divider />
+	<div class="mx-4 space-y-2 ">
+		<Button
+			gradient
+			on:click={async () => {
+				try {
+					const addedReturn = await post('returns/new');
+					console.log(addedReturn);
+				} catch (e) {
+					console.log(e);
+				}
+			}}>{$_('returns.actions.addNewEntry')}</Button
+		>
+	</div>
 </div>
 
 <style>
