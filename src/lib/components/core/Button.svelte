@@ -1,9 +1,8 @@
 <script>
 	export let type = 'primary';
-	export let flat = false;
-	export let inverse = false;
 	export let size = 'normal';
 	export let fullwidth = false;
+	export let gradient = false;
 </script>
 
 <button
@@ -13,6 +12,7 @@
 	class:normal={size == 'normal'}
 	class:large={size == 'large'}
 	class:fullwidth
+	class:gradient
 	on:click
 >
 	<slot />
@@ -66,5 +66,43 @@
 
 	.fullwidth {
 		width: 100%;
+	}
+
+	.gradient {
+		outline: none;
+		border: none;
+		background: linear-gradient(
+			to left,
+			var(--primary-color),
+			var(--accent-color),
+			var(--secondary-color)
+		);
+	}
+	.gradient:hover {
+		color: var(--text-color-strong);
+	}
+	.gradient::after {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		bottom: -10px;
+		left: 5%;
+		height: 110%;
+		width: 90%;
+		opacity: 0.15;
+		border-radius: 50px;
+		background: inherit;
+		filter: blur(16px);
+		transition: all 0.2s;
+	}
+	.gradient:hover::after {
+		filter: blur(16px);
+		width: 100%;
+		opacity: 0.85;
+		bottom: -5px;
+		left: 0;
+	}
+	.gradient:hover:active::after {
+		filter: blur(10px);
 	}
 </style>
