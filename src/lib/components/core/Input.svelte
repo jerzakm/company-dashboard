@@ -22,11 +22,11 @@
 	{/if}
 	<label>
 		{#if type == 'password'}
-			<input {disabled} bind:value type="password" />
+			<input {disabled} bind:value type="password" on:change on:input />
 		{:else if type == 'number'}
-			<input {disabled} bind:value type="number" />
+			<input {disabled} bind:value type="number" on:change on:input />
 		{:else}
-			<input {disabled} bind:value type="text" />
+			<input {disabled} bind:value type="text" on:change on:input />
 		{/if}
 	</label>
 </div>
