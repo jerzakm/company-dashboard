@@ -4,10 +4,13 @@
 	export let disabled = false;
 	export let showPlaceholder = true;
 	export let type = 'text';
+	export let largeLabel = false;
 
 	let placeholderStyle = '';
 	if (!showPlaceholder) {
 		placeholderStyle = '0px auto';
+	} else if (showPlaceholder && largeLabel) {
+		placeholderStyle = '18px auto';
 	} else {
 		placeholderStyle = '15px auto';
 	}
@@ -15,7 +18,7 @@
 
 <div style="grid-template-rows: {placeholderStyle};" class={`${$$props.class}`}>
 	{#if showPlaceholder}
-		<span class="title">{placeholder}</span>
+		<span class={`title ${largeLabel ? 'largeLabel' : ''}`}>{placeholder}</span>
 	{/if}
 	<label>
 		{#if type == 'password'}
@@ -41,6 +44,12 @@
 		padding-left: 5px;
 		justify-self: left;
 		@apply -mb-10;
+	}
+	.largeLabel {
+		font-size: 14px;
+		opacity: 0.7;
+		transform: translateY(-2px);
+		color: var(--text-color-strong);
 	}
 	label {
 		display: inline-block;
