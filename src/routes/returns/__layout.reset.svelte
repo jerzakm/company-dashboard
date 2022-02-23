@@ -4,10 +4,10 @@
 
 	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
-	import ReturnsSidebar from './_sidebar.svelte';
 
 	export let sidebar = true;
 	import '$lib/locale/i18n';
+	import ReturnsSidebar from '$lib/components/Sidebars/ReturnsSidebar.svelte';
 	let user = null;
 
 	authStore.subscribe(async (u) => {
