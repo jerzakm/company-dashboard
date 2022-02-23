@@ -43,3 +43,15 @@ export const getUser = () => {
 
 	return user;
 };
+
+export const ApiPermission = {
+	products: {
+		get: 'products:get',
+		post: 'products:post'
+	},
+	returns: {
+		addNew: 'returnsNew:post',
+		get: 'returnsList:get',
+		edit: 'returnsList:edit'
+	}
+};

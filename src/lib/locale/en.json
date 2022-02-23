@@ -1,9 +1,19 @@
 {
-	"login": {
-		"pageTitle": "Log in",
-		"username": "User name",
-		"password": "Password",
-		"login": "Sign in",
-		"loginError": "Sign in error. Enter the correct username and password or contact the administrator."
-	}
+  "login": {
+    "pageTitle": "Log in",
+    "username": "User name",
+    "password": "Password",
+    "login": "Sign in",
+    "loginError": "Sign in error. Enter the correct username and password or contact the administrator."
+  },
+  "returns.main.pageTitle": "Returns",
+  "returns.locations.pageTitle": "By location",
+  "returns.outlet.pageTitle": "Outlet",
+  "returns.todo.pageTitle": "Require attention",
+  "returns.list.pageTitle": "List of returns",
+  "returns.list.table.date": "Date",
+  "returns.list.table.sender": "Sender",
+  "returns.list.table.products": "Products",
+  "returns.list.table.returnReason": "Return reason",
+  "returns.list.table.status": "Status"
 }

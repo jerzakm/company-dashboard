@@ -5,10 +5,12 @@
 :root {
 	--surface-border-light: #2a2a2a;
 	--text-color-light: #666;
-	--text-color-strong: #fff;
+	--text-color-strong: rgba(250, 250, 250, 0.95);
 	--background-color: #181818;
+	--surface-background-color: rgba(31, 31, 31);
 	--primary-color: rgb(255, 62, 0);
-	--secondary-color: pink;
+	--secondary-color: rgba(0, 62, 255, 1);
+	--accent-color: rgba(255, 0, 180, 1);
 	--error-color: rgb(255, 92, 92);
 }
 
@@ -21,4 +23,14 @@ body {
 * {
 	border-color: var(--surface-border-light);
 	letter-spacing: 0.025em;
+}
+
+h1 {
+	@apply text-4xl font-bold;
+}
+h2 {
+	@apply text-3xl font-bold;
+}
+h3 {
+	@apply text-2xl font-bold;
 }

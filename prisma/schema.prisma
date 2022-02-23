@@ -97,15 +97,15 @@ model PhysicalLocation {
 }
 
 model ReturnLocation {
-  id           String           @id @default(cuid())
+  id           String            @id @default(uuid())
   description  String
-  created_at   DateTime         @default(now())
+  created_at   DateTime          @default(now())
   userId       String
-  user         User             @relation(fields: [userId], references: [id])
-  product      ReturnProduct?   @relation(fields: [productId], references: [id])
-  productId    String           @unique
-  locationInfo PhysicalLocation @relation(fields: [locationId], references: [id])
-  locationId   String
+  user         User              @relation(fields: [userId], references: [id])
+  product      ReturnProduct?    @relation(fields: [productId], references: [id])
+  productId    String?           @unique
+  locationInfo PhysicalLocation? @relation(fields: [locationId], references: [id])
+  locationId   String?
 }
 
 model ReturnProduct {

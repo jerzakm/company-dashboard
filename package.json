@@ -30,6 +30,8 @@
 	"dependencies": {
 		"@prisma/client": "^3.9.2",
 		"autoprefixer": "^10.4.2",
+		"dayjs": "^1.10.7",
+		"handsontable": "^11.1.0",
 		"svelte-i18n": "^3.3.13",
 		"tailwindcss": "^3.0.23"
 	},

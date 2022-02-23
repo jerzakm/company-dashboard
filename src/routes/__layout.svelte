@@ -5,13 +5,10 @@
 	import { goto } from '$app/navigation';
 	import { authStore, checkStoredLogin } from '$lib/core/auth';
 	import { onMount } from 'svelte';
-	import Topbar from '$lib/components/Nav/Topbar.svelte';
-	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
 
 	import '$lib/locale/i18n';
 
 	let user = null;
-	let mounted = false;
 
 	authStore.subscribe(async (u) => {
 		user = u;
@@ -22,7 +19,6 @@
 	});
 
 	onMount(async () => {
-		mounted = true;
 		const verified = await checkStoredLogin();
 
 		if (!verified) goto('/login');
@@ -32,14 +28,6 @@
 <div class="flex h-full">
 	{#if user}
 		<SideIcons />
-		<Sidebar />
 	{/if}
-	<main class="w-full flex flex-col flex-1 overflow-x-hidden" style="max-height: 100vh;">
-		<Topbar {user} />
-		<div class="flex flex-col flex-1 overflow-y-auto">
-			<content class="flex-1 overflow-y-auto" style="max-height: 100vh;">
-				<slot />
-			</content>
-		</div>
-	</main>
+	<slot />
 </div>
