@@ -20,6 +20,7 @@
 
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import ProductsList from './_components/ProductsList.svelte';
 
 	export let id;
 
@@ -91,7 +92,9 @@
 		</Card>
 		<Card>
 			<span class="text-xl" slot="header">Products</span>
-			<div slot="content" class="flex flex-col gap-4">asd</div>
+			<div slot="content" class="flex flex-col gap-4">
+				<ProductsList {entry} />
+			</div>
 		</Card>
 		<Card>
 			<span class="text-xl" slot="header">Transaction & return details</span>

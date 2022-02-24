@@ -4,9 +4,6 @@
 	import { get } from '$lib/core/api';
 
 	import Handsontable from 'handsontable';
-	import 'handsontable/dist/handsontable.full.css';
-	import './_table.css';
-	import './_cellRenderers';
 	import { onMount } from 'svelte';
 
 	const getList = async () => {

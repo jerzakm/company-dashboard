@@ -1,7 +1,11 @@
 <script>
+	// Table imports - it's used in every route
+	import 'handsontable/dist/handsontable.full.css';
+	import '$lib/table/_table.css';
+	import '$lib/table/_cellRenderers';
+
 	import CoreLayout from '$lib/components/Layout/CoreLayout.svelte';
 	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
-
 	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
 
