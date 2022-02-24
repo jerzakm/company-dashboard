@@ -16,6 +16,7 @@
 	import Input from '$lib/components/core/Input.svelte';
 	import { get, put } from '$lib/core/api';
 	import { debounce } from '$lib/util/debounce';
+	import { formatToDateHour } from '$lib/util/time';
 
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
@@ -35,6 +36,7 @@
 	onMount(async () => {
 		const { data } = await get(`returns/list/${id}`);
 		entry = data;
+		console.log(entry);
 	});
 </script>
 
@@ -44,7 +46,12 @@
 
 {#if entry}
 	<div class="w-full flex flex-col p-4 gap-6">
-		<span>Return entry</span>
+		<div class="flex justify-between items-center">
+			<span>Return entry</span>
+			<span class="text-[color:var(--text-color-light)] text-sm"
+				>{formatToDateHour(entry.created_at)}</span
+			>
+		</div>
 		<h1 class="-mt-6">#{id}</h1>
 		<Card>
 			<span class="text-xl" slot="header">Sender</span>
