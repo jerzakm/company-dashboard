@@ -18,6 +18,7 @@
 	import { debounce } from '$lib/util/debounce';
 
 	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	export let id;
 
@@ -36,6 +37,10 @@
 		entry = data;
 	});
 </script>
+
+<svelte:head>
+	<title>{$_('returns.entry.pageTitle')} #{id}</title>
+</svelte:head>
 
 {#if entry}
 	<div class="w-full flex flex-col p-4 gap-6">
@@ -76,6 +81,14 @@
 					/>
 				</div>
 			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">Products</span>
+			<div slot="content" class="flex flex-col gap-4">asd</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">Transaction & return details</span>
+			<div slot="content" class="flex flex-col gap-4">asd</div>
 		</Card>
 	</div>
 {/if}
