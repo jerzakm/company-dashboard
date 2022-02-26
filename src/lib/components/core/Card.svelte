@@ -2,7 +2,7 @@
 	import Divider from './Divider.svelte';
 </script>
 
-<card>
+<card class={$$props.class}>
 	{#if $$slots.header}
 		<div class="py-2">
 			<slot name="header" />
