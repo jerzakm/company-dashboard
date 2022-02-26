@@ -20,11 +20,15 @@
 
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import AddProduct from './_components/AddProduct.svelte';
 	import ProductsList from './_components/ProductsList.svelte';
-
+	import Modal from '$lib/components/core/Modal.svelte';
+	import Button from '$lib/components/core/Button.svelte';
 	export let id;
 
 	let entry;
+
+	let showAddProductModal;
 
 	async function saveSender() {
 		const changedSender = await put('returns/edit/sender', entry.sender);
@@ -46,10 +50,10 @@
 </svelte:head>
 
 {#if entry}
-	<div class="w-full flex flex-col p-4 gap-6">
-		<div class="flex justify-between items-center">
+	<div class="flex w-full flex-col gap-6 p-4">
+		<div class="flex items-center justify-between">
 			<span>Return entry</span>
-			<span class="text-[color:var(--text-color-light)] text-sm"
+			<span class="text-sm text-[color:var(--text-color-light)]"
 				>{formatToDateHour(entry.created_at)}</span
 			>
 		</div>
@@ -92,8 +96,12 @@
 		</Card>
 		<Card>
 			<span class="text-xl" slot="header">Products</span>
-			<div slot="content" class="flex flex-col gap-4">
+			<div slot="content" class="flex flex-col gap-4 ">
 				<ProductsList {entry} />
+				<Modal title="Add a new product" bind:showModal={showAddProductModal}>
+					<AddProduct {entry} />
+				</Modal>
+				<Button on:click={() => (showAddProductModal = true)}>Add</Button>
 			</div>
 		</Card>
 		<Card>

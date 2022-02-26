@@ -74,7 +74,7 @@
 		</div>
 	</div>
 
-	<main class="w-full flex flex-col flex-1 overflow-x-hidden z-10" style="max-height: 100vh;">
+	<main class="z-10 flex w-full flex-1 flex-col overflow-x-hidden" style="max-height: 100vh;">
 		<Topbar {user} />
 
 		<content class="flex flex-1 overflow-y-auto " style="max-height: 100vh;">
@@ -97,7 +97,7 @@
 		@apply z-40;
 	}
 	.notification-bg {
-		@apply h-full w-full absolute;
+		@apply absolute h-full w-full;
 		background-color: var(--text-color-strong);
 		opacity: 0.03;
 	}

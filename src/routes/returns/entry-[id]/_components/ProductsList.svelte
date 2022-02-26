@@ -17,12 +17,13 @@
 		const productsTable = new Handsontable(productsTableEl, {
 			data: products,
 			rowHeaders: false,
-			colHeaders: ['#', 'Symbol', 'Name', 'Group', 'Actions'],
+			colHeaders: ['#', 'Symbol', 'Name', 'Group', 'Notes', 'Actions'],
 			columns: [
 				{ data: 'index' },
 				{ data: 'symbol' },
 				{ data: 'name' },
 				{ data: 'group' },
+				{ data: 'description' },
 				{ data: '' }
 			],
 			height: 'auto',
