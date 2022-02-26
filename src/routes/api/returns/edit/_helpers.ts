@@ -57,11 +57,26 @@ export const updateSender = async (data: ReturnSender) => {
 	}
 };
 
-export const addProduct = async (data: ReturnProduct, userId: string, returnId: number) => {
+export const addProduct = async (
+	productId: string,
+	userId: string,
+	returnId: number,
+	quantity = 1
+) => {
 	try {
+		const { group, name, symbol, buyPrice } = await prisma.product.findUnique({
+			where: { id: productId }
+		});
+
 		return await prisma.returnProduct.create({
 			data: {
-				...data
+				description: '',
+				group,
+				name,
+				price: buyPrice,
+				quantity,
+				symbol,
+				returnId
 			}
 		});
 	} catch (e) {
