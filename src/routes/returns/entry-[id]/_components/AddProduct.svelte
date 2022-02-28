@@ -1,13 +1,14 @@
 <script lang="ts">
 	// Components
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 	import Handsontable from 'handsontable';
 	import { get, post } from '$lib/core/api';
 	import Input from '$lib/components/core/Input.svelte';
 
+	export let entry;
 	let addProductTableEl;
 
-	export let entry;
+	const dispatch = createEventDispatcher();
 
 	onMount(async () => {
 		const { data } = await get('products');
@@ -35,9 +36,18 @@
 		});
 
 		productsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
-			const product = productsTable.getDataAtRow(coords.row);
-			console.log(product);
-			await post('returns/edit/products', { productId: product[2], returnId: entry.id });
+			try {
+				const product = productsTable.getDataAtRow(coords.row);
+				const response = await post('returns/edit/products', {
+					productId: product[2],
+					returnId: entry.id
+				});
+				dispatch('newProductAdded', {
+					product: response.data
+				});
+			} catch (e) {
+				console.log(e);
+			}
 		});
 
 		productsTable.addHook('afterOnCellMouseOver', async (event, coords, TD) => {

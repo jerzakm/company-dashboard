@@ -8,14 +8,22 @@
 
 	let productsTableEl;
 
-	onMount(() => {
+	let productsTable;
+
+	$: productsTable && entry && updateData();
+
+	const updateData = () => {
+		console.log(entry);
 		const products = sortByCreatedAt([...entry.products], true).map((p, i) => {
 			p.index = i;
 			return p;
 		});
+		productsTable.updateData(products);
+	};
 
-		const productsTable = new Handsontable(productsTableEl, {
-			data: products,
+	onMount(() => {
+		productsTable = new Handsontable(productsTableEl, {
+			data: [],
 			rowHeaders: false,
 			colHeaders: ['#', 'Symbol', 'Name', 'Group', 'Notes', 'Actions'],
 			columns: [

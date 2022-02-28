@@ -3,33 +3,36 @@
 	 * @type {import('@sveltejs/kit').Load}
 	 */
 	export async function load({ params }) {
+		const { data } = await get(`returns/list/${params.id}`);
+
 		return {
 			props: {
-				id: params.id
+				id: params.id,
+				data
 			}
 		};
 	}
 </script>
 
-<script>
+<script lang="ts">
 	import Card from '$lib/components/core/Card.svelte';
 	import Input from '$lib/components/core/Input.svelte';
 	import { get, put } from '$lib/core/api';
 	import { debounce } from '$lib/util/debounce';
 	import { formatToDateHour } from '$lib/util/time';
-
-	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import AddProduct from './_components/AddProduct.svelte';
 	import ProductsList from './_components/ProductsList.svelte';
 	import Modal from '$lib/components/core/Modal.svelte';
 	import Button from '$lib/components/core/Button.svelte';
 	export let id;
+	export let data;
 
-	let entry;
+	let entry: any = data;
 
-	let showAddProductModal;
+	$: id && getEntryData();
 
+	// update sender
 	async function saveSender() {
 		const changedSender = await put('returns/edit/sender', entry.sender);
 		if (changedSender.data) {
@@ -38,18 +41,24 @@
 	}
 	const senderChange = debounce(() => saveSender(), 500);
 
-	onMount(async () => {
+	// Add new product
+	let showAddProductModal;
+	const newProductAdded = async () => {
+		await getEntryData();
+		showAddProductModal = false;
+	};
+
+	const getEntryData = async () => {
 		const { data } = await get(`returns/list/${id}`);
 		entry = data;
-		console.log(entry);
-	});
+	};
 </script>
 
 <svelte:head>
 	<title>{$_('returns.entry.pageTitle')} #{id}</title>
 </svelte:head>
 
-{#if entry}
+{#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
 		<div class="flex items-center justify-between">
 			<span>Return entry</span>
@@ -99,7 +108,12 @@
 			<div slot="content" class="flex flex-col gap-4 ">
 				<ProductsList {entry} />
 				<Modal title="Add a new product" bind:showModal={showAddProductModal}>
-					<AddProduct {entry} />
+					<AddProduct
+						{entry}
+						on:newProductAdded={async () => {
+							await newProductAdded();
+						}}
+					/>
 				</Modal>
 				<Button on:click={() => (showAddProductModal = true)}>Add</Button>
 			</div>
