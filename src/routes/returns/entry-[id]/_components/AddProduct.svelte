@@ -31,13 +31,17 @@
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
 			readOnly: true,
-			disableVisualSelection: true
+			disableVisualSelection: false
 		});
 
 		productsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
 			const product = productsTable.getDataAtRow(coords.row);
 			console.log(product);
 			await post('returns/edit/products', { productId: product[2], returnId: entry.id });
+		});
+
+		productsTable.addHook('afterOnCellMouseOver', async (event, coords, TD) => {
+			productsTable.selectRows(coords.row);
 		});
 	});
 </script>
