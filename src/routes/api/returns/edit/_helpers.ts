@@ -155,21 +155,31 @@ export const createReturnEvent = async (returnId, userId, type, description, dif
 	}
 };
 
-export const updateSaleSource = async (data) => {
-	console.log(data);
+export const updateSaleSource = async (returnId: number, saleSourceId: string | undefined) => {
 	try {
-		return await prisma.returnEntry.update({
-			where: {
-				id: data.returnId
-			},
-			data: {
-				saleSource: {
-					connect: {
-						id: data.saleSource.id
+		if (saleSourceId) {
+			return await prisma.returnEntry.update({
+				where: {
+					id: returnId
+				},
+				data: {
+					saleSource: {
+						connect: {
+							id: saleSourceId
+						}
 					}
 				}
-			}
-		});
+			});
+		} else {
+			return await prisma.returnEntry.update({
+				where: { id: returnId },
+				data: {
+					saleSource: {
+						disconnect: true
+					}
+				}
+			});
+		}
 	} catch (e) {
 		console.log(e);
 		return null;
