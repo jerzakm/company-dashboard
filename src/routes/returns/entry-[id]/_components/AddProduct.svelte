@@ -7,13 +7,41 @@
 
 	export let entry;
 	let addProductTableEl;
+	let searchQuery = '';
 
 	const dispatch = createEventDispatcher();
 
-	onMount(async () => {
-		const { data } = await get('products');
+	let data = [];
+	let filteredData = [];
+	let productsTable;
 
-		const productsTable = new Handsontable(addProductTableEl, {
+	const searchProduct = (query: string) => {
+		function filterQuery(entry) {
+			let result = true;
+
+			// find entry with ALL of the space or comma separated words in a query and remove whitespace
+			query
+				.split(/[ ,]+/)
+				.filter(Boolean)
+				// query.split(' ').
+				.map((phrase) => {
+					const match = JSON.stringify(entry).toLowerCase().includes(phrase.toLowerCase());
+					if (!match) result = false;
+				});
+
+			return result;
+		}
+
+		filteredData = data.filter(filterQuery);
+		productsTable.updateData(filteredData);
+	};
+
+	$: productsTable && searchProduct(searchQuery);
+
+	onMount(async () => {
+		data = (await get('products')).data;
+
+		productsTable = new Handsontable(addProductTableEl, {
 			data,
 			rowHeaders: false,
 			colHeaders: ['Symbol', 'Name', ''],
@@ -56,5 +84,5 @@
 	});
 </script>
 
-<Input placeholder="Search" class="mb-4 mr-1" />
+<Input placeholder="Search" class="mb-4 mr-1" bind:value={searchQuery} />
 <div bind:this={addProductTableEl} id="returnsList" />
