@@ -25,6 +25,7 @@
 	import ProductsList from './_components/ProductsList.svelte';
 	import Modal from '$lib/components/core/Modal.svelte';
 	import Button from '$lib/components/core/Button.svelte';
+	import TransactionDetails from './_components/TransactionDetails.svelte';
 	export let id;
 	export let data;
 
@@ -51,6 +52,7 @@
 	const getEntryData = async () => {
 		const { data } = await get(`returns/list/${id}`);
 		entry = data;
+		console.log(entry);
 	};
 </script>
 
@@ -120,7 +122,9 @@
 		</Card>
 		<Card>
 			<span class="text-xl" slot="header">Transaction & return details</span>
-			<div slot="content" class="flex flex-col gap-4">asd</div>
+			<div slot="content" class="flex flex-col gap-4">
+				<TransactionDetails {entry} />
+			</div>
 		</Card>
 	</div>
 {/if}

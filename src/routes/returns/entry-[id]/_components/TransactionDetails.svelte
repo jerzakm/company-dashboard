@@ -1,40 +1,52 @@
 <script>
+	import Input from '$lib/components/core/Input.svelte';
+
 	import { get, post } from '$lib/core/api';
+	import { debounce } from '$lib/util/debounce';
 
 	import { onMount } from 'svelte';
 
 	import Select from 'svelte-select';
 	export let entry;
 
-	let items = [];
+	// SALE SOURCE
+	let saleSources = [];
+	let saleSourceValue;
 
-	let value;
-
-	async function handleSelect(event) {
+	async function updateSaleSource(event) {
 		await post('returns/edit/saleSource', { returnId: entry.id, saleSourceId: event.detail.value });
 	}
 
-	async function handleClear() {
+	async function removeSaleSource() {
 		await post('returns/edit/saleSource', { returnId: entry.id, saleSourceId: undefined });
 	}
 
 	function displaySaleSource() {
-		const i = items.findIndex((r) => {
+		const i = saleSources.findIndex((r) => {
 			return r.value == entry.saleSourceId;
 		});
 
 		if (i >= 0) {
-			value = items[i];
+			saleSourceValue = saleSources[i];
 		}
 	}
 
-	$: items && entry && displaySaleSource();
+	$: saleSources && entry && displaySaleSource();
+
+	// SALE DOCUMENT
+	async function saveSaleDocument() {
+		const changedDocuments = await post('returns/edit/saleDocument', {
+			saleDocument: entry.saleDocument,
+			returnId: entry.id
+		});
+	}
+	const saleDocumentChange = debounce(() => saveSaleDocument(), 500);
 
 	onMount(async () => {
-		const { data } = await get('returns/saleSources');
+		const { data } = await get('returns/dictionary');
+
 		const sources = [];
-		console.log(data);
-		data.map((s) => {
+		data.saleSources.map((s) => {
 			sources.push({
 				value: s.id,
 				label: `${s.subCategory ? s.subCategory : s.name}`,
@@ -42,35 +54,39 @@
 			});
 		});
 
-		items = sources;
-		// value = sources[0];
+		saleSources = sources;
 	});
 
 	const groupBy = (item) => item.group;
 </script>
 
-<div class="themed grid grid-cols-4">
+<div class="selectTheme transactionDetailsGrid">
 	<span>Sale source</span>
 	<div>
 		<Select
-			{items}
-			{value}
-			on:select={handleSelect}
-			on:clear={handleClear}
-			containerClasses="test"
+			items={saleSources}
+			value={saleSourceValue}
+			on:select={updateSaleSource}
+			on:clear={removeSaleSource}
 			{groupBy}
 		/>
 	</div>
 	<span>Return reason</span>
-	<span>x</span>
+	<span />
 	<span>Sale document</span>
-	<span>x</span>
+	<div>
+		<Input
+			bind:value={entry.saleDocument}
+			on:change={() => saleDocumentChange()}
+			on:input={() => saleDocumentChange()}
+		/>
+	</div>
 	<span>Status</span>
 	<span>{entry.resolved}</span>
 </div>
 
 <style>
-	.themed {
+	.selectTheme {
 		--border: 1px solid var(--text-color-light);
 		--borderRadius: 10px;
 		--placeholderColor: var(--text-color-strong);
@@ -86,5 +102,9 @@
 		--borderHoverColor: var(--text-color-strong);
 		--itemHoverColor: var(--background-color);
 		--itemHoverBG: var(--text-color-strong);
+	}
+	.transactionDetailsGrid {
+		grid-template-columns: auto 1fr auto 1fr;
+		@apply grid items-center gap-x-16 gap-y-2;
 	}
 </style>

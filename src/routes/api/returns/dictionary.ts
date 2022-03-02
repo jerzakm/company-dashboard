@@ -14,7 +14,9 @@ export async function get({ request }) {
 	const permission = await tokenHasPermission(authorization, ApiPermission.returns.get);
 
 	try {
-		data = await prisma.saleSource.findMany({});
+		const saleSources = await prisma.saleSource.findMany({});
+		const returnReasons = await prisma.returnReason.findMany({});
+		data = { saleSources, returnReasons };
 	} catch (e) {
 		console.log(e);
 	}

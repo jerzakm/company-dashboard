@@ -13,7 +13,6 @@
 	$: productsTable && entry && updateData();
 
 	const updateData = () => {
-		console.log(entry);
 		const products = sortByCreatedAt([...entry.products], true).map((p, i) => {
 			p.index = i;
 			return p;

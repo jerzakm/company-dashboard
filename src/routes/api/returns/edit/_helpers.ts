@@ -186,6 +186,23 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 	}
 };
 
+export const updateSaleDocument = async (returnId: any, saleDocument: string) => {
+	try {
+		if (!saleDocument) saleDocument = '';
+		return await prisma.returnEntry.update({
+			where: {
+				id: parseInt(returnId)
+			},
+			data: {
+				saleDocument
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export interface IReturnEntryBasic {
 	city: string;
 	country: string;
