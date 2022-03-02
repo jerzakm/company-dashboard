@@ -33,6 +33,33 @@
 
 	$: saleSources && entry && displaySaleSource();
 
+	// RETURN REASON
+	let returnReasons = [];
+	let returnReasonValue;
+
+	async function updateReturnReason(event) {
+		await post('returns/edit/returnReason', {
+			returnId: entry.id,
+			returnReasonId: event.detail.value
+		});
+	}
+
+	async function removeReturnReason() {
+		await post('returns/edit/returnReason', { returnId: entry.id, returnReasonId: undefined });
+	}
+
+	function displayReturnReason() {
+		const i = returnReasons.findIndex((r) => {
+			return r.value == entry.returnReasonId;
+		});
+
+		if (i >= 0) {
+			returnReasonValue = returnReasons[i];
+		}
+	}
+
+	$: returnReasons && entry && displayReturnReason();
+
 	// SALE DOCUMENT
 	async function saveSaleDocument() {
 		const changedDocuments = await post('returns/edit/saleDocument', {
@@ -54,7 +81,18 @@
 			});
 		});
 
-		saleSources = sources;
+		console.log(data);
+
+		const reasons = [];
+		data.returnReasons.map((r) => {
+			reasons.push({
+				value: r.id,
+				label: `${r.reason}`,
+				group: r.category
+			});
+		});
+
+		returnReasons = reasons;
 	});
 
 	const groupBy = (item) => item.group;
@@ -72,7 +110,15 @@
 		/>
 	</div>
 	<span>Return reason</span>
-	<span />
+	<div>
+		<Select
+			items={returnReasons}
+			value={returnReasonValue}
+			on:select={updateReturnReason}
+			on:clear={removeReturnReason}
+			{groupBy}
+		/>
+	</div>
 	<span>Sale document</span>
 	<div>
 		<Input

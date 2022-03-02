@@ -186,6 +186,37 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 	}
 };
 
+export const updateReturnReason = async (returnId: number, returnReasonId: string | undefined) => {
+	try {
+		if (returnReasonId) {
+			return await prisma.returnEntry.update({
+				where: {
+					id: returnId
+				},
+				data: {
+					returnReason: {
+						connect: {
+							id: returnReasonId
+						}
+					}
+				}
+			});
+		} else {
+			return await prisma.returnEntry.update({
+				where: { id: returnId },
+				data: {
+					returnReason: {
+						disconnect: true
+					}
+				}
+			});
+		}
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export const updateSaleDocument = async (returnId: any, saleDocument: string) => {
 	try {
 		if (!saleDocument) saleDocument = '';
