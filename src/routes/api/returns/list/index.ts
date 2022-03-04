@@ -16,7 +16,6 @@ export async function get({ params, request }) {
 	try {
 		data = await prisma.returnEntry.findMany({
 			include: {
-				images: true,
 				notes: true,
 				products: true,
 				returnReason: true,

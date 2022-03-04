@@ -21,7 +21,18 @@ export async function get({ params, request }) {
 				id
 			},
 			include: {
-				images: true,
+				images: {
+					select: {
+						user: {
+							select: {
+								name: true
+							}
+						},
+						created_at: true,
+						extension: true,
+						id: true
+					}
+				},
 				notes: true,
 				products: true,
 				returnReason: true,

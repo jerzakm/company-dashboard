@@ -2,6 +2,7 @@
 	import Button from '$lib/components/core/Button.svelte';
 
 	import { post } from '$lib/core/api';
+	import { formatToDateHour } from '$lib/util/time';
 
 	import { createEventDispatcher, onMount } from 'svelte';
 
@@ -33,8 +34,14 @@
 {#if entry}
 	<div class="masonry">
 		{#each entry.images as image}
-			<figure>
-				<img src={`/api/images/${image.id}.${image.extension}`} alt="image" />
+			<figure class="flex flex-col items-center">
+				<img
+					src={`/api/images/${image.id}.${image.extension}`}
+					alt={`product or packaging image for return ${entry.id} - ${image.description}`}
+				/>
+				<span class="mt-1 px-2 text-xs text-[color:var(--text-color-light)]"
+					>Added by <b>{image.user.name}</b> on {formatToDateHour(image.created_at)}</span
+				>
 			</figure>
 		{/each}
 	</div>
