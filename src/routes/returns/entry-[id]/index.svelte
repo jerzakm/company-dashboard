@@ -26,6 +26,7 @@
 	import Modal from '$lib/components/core/Modal.svelte';
 	import Button from '$lib/components/core/Button.svelte';
 	import TransactionDetails from './_components/TransactionDetails.svelte';
+	import ImageGallery from './_components/ImageGallery.svelte';
 	export let id;
 	export let data;
 
@@ -59,6 +60,8 @@
 <svelte:head>
 	<title>{$_('returns.entry.pageTitle')} #{id}</title>
 </svelte:head>
+
+<!-- <img src="http://localhost:3030/image/example/jpg" /> -->
 
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
@@ -103,6 +106,12 @@
 						on:input={() => senderChange()}
 					/>
 				</div>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">Images</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<ImageGallery {entry} />
 			</div>
 		</Card>
 		<Card>

@@ -81,8 +81,6 @@
 			});
 		});
 
-		console.log(data);
-
 		const reasons = [];
 		data.returnReasons.map((r) => {
 			reasons.push({
