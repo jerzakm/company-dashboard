@@ -16,7 +16,7 @@ export async function get({ params }) {
 		status,
 		body,
 		headers: {
-			'Content-Type': 'image/png',
+			'Content-Type': 'image/*',
 			'Cache-Control': 'max-age=31536000, immutable'
 		}
 	};

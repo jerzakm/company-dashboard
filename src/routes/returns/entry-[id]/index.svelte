@@ -111,7 +111,12 @@
 		<Card>
 			<span class="text-xl" slot="header">Images</span>
 			<div slot="content" class="flex flex-col gap-4">
-				<ImageGallery {entry} />
+				<ImageGallery
+					{entry}
+					on:newImageAdded={() => {
+						getEntryData();
+					}}
+				/>
 			</div>
 		</Card>
 		<Card>

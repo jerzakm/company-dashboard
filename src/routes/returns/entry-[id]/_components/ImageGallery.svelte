@@ -3,13 +3,12 @@
 
 	import { post } from '$lib/core/api';
 
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	export let entry;
 
-	onMount(() => {
-		//
-	});
+	const dispatch = createEventDispatcher();
+
 	let fileinput;
 
 	const onFileSelected = (e) => {
@@ -17,10 +16,16 @@
 		let reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = async (e) => {
-			await post('images', {
-				returnId: entry.id,
-				data: e.target.result
-			});
+			try {
+				const response = await post('images', {
+					returnId: entry.id,
+					data: e.target.result
+				});
+				dispatch('newImageAdded');
+				fileinput.value = '';
+			} catch (e) {
+				console.log(e);
+			}
 		};
 	};
 </script>
@@ -29,7 +34,7 @@
 	<div class="masonry">
 		{#each entry.images as image}
 			<figure>
-				<img src={`/api/images/${image.id}.${image.description}`} alt="image" />
+				<img src={`/api/images/${image.id}.${image.extension}`} alt="image" />
 			</figure>
 		{/each}
 	</div>

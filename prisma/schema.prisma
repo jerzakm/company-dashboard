@@ -124,6 +124,7 @@ model ReturnProduct {
 model ReturnImage {
   id          String      @id @default(cuid())
   imgSrc      String
+  extension   String
   description String
   created_at  DateTime    @default(now())
   userId      String
