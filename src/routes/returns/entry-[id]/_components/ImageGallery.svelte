@@ -95,23 +95,16 @@
 			</figure>
 		{/each}
 	</div>
-	<Button gradient size="large" fullwidth>
-		<img
-			class="icon mr-2 "
-			src="/icons/takePhoto.png"
-			alt=""
-			on:click={() => {
-				fileinput.click();
-			}}
-		/>
-		<div
-			class="ml-2"
-			on:click={() => {
-				fileinput.click();
-			}}
-		>
-			Add another
-		</div>
+	<Button
+		gradient
+		size="large"
+		fullwidth
+		on:click={() => {
+			fileinput.click();
+		}}
+	>
+		<img class="icon mr-2 " src="/icons/takePhoto.png" alt="" />
+		<div class="ml-2">Add another</div>
 		<input
 			style="display:none"
 			type="file"

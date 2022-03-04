@@ -39,16 +39,27 @@ export async function post({ request }) {
 
 	// if saving file fails, remove DB entry
 	try {
-		fs.writeFileSync(`data/images/${returnImage.id}.${extension}`, base64Data, 'base64');
-		const img = Buffer.from(base64Data, 'base64');
-		const size = 400;
+		const imageBuffer = Buffer.from(base64Data, 'base64');
 
-		const resizedImageBuffer = await sharp(img).resize(size, size, { fit: 'inside' }).toBuffer();
+		// MINI
+		const miniatureSize = 400;
+		const miniatureImageBuffer = await sharp(imageBuffer)
+			.resize(miniatureSize, miniatureSize, { fit: 'inside' })
+			.toBuffer();
+		const miniatureImageData = miniatureImageBuffer.toString('base64');
 
-		const resizedImageData = resizedImageBuffer.toString('base64');
+		// NORMAL
+		const imageSize = 2500;
+		const normalImageBuffer = await sharp(imageBuffer)
+			.resize(imageSize, imageSize, { fit: 'inside' })
+			.toBuffer();
+		const normalImageData = normalImageBuffer.toString('base64');
+
+		// SAVE FILES
+		fs.writeFileSync(`data/images/${returnImage.id}.${extension}`, normalImageData, 'base64');
 		fs.writeFileSync(
-			`data/images/${returnImage.id}_${size}.${extension}`,
-			resizedImageData,
+			`data/images/${returnImage.id}_${miniatureSize}.${extension}`,
+			miniatureImageData,
 			'base64'
 		);
 	} catch (e) {
