@@ -86,7 +86,7 @@
 				}}
 			>
 				<img
-					src={`/api/images/${image.id}.${image.extension}`}
+					src={`/api/images/${image.id}_400.${image.extension}`}
 					alt={`product or packaging image for return ${entry.id} - ${image.description}`}
 				/>
 				<span class="mt-1 px-2 text-xs text-[color:var(--text-color-light)]"

@@ -1,6 +1,7 @@
 import { ApiPermission } from '$lib/core/auth';
 import fs from 'fs';
 import { prisma, tokenHasPermission } from '../_prisma';
+import sharp from 'sharp';
 
 export async function post({ request }) {
 	const authorization = await request.headers.get('authorization');
@@ -39,6 +40,17 @@ export async function post({ request }) {
 	// if saving file fails, remove DB entry
 	try {
 		fs.writeFileSync(`data/images/${returnImage.id}.${extension}`, base64Data, 'base64');
+		const img = Buffer.from(base64Data, 'base64');
+		const size = 400;
+
+		const resizedImageBuffer = await sharp(img).resize(size, size, { fit: 'inside' }).toBuffer();
+
+		const resizedImageData = resizedImageBuffer.toString('base64');
+		fs.writeFileSync(
+			`data/images/${returnImage.id}_${size}.${extension}`,
+			resizedImageData,
+			'base64'
+		);
 	} catch (e) {
 		await prisma.returnImage.delete({ where: { id: returnImage.id } });
 		return { status: 500 };
