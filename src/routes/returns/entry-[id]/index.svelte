@@ -27,6 +27,7 @@
 	import Button from '$lib/components/core/Button.svelte';
 	import TransactionDetails from './_components/TransactionDetails.svelte';
 	import ImageGallery from './_components/ImageGallery.svelte';
+	import Notes from './_components/Notes.svelte';
 	export let id;
 	export let data;
 
@@ -72,6 +73,7 @@
 			>
 		</div>
 		<h1 class="-mt-6">#{id}</h1>
+
 		<Card>
 			<span class="text-xl" slot="header">Sender</span>
 			<div slot="content" class="flex flex-col gap-4">
@@ -144,6 +146,17 @@
 			<span class="text-xl" slot="header">Transaction & return details</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<TransactionDetails {entry} />
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">Notes</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Notes
+					{entry}
+					on:noteAdded={() => {
+						getEntryData();
+					}}
+				/>
 			</div>
 		</Card>
 	</div>

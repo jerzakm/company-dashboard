@@ -33,7 +33,15 @@ export async function get({ params, request }) {
 						id: true
 					}
 				},
-				notes: true,
+				notes: {
+					include: {
+						user: {
+							select: {
+								name: true
+							}
+						}
+					}
+				},
 				products: {
 					select: {
 						description: true,
