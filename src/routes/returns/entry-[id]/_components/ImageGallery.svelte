@@ -62,7 +62,6 @@
 						modalImageIndex > 0
 							? (modalImageIndex = modalImageIndex - 1)
 							: (modalImageIndex = entry.images.length - 1);
-						console.log(modalImageIndex);
 					}}>&lt Previous</Button
 				>
 				<Button
@@ -70,7 +69,6 @@
 						modalImageIndex < entry.images.length - 1
 							? (modalImageIndex = modalImageIndex + 1)
 							: (modalImageIndex = 0);
-						console.log(modalImageIndex);
 					}}>Next &gt</Button
 				>
 			</div>

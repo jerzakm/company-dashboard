@@ -70,3 +70,57 @@ export async function post({ request }) {
 		body
 	};
 }
+
+export async function del({ request }) {
+	let status = 400;
+
+	const authorization = await request.headers.get('authorization');
+	if (!authorization) {
+		return {
+			status: 401
+		};
+	}
+	const permission = await tokenHasPermission(authorization, ApiPermission.returns.edit);
+
+	if (!permission.granted) {
+		status = 401;
+		return { status };
+	}
+
+	const body = {
+		data: {},
+		err: {}
+	};
+
+	try {
+		const { returnProductId } = await request.json();
+
+		const currentLocation = await prisma.returnLocation.findFirst({
+			where: {
+				productId: returnProductId
+			}
+		});
+
+		if (currentLocation) {
+			await prisma.returnLocation.delete({
+				where: {
+					id: currentLocation.id
+				}
+			});
+		}
+
+		// const returnReasonUpdate = await updateReturnReason(returnId, returnReasonId);
+
+		// body.data = returnReasonUpdate;
+
+		status = 200;
+	} catch (e) {
+		console.log(e);
+		// createAppLogEntry(AppLogStatus.CRITICAL, JSON.stringify(e), permission.userId);
+	}
+
+	return {
+		status,
+		body
+	};
+}

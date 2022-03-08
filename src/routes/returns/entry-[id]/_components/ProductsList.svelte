@@ -1,10 +1,10 @@
 <script>
-	import { get, post } from '$lib/core/api';
+	import { del, get, post } from '$lib/core/api';
 
 	import { sortByCreatedAt } from '$lib/util/sort';
 
 	import Handsontable from 'handsontable';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	export let entry;
 
@@ -13,6 +13,8 @@
 	let productsTable;
 
 	$: productsTable && entry && updateData();
+
+	const dispatch = createEventDispatcher();
 
 	const updateData = () => {
 		const products = sortByCreatedAt([...entry.products], true).map((p, i) => {
@@ -51,7 +53,12 @@
 									const row = selection[0].start.row;
 									const rowData = productsTable.getDataAtRow(row);
 									const returnProductId = rowData[6];
-									await post('returns/edit/location', { returnProductId, locationId: loc.id });
+									try {
+										await post('returns/edit/location', { returnProductId, locationId: loc.id });
+										dispatch('locationChanged');
+									} catch (e) {
+										console.log(e);
+									}
 								}, 0);
 							}
 						};
@@ -62,28 +69,34 @@
 		items.clearLocation = {
 			name: 'Clear location',
 			callback(key, selection, clickEvent) {
-				setTimeout(() => {
-					alert('clearing loc');
+				setTimeout(async () => {
+					const row = selection[0].start.row;
+					const rowData = productsTable.getDataAtRow(row);
+					const returnProductId = rowData[6];
+					setTimeout(async () => {
+						try {
+							await del('returns/edit/location', { returnProductId });
+							dispatch('locationChanged');
+						} catch (e) {
+							console.log(e);
+						}
+					}, 0);
 				}, 0);
 			}
 		};
 
 		items.sp1 = '---------';
 
-		items.remove = {
-			// Own custom option
-			name() {
-				// `name` can be a string or a function
-				return 'Remove'; // Name can contain HTML
-			},
-			callback(key, selection, clickEvent) {
-				// Callback for specific option
-				const row = selection[0].start.row;
-				setTimeout(() => {
-					console.log(row);
-				}, 0);
-			}
-		};
+		// items.remove = {
+		// 	// Own custom option
+		// 	name() {
+		// 		// `name` can be a string or a function
+		// 		return 'Remove'; // Name can contain HTML
+		// 	},
+		// 	callback(key, selection, clickEvent) {
+		// 		// Callback for specific option
+		// 	}
+		// };
 
 		function productLocationRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
 			td.innerHTML = value ? `${value.locationInfo.subName} - ${value?.locationInfo.name}` : '';

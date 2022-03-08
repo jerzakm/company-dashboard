@@ -122,7 +122,12 @@
 		<Card>
 			<span class="text-xl" slot="header">Products</span>
 			<div slot="content" class="flex flex-col gap-4 ">
-				<ProductsList {entry} />
+				<ProductsList
+					{entry}
+					on:locationChanged={() => {
+						getEntryData();
+					}}
+				/>
 				<Modal title="Add a new product" bind:showModal={showAddProductModal}>
 					<AddProduct
 						{entry}
@@ -134,6 +139,7 @@
 				<Button on:click={() => (showAddProductModal = true)}>Add</Button>
 			</div>
 		</Card>
+
 		<Card>
 			<span class="text-xl" slot="header">Transaction & return details</span>
 			<div slot="content" class="flex flex-col gap-4">
