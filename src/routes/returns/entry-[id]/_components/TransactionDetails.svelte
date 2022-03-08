@@ -89,7 +89,7 @@
 				group: r.category
 			});
 		});
-
+		saleSources = sources;
 		returnReasons = reasons;
 	});
 

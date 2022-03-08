@@ -16,7 +16,32 @@ export async function get({ request }) {
 	try {
 		const saleSources = await prisma.saleSource.findMany({});
 		const returnReasons = await prisma.returnReason.findMany({});
-		data = { saleSources, returnReasons };
+		const locations = await prisma.physicalLocation.findMany({
+			select: {
+				name: true,
+				subName: true,
+				id: true
+			}
+		});
+
+		const locationGroups = [
+			...new Set(
+				locations.map((l) => {
+					return l.subName;
+				})
+			)
+		];
+
+		const locationsByGroup = locationGroups.map((group) => {
+			return {
+				name: group,
+				locations: locations.filter((r) => {
+					return r.subName == group;
+				})
+			};
+		});
+
+		data = { saleSources, returnReasons, locations, locationsByGroup };
 	} catch (e) {
 		console.log(e);
 	}

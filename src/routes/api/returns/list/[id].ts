@@ -34,7 +34,20 @@ export async function get({ params, request }) {
 					}
 				},
 				notes: true,
-				products: true,
+				products: {
+					select: {
+						description: true,
+						group: true,
+						id: true,
+						location: {
+							include: { locationInfo: true }
+						},
+						name: true,
+						price: true,
+						quantity: true,
+						symbol: true
+					}
+				},
 				returnReason: true,
 				sender: true
 			}
