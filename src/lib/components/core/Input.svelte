@@ -5,6 +5,7 @@
 	export let showPlaceholder = true;
 	export let type = 'text';
 	export let largeLabel = false;
+	export let textArea = false;
 
 	let placeholderStyle = '';
 	if (!showPlaceholder) {
@@ -21,7 +22,9 @@
 		<span class={`title ${largeLabel ? 'largeLabel' : ''}`}>{placeholder}</span>
 	{/if}
 	<label>
-		{#if type == 'password'}
+		{#if textArea}
+			<textarea {disabled} bind:value on:change on:input />
+		{:else if type == 'password'}
 			<input {disabled} bind:value type="password" on:change on:input />
 		{:else if type == 'number'}
 			<input {disabled} bind:value type="number" on:change on:input />
@@ -58,7 +61,8 @@
 		@apply text-base;
 	}
 
-	input {
+	input,
+	textarea {
 		display: block;
 		box-sizing: border-box;
 		width: 100%;
@@ -71,7 +75,11 @@
 		border-bottom: 2px solid var(--text-color-light);
 		transition: border-color 0.35s ease-out;
 	}
+	textarea {
+		height: 100%;
+	}
 
+	textarea:focus,
 	input:focus {
 		border-bottom: 2px solid var(--primary-color);
 		outline: none;

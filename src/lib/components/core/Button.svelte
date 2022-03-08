@@ -1,12 +1,11 @@
 <script>
-	export let type = 'primary';
 	export let size = 'normal';
 	export let fullwidth = false;
 	export let gradient = false;
 </script>
 
 <button
-	class={type}
+	class={`${$$props.class}`}
 	class:tiny={size == 'tiny'}
 	class:small={size == 'small'}
 	class:normal={size == 'normal'}
