@@ -1,7 +1,7 @@
 <script>
 	import Button from '$lib/components/core/Button.svelte';
 	import Modal from '$lib/components/core/Modal.svelte';
-
+	import { _ } from 'svelte-i18n';
 	import { post } from '$lib/core/api';
 	import { formatToDateHour } from '$lib/util/time';
 
@@ -36,10 +36,16 @@
 </script>
 
 {#if entry}
-	<Modal title="Image gallery" bind:showModal class="flex flex-col items-center">
+	<Modal
+		title={$_('returns.entry.images.header')}
+		bind:showModal
+		class="flex flex-col items-center"
+	>
 		<img
 			src={`/api/images/${entry.images[modalImageIndex].id}.${entry.images[modalImageIndex].extension}`}
-			alt={`product or packaging image for return ${entry.id} - ${entry.images[modalImageIndex].description}`}
+			alt={`${$_('returns.entry.images.alt')}  ${entry.id} - ${
+				entry.images[modalImageIndex].description
+			}`}
 			class="max-w-full "
 		/>
 
@@ -50,9 +56,9 @@
 		<controls class="fixed bottom-0 z-50 m-auto flex flex-col items-center gap-2">
 			<div class="flex flex-col items-center">
 				<span class="mt-1 px-2 text-xs "
-					>Added by <b>{entry.images[modalImageIndex].user.name}</b> on {formatToDateHour(
-						entry.images[modalImageIndex].created_at
-					)}</span
+					>{$_('returns.entry.images.added by')} <b>{entry.images[modalImageIndex].user.name}</b>
+					{$_('returns.entry.images.added.on')}
+					{formatToDateHour(entry.images[modalImageIndex].created_at)}</span
 				>
 				<span>{modalImageIndex + 1}/{entry.images.length}</span>
 			</div>
@@ -85,10 +91,14 @@
 			>
 				<img
 					src={`/api/images/${image.id}_400.${image.extension}`}
-					alt={`product or packaging image for return ${entry.id} - ${image.description}`}
+					alt={`${$_('returns.entry.images.alt')}  ${entry.id} - ${
+						entry.images[modalImageIndex].description
+					}`}
 				/>
 				<span class="mt-1 px-2 text-xs text-[color:var(--text-color-light)]"
-					>Added by <b>{image.user.name}</b> on {formatToDateHour(image.created_at)}</span
+					><b>{entry.images[modalImageIndex].user.name}</b>
+
+					{formatToDateHour(entry.images[modalImageIndex].created_at)}</span
 				>
 			</figure>
 		{/each}
@@ -102,7 +112,7 @@
 		}}
 	>
 		<img class="icon mr-2 " src="/icons/takePhoto.png" alt="" />
-		<div class="ml-2">Add another</div>
+		<div class="ml-2">{$_('returns.entry.images.add')}</div>
 		<input
 			style="display:none"
 			type="file"

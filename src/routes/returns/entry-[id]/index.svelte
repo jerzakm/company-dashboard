@@ -67,7 +67,7 @@
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
 		<div class="flex items-center justify-between">
-			<span>Return entry</span>
+			<span>{$_('returns.entry.pageTitle')}</span>
 			<span class="text-sm text-[color:var(--text-color-light)]"
 				>{formatToDateHour(entry.created_at)}</span
 			>
@@ -75,17 +75,17 @@
 		<h1 class="-mt-6">#{id}</h1>
 
 		<Card>
-			<span class="text-xl" slot="header">Sender</span>
+			<span class="text-xl" slot="header">{$_('returns.entry.sender.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<Input
-					placeholder="Name"
+					placeholder={$_('returns.entry.sender.name')}
 					largeLabel
 					bind:value={entry.sender.name}
 					on:change={() => senderChange()}
 					on:input={() => senderChange()}
 				/>
 				<Input
-					placeholder="Street"
+					placeholder={$_('returns.entry.sender.street')}
 					largeLabel
 					bind:value={entry.sender.street}
 					on:change={() => senderChange()}
@@ -93,14 +93,14 @@
 				/>
 				<div class="flex gap-4">
 					<Input
-						placeholder="Postcode"
+						placeholder={$_('returns.entry.sender.postCode')}
 						largeLabel
 						bind:value={entry.sender.postCode}
 						on:change={() => senderChange()}
 						on:input={() => senderChange()}
 					/>
 					<Input
-						placeholder="City"
+						placeholder={$_('returns.entry.sender.city')}
 						class="w-full"
 						largeLabel
 						bind:value={entry.sender.city}
@@ -111,7 +111,7 @@
 			</div>
 		</Card>
 		<Card>
-			<span class="text-xl" slot="header">Images</span>
+			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<ImageGallery
 					{entry}
@@ -122,7 +122,7 @@
 			</div>
 		</Card>
 		<Card>
-			<span class="text-xl" slot="header">Products</span>
+			<span class="text-xl" slot="header">{$_('returns.entry.products.header')}</span>
 			<div slot="content" class="flex flex-col gap-4 ">
 				<ProductsList
 					{entry}
@@ -130,7 +130,10 @@
 						getEntryData();
 					}}
 				/>
-				<Modal title="Add a new product" bind:showModal={showAddProductModal}>
+				<Modal
+					title={$_('returns.entry.products.modal.header')}
+					bind:showModal={showAddProductModal}
+				>
 					<AddProduct
 						{entry}
 						on:newProductAdded={async () => {
@@ -138,18 +141,20 @@
 						}}
 					/>
 				</Modal>
-				<Button on:click={() => (showAddProductModal = true)}>Add</Button>
+				<Button on:click={() => (showAddProductModal = true)}
+					>{$_('returns.entry.products.addNewButton')}</Button
+				>
 			</div>
 		</Card>
 
 		<Card>
-			<span class="text-xl" slot="header">Transaction & return details</span>
+			<span class="text-xl" slot="header">{$_('returns.entry.transactionDetails.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<TransactionDetails {entry} />
 			</div>
 		</Card>
 		<Card>
-			<span class="text-xl" slot="header">Notes</span>
+			<span class="text-xl" slot="header">{$_('returns.entry.notes.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<Notes
 					{entry}

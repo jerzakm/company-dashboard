@@ -4,6 +4,7 @@
 	import Handsontable from 'handsontable';
 	import { get, post } from '$lib/core/api';
 	import Input from '$lib/components/core/Input.svelte';
+	import { _ } from 'svelte-i18n';
 
 	export let entry;
 	let addProductTableEl;
@@ -44,7 +45,7 @@
 		productsTable = new Handsontable(addProductTableEl, {
 			data,
 			rowHeaders: false,
-			colHeaders: ['Symbol', 'Name', ''],
+			colHeaders: ['Symbol', `${$_('returns.entry.products.name')}`, ''],
 			columns: [{ data: 'symbol' }, { data: 'name' }, { data: 'id' }],
 			height: '65vh',
 			dropdownMenu: true,
@@ -84,5 +85,5 @@
 	});
 </script>
 
-<Input placeholder="Search" class="mb-4 mr-1" bind:value={searchQuery} />
+<Input placeholder={$_('ui.search')} class="mb-4 mr-1" bind:value={searchQuery} />
 <div bind:this={addProductTableEl} id="returnsList" />

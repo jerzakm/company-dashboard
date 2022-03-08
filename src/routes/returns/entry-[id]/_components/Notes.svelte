@@ -1,7 +1,7 @@
 <script>
 	import Button from '$lib/components/core/Button.svelte';
 	import Input from '$lib/components/core/Input.svelte';
-
+	import { _ } from 'svelte-i18n';
 	import Modal from '$lib/components/core/Modal.svelte';
 
 	import { post } from '$lib/core/api';
@@ -37,10 +37,9 @@
 <div class="flex flex-col gap-6">
 	<notes class="mt-4 flex flex-col gap-2">
 		{#each entry.notes as note, i}
-			<!-- <note class="border-b-2"> -->
 			<note class={i % 2 == 0 ? 'bg-[color:var(--background-color)]' : ''}>
 				<span class="px-2 text-xs text-[color:var(--text-color-light)]">
-					Added on {formatToDateHour(note.created_at)} by {note.user.name}
+					{formatToDateHour(note.created_at)} - {note.user.name}
 				</span>
 				<p class="px-2">
 					{note.content}
@@ -48,10 +47,12 @@
 			</note>
 		{/each}
 	</notes>
-	<Button on:click={() => (showModal = true)}>New note</Button>
+	<Button on:click={() => (showModal = true)}>{$_('returns.entry.notes.add')}</Button>
 </div>
 
-<Modal title="New note" bind:showModal class="flex flex-col items-end gap-6">
+<Modal title={$_('returns.entry.notes.add')} bind:showModal class="flex flex-col items-end gap-6">
 	<Input textArea class="h-48 w-full" bind:value={content} />
-	<Button class="w-1/2" on:click={() => addNote()}>Save</Button>
+	<Button class="w-full lg:w-1/2" on:click={() => addNote()}
+		>{$_('returns.entry.notes.save')}</Button
+	>
 </Modal>

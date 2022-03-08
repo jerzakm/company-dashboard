@@ -1,6 +1,6 @@
 <script>
 	import Input from '$lib/components/core/Input.svelte';
-
+	import { _ } from 'svelte-i18n';
 	import { get, post } from '$lib/core/api';
 	import { debounce } from '$lib/util/debounce';
 

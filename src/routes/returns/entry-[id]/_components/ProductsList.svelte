@@ -1,6 +1,6 @@
 <script>
 	import { del, get, post } from '$lib/core/api';
-
+	import { _ } from 'svelte-i18n';
 	import { sortByCreatedAt } from '$lib/util/sort';
 
 	import Handsontable from 'handsontable';
@@ -34,7 +34,9 @@
 		items.location = {
 			// Own custom option
 			name() {
-				return '<span class="w-full flex -ml-2 px-1 font-bold text-lg border-b-2">Locations</span>'; // Name can contain HTML
+				return `<span class="w-full flex -ml-2 px-1 font-bold text-lg border-b-2"> ${$_(
+					'returns.entry.products.location'
+				)} </span>`; // Name can contain HTML
 			},
 			disableSelection: true,
 			isCommand: false
@@ -67,7 +69,7 @@
 			};
 		}
 		items.clearLocation = {
-			name: 'Clear location',
+			name: `${$_('returns.entry.products.clearLocation')}`,
 			callback(key, selection, clickEvent) {
 				setTimeout(async () => {
 					const row = selection[0].start.row;
@@ -108,7 +110,15 @@
 		productsTable = new Handsontable(productsTableEl, {
 			data: [],
 			rowHeaders: false,
-			colHeaders: ['#', 'Symbol', 'Name', 'Group', 'Notes', 'Location', 'id'],
+			colHeaders: [
+				'#',
+				`${$_('returns.entry.products.symbol')}`,
+				`${$_('returns.entry.products.name')}`,
+				`${$_('returns.entry.products.group')}`,
+				`${$_('returns.entry.products.notes')}`,
+				`${$_('returns.entry.products.location')}`,
+				'id'
+			],
 			columns: [
 				{ data: 'index' },
 				{ data: 'symbol' },
