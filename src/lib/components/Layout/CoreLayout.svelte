@@ -1,5 +1,4 @@
 <script>
-	import SideIcons from '$lib/components/Nav/SideIcons.svelte';
 	import '../../../styles/app.css';
 
 	import { goto } from '$app/navigation';
@@ -26,8 +25,5 @@
 </script>
 
 <div class="flex h-full">
-	{#if user}
-		<SideIcons />
-	{/if}
 	<slot />
 </div>

@@ -10,6 +10,8 @@
 
 	export let active = '';
 
+	$: console.log(active);
+
 	let underline;
 
 	const links = [
@@ -34,7 +36,7 @@
 
 <div class="space-y-4">
 	<div class="mx-4 space-y-2 ">
-		<div class="space-y-1 flex flex-col">
+		<div class="flex flex-col space-y-1">
 			{#each links as { href, label }}
 				<a {href} class={`${active == href ? 'active' : ''}`}>
 					<div role="menuitem">
@@ -70,6 +72,7 @@
 		-webkit-text-fill-color: transparent;
 		@apply font-bold;
 	}
+
 	a {
 		align-self: flex-start;
 		text-decoration: none;

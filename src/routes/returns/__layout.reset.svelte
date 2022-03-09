@@ -9,12 +9,20 @@
 	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
 
-	export let sidebar = true;
 	import '$lib/locale/i18n';
 	import ReturnsSidebar from '$lib/components/Sidebars/ReturnsSidebar.svelte';
 	import Button from '$lib/components/core/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	let user = null;
+
+	let url = '';
+
+	let sidebarVisible = false || window?.innerWidth > 640;
+
+	page.subscribe((v) => {
+		url = v.url.pathname;
+	});
 
 	authStore.subscribe(async (u) => {
 		user = u;
@@ -46,10 +54,31 @@
 </script>
 
 <CoreLayout>
-	{#if user && sidebar}
-		<Sidebar>
-			<ReturnsSidebar active="/returns/locations" on:newReturnEvent={newReturnEventHandler} />
+	{#if user}
+		<Sidebar visible={sidebarVisible}>
+			<ReturnsSidebar active={url} on:newReturnEvent={newReturnEventHandler} />
 		</Sidebar>
+	{/if}
+
+	{#if window?.innerWidth < 640}
+		<div class="fixed bottom-0 z-50 m-1" style="left: calc(50%); transform: translateX(-50%);">
+			<Button on:click={() => (sidebarVisible = !sidebarVisible)} size="large">
+				{#if sidebarVisible}X
+				{:else}
+					<svg
+						viewBox="0 0 100 80"
+						width="20"
+						height="20"
+						stroke="currentColor"
+						fill="currentColor"
+					>
+						<rect width="100" height="20" rx="8" />
+						<rect y="30" width="100" height="20" rx="8" />
+						<rect y="60" width="100" height="20" rx="8" />
+					</svg>
+				{/if}
+			</Button>
+		</div>
 	{/if}
 
 	<div class={`notification ${showReturnNotification ? 'flex' : 'hidden'}`}>
@@ -74,7 +103,10 @@
 		</div>
 	</div>
 
-	<main class="z-10 flex w-full flex-1 flex-col overflow-x-hidden" style="max-height: 100vh;">
+	<main
+		class="z-10 flex w-full flex-1 flex-col-reverse overflow-x-hidden sm:flex-col"
+		style="max-height: 100vh;"
+	>
 		<Topbar {user} />
 
 		<content class="flex flex-1 overflow-y-auto " style="max-height: 100vh;">

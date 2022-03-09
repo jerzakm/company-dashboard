@@ -21,6 +21,7 @@
 	button {
 		color: var(--text-color-strong);
 		border-color: var(--text-color-light);
+		background-color: var(--surface-background-color);
 		@apply m-0;
 		@apply border;
 		@apply rounded;
