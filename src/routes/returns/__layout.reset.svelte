@@ -14,7 +14,14 @@
 	import ReturnsSidebar from '$lib/components/Sidebars/ReturnsSidebar.svelte';
 	import Button from '$lib/components/core/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	let user = null;
+
+	let url = '';
+
+	page.subscribe((v) => {
+		url = v.url.pathname;
+	});
 
 	authStore.subscribe(async (u) => {
 		user = u;
@@ -48,7 +55,7 @@
 <CoreLayout>
 	{#if user && sidebar}
 		<Sidebar>
-			<ReturnsSidebar active="/returns/locations" on:newReturnEvent={newReturnEventHandler} />
+			<ReturnsSidebar active={url} on:newReturnEvent={newReturnEventHandler} />
 		</Sidebar>
 	{/if}
 
