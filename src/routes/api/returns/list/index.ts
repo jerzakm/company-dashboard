@@ -1,5 +1,5 @@
 import { ApiPermission } from '$lib/core/auth';
-import { prisma, tokenHasPermission } from '../_prisma';
+import { prisma, tokenHasPermission } from '../../_prisma';
 
 export async function get({ params, request }) {
 	let data;
@@ -16,7 +16,6 @@ export async function get({ params, request }) {
 	try {
 		data = await prisma.returnEntry.findMany({
 			include: {
-				images: true,
 				notes: true,
 				products: true,
 				returnReason: true,

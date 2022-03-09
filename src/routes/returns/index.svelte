@@ -1,7 +1,7 @@
 <script>
 	import Layout from '$lib/components/Layout.svelte';
 	import { _ } from 'svelte-i18n';
-	import ReturnsSidebar from './_sidebar.svelte';
+	import ReturnsSidebar from '$lib/components/Sidebars/ReturnsSidebar.svelte';
 </script>
 
 <svelte:head>

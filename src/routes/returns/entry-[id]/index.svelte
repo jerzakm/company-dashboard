@@ -1,0 +1,168 @@
+<script context="module">
+	/**
+	 * @type {import('@sveltejs/kit').Load}
+	 */
+	export async function load({ params }) {
+		const { data } = await get(`returns/list/${params.id}`);
+
+		return {
+			props: {
+				id: params.id,
+				data
+			}
+		};
+	}
+</script>
+
+<script lang="ts">
+	import Card from '$lib/components/core/Card.svelte';
+	import Input from '$lib/components/core/Input.svelte';
+	import { get, put } from '$lib/core/api';
+	import { debounce } from '$lib/util/debounce';
+	import { formatToDateHour } from '$lib/util/time';
+	import { _ } from 'svelte-i18n';
+	import AddProduct from './_components/AddProduct.svelte';
+	import ProductsList from './_components/ProductsList.svelte';
+	import Modal from '$lib/components/core/Modal.svelte';
+	import Button from '$lib/components/core/Button.svelte';
+	import TransactionDetails from './_components/TransactionDetails.svelte';
+	import ImageGallery from './_components/ImageGallery.svelte';
+	import Notes from './_components/Notes.svelte';
+	export let id;
+	export let data;
+
+	let entry: any = data;
+
+	$: id && getEntryData();
+
+	// update sender
+	async function saveSender() {
+		const changedSender = await put('returns/edit/sender', entry.sender);
+		if (changedSender.data) {
+			entry.sender = changedSender.data;
+		}
+	}
+	const senderChange = debounce(() => saveSender(), 500);
+
+	// Add new product
+	let showAddProductModal;
+	const newProductAdded = async () => {
+		await getEntryData();
+		showAddProductModal = false;
+	};
+
+	const getEntryData = async () => {
+		const { data } = await get(`returns/list/${id}`);
+		entry = data;
+		console.log(entry);
+	};
+</script>
+
+<svelte:head>
+	<title>{$_('returns.entry.pageTitle')} #{id}</title>
+</svelte:head>
+
+<!-- <img src="http://localhost:3030/image/example/jpg" /> -->
+
+{#if entry && entry.id == id}
+	<div class="flex w-full flex-col gap-6 p-4">
+		<div class="flex items-center justify-between">
+			<span>{$_('returns.entry.pageTitle')}</span>
+			<span class="text-sm text-[color:var(--text-color-light)]"
+				>{formatToDateHour(entry.created_at)}</span
+			>
+		</div>
+		<h1 class="-mt-6">#{id}</h1>
+
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.sender.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Input
+					placeholder={$_('returns.entry.sender.name')}
+					largeLabel
+					bind:value={entry.sender.name}
+					on:change={() => senderChange()}
+					on:input={() => senderChange()}
+				/>
+				<Input
+					placeholder={$_('returns.entry.sender.street')}
+					largeLabel
+					bind:value={entry.sender.street}
+					on:change={() => senderChange()}
+					on:input={() => senderChange()}
+				/>
+				<div class="flex gap-4">
+					<Input
+						placeholder={$_('returns.entry.sender.postCode')}
+						largeLabel
+						bind:value={entry.sender.postCode}
+						on:change={() => senderChange()}
+						on:input={() => senderChange()}
+					/>
+					<Input
+						placeholder={$_('returns.entry.sender.city')}
+						class="w-full"
+						largeLabel
+						bind:value={entry.sender.city}
+						on:change={() => senderChange()}
+						on:input={() => senderChange()}
+					/>
+				</div>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<ImageGallery
+					{entry}
+					on:newImageAdded={() => {
+						getEntryData();
+					}}
+				/>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.products.header')}</span>
+			<div slot="content" class="flex flex-col gap-4 ">
+				<ProductsList
+					{entry}
+					on:locationChanged={() => {
+						getEntryData();
+					}}
+				/>
+				<Modal
+					title={$_('returns.entry.products.modal.header')}
+					bind:showModal={showAddProductModal}
+				>
+					<AddProduct
+						{entry}
+						on:newProductAdded={async () => {
+							await newProductAdded();
+						}}
+					/>
+				</Modal>
+				<Button on:click={() => (showAddProductModal = true)}
+					>{$_('returns.entry.products.addNewButton')}</Button
+				>
+			</div>
+		</Card>
+
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.transactionDetails.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<TransactionDetails {entry} />
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.notes.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Notes
+					{entry}
+					on:noteAdded={() => {
+						getEntryData();
+					}}
+				/>
+			</div>
+		</Card>
+	</div>
+{/if}

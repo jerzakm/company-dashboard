@@ -1,15 +1,11 @@
 <script>
-	import Layout from '$lib/components/Layout.svelte';
-	import ReturnsSidebar from '../_sidebar.svelte';
 	import { _ } from 'svelte-i18n';
 
 	import { get } from '$lib/core/api';
 
 	import Handsontable from 'handsontable';
-	import 'handsontable/dist/handsontable.full.css';
-	import './_table.css';
-	import './_cellRenderers';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const getList = async () => {
 		const list = await get('returns/list');
@@ -63,20 +59,74 @@
 				indicators: true
 			},
 			search: true,
-			contextMenu: true,
-			multiColumnSorting: true,
 			filters: true,
+			// @ts-ignore
+			contextMenu: {
+				callback(key, selection, clickEvent) {
+					// Common callback for all options
+					// console.log(key, selection, clickEvent);
+				},
+				items: {
+					sp1: '---------',
+
+					edit: {
+						// Own custom option
+						name() {
+							// `name` can be a string or a function
+							return 'Edit'; // Name can contain HTML
+						},
+						callback(key, selection, clickEvent) {
+							// Callback for specific option
+							const row = selection[0].start.row;
+							setTimeout(() => {
+								const entryId = returnsTable.getDataAtRow(row)[0];
+								editEntry(entryId);
+							}, 0);
+						}
+					}
+				}
+			},
 			allowInsertColumn: false,
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
 			readOnly: true,
-			columnSorting: {
+			multiColumnSorting: {
 				initialConfig: {
 					column: 0,
 					sortOrder: 'desc'
 				}
 			}
 		});
+
+		let clicked = 0;
+		let clickedId = 0;
+
+		returnsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
+			try {
+				const id = returnsTable.getDataAtRow(coords.row)[0];
+
+				if (clickedId == 0 || clickedId == id) {
+					clicked++;
+				}
+
+				clickedId = id;
+
+				if (clicked >= 2) {
+					editEntry(id);
+				}
+
+				setTimeout(() => {
+					clicked = 0;
+					clickedId = 0;
+				}, 1000);
+			} catch (e) {
+				console.log(e);
+			}
+		});
+
+		function editEntry(id) {
+			goto(`/returns/entry-${id}`);
+		}
 	});
 </script>
 
@@ -84,14 +134,7 @@
 	<title>{$_('returns.list.pageTitle')}</title>
 </svelte:head>
 
-<Layout>
-	<div slot="sidebar">
-		<ReturnsSidebar active="/returns/list" />
-	</div>
-	<div slot="content" class="w-full ">
-		<div bind:this={returnsListEl} id="returnsList" />
-	</div>
-</Layout>
+<div bind:this={returnsListEl} id="returnsList" />
 
 <style>
 </style>
