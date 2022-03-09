@@ -41,5 +41,6 @@
   "returns.entry.products.group": "Group",
   "returns.entry.products.notes": "Notes",
   "returns.entry.products.location": "Location",
-  "returns.entry.products.clearLocation": "Clear location"
+  "returns.entry.products.clearLocation": "Clear location",
+  "returns.entry.products.removeProduct": "Remove"
 }

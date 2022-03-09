@@ -89,16 +89,30 @@
 
 		items.sp1 = '---------';
 
-		// items.remove = {
-		// 	// Own custom option
-		// 	name() {
-		// 		// `name` can be a string or a function
-		// 		return 'Remove'; // Name can contain HTML
-		// 	},
-		// 	callback(key, selection, clickEvent) {
-		// 		// Callback for specific option
-		// 	}
-		// };
+		items.remove = {
+			// Own custom option
+			name() {
+				// `name` can be a string or a function
+				return `<span class="text-[color:var(--error-color)]">${$_(
+					'returns.entry.products.removeProduct'
+				)}</span>`;
+			},
+			callback(key, selection, clickEvent) {
+				setTimeout(async () => {
+					const row = selection[0].start.row;
+					const rowData = productsTable.getDataAtRow(row);
+					const returnProductId = rowData[6];
+					setTimeout(async () => {
+						try {
+							await del('returns/edit/products', { returnProductId, returnId: entry.id });
+							dispatch('locationChanged');
+						} catch (e) {
+							console.log(e);
+						}
+					}, 0);
+				}, 0);
+			}
+		};
 
 		function productLocationRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
 			td.innerHTML = value ? `${value.locationInfo.subName} - ${value?.locationInfo.name}` : '';

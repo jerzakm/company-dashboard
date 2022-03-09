@@ -41,5 +41,6 @@
   "returns.entry.products.group": "Grupa",
   "returns.entry.products.notes": "Notatki",
   "returns.entry.products.location": "Lokalizacja",
-  "returns.entry.products.clearLocation": "Usuń lokalizację"
+  "returns.entry.products.clearLocation": "Usuń lokalizację",
+  "returns.entry.products.removeProduct": "Usuń produkt"
 }
