@@ -5,6 +5,7 @@
 	import '$lib/table/_cellRenderers';
 
 	import CoreLayout from '$lib/components/Layout/CoreLayout.svelte';
+	import PageTransition from '$lib/components/Layout/PageTransition.svelte';
 	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
 	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
@@ -110,9 +111,11 @@
 		<Topbar {user} />
 
 		<content class="flex flex-1 overflow-y-auto " style="max-height: 100vh;">
-			<div class="w-full">
-				<slot />
-			</div>
+			<!-- <div class="w-full"> -->
+			<PageTransition refresh={url} class="w-full">
+				<slot /></PageTransition
+			>
+			<!-- </div> -->
 		</content>
 	</main>
 </CoreLayout>
