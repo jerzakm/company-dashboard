@@ -48,7 +48,7 @@
 			}
 			notifications.stopLoader();
 		} catch (e) {
-			alert('err @saveSender()');
+			notifications.sendNotification($_('returns.entry.notifications.senderChangeFailed'), 'error');
 		}
 	}
 	const senderChange = debounce(() => saveSender(), 500);
