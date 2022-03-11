@@ -3,7 +3,7 @@ export const statusGoals = {
 	imageQty: 2
 };
 
-export const status = (entry: any) => {
+export const checkEntryStatusRequirements = (entry: any) => {
 	return {
 		sender:
 			`${entry.sender.name}${entry.sender.city}${entry.sender.street}${entry.sender.postCode}`

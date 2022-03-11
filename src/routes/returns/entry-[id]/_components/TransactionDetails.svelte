@@ -4,10 +4,13 @@
 	import { get, post } from '$lib/core/api';
 	import { debounce } from '$lib/util/debounce';
 
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	import Select from 'svelte-select';
 	import { notifications } from '$lib/stores/notifications';
+
+	const dispatch = createEventDispatcher();
+
 	export let entry;
 
 	// SALE SOURCE
@@ -24,6 +27,7 @@
 				$_('returns.entry.notifications.updateSaleSourceSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateSaleSourceErr'),
@@ -39,6 +43,7 @@
 				$_('returns.entry.notifications.removeSaleSourceSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.removeSaleSourceErr'),
@@ -73,6 +78,7 @@
 				$_('returns.entry.notifications.updateReturnReasonSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateReturnReasonErr'),
@@ -88,6 +94,7 @@
 				$_('returns.entry.notifications.removeReturnReasonSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.removeReturnReasonErr'),
@@ -120,6 +127,7 @@
 				$_('returns.entry.notifications.updateSaleDocumentSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateSaleDocumentErr'),
