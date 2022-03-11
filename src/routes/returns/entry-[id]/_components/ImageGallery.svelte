@@ -22,6 +22,7 @@
 		let reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = async (e) => {
+			notifications.startLoader();
 			try {
 				const response = await post('images', {
 					returnId: entry.id,
@@ -38,6 +39,7 @@
 
 				notifications.sendNotification($_('returns.entry.notifications.newImageAddErr'), 'error');
 			}
+			notifications.stopLoader();
 		};
 	};
 </script>
@@ -75,14 +77,14 @@
 						modalImageIndex > 0
 							? (modalImageIndex = modalImageIndex - 1)
 							: (modalImageIndex = entry.images.length - 1);
-					}}>&lt ${$_('returns.entry.images.previous')}</Button
+					}}>&lt {$_('returns.entry.images.previous')}</Button
 				>
 				<Button
 					on:click={() => {
 						modalImageIndex < entry.images.length - 1
 							? (modalImageIndex = modalImageIndex + 1)
 							: (modalImageIndex = 0);
-					}}>${$_('returns.entry.images.next')} &gt</Button
+					}}>{$_('returns.entry.images.next')} &gt</Button
 				>
 			</div>
 		</controls>
