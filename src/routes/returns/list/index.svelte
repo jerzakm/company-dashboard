@@ -18,7 +18,6 @@
 		const returnsList = [];
 
 		const { data } = await getList();
-		console.log(data);
 
 		data.map((entry) => {
 			returnsList.push({
@@ -32,7 +31,6 @@
 				status: entry.resolved
 			});
 		});
-		console.log(returnsList);
 
 		const returnsTable = new Handsontable(returnsListEl, {
 			data: returnsList,

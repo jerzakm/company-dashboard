@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 
 	import Select from 'svelte-select';
+	import { notifications } from '$lib/stores/notifications';
 	export let entry;
 
 	// SALE SOURCE
@@ -14,11 +15,36 @@
 	let saleSourceValue;
 
 	async function updateSaleSource(event) {
-		await post('returns/edit/saleSource', { returnId: entry.id, saleSourceId: event.detail.value });
+		try {
+			await post('returns/edit/saleSource', {
+				returnId: entry.id,
+				saleSourceId: event.detail.value
+			});
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateSaleSourceSuccess'),
+				'success'
+			);
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateSaleSourceErr'),
+				'error'
+			);
+		}
 	}
 
 	async function removeSaleSource() {
-		await post('returns/edit/saleSource', { returnId: entry.id, saleSourceId: undefined });
+		try {
+			await post('returns/edit/saleSource', { returnId: entry.id, saleSourceId: undefined });
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeSaleSourceSuccess'),
+				'success'
+			);
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeSaleSourceErr'),
+				'error'
+			);
+		}
 	}
 
 	function displaySaleSource() {
@@ -38,14 +64,36 @@
 	let returnReasonValue;
 
 	async function updateReturnReason(event) {
-		await post('returns/edit/returnReason', {
-			returnId: entry.id,
-			returnReasonId: event.detail.value
-		});
+		try {
+			await post('returns/edit/returnReason', {
+				returnId: entry.id,
+				returnReasonId: event.detail.value
+			});
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateReturnReasonSuccess'),
+				'success'
+			);
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateReturnReasonErr'),
+				'error'
+			);
+		}
 	}
 
 	async function removeReturnReason() {
-		await post('returns/edit/returnReason', { returnId: entry.id, returnReasonId: undefined });
+		try {
+			await post('returns/edit/returnReason', { returnId: entry.id, returnReasonId: undefined });
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeReturnReasonSuccess'),
+				'success'
+			);
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeReturnReasonErr'),
+				'error'
+			);
+		}
 	}
 
 	function displayReturnReason() {
@@ -62,10 +110,21 @@
 
 	// SALE DOCUMENT
 	async function saveSaleDocument() {
-		const changedDocuments = await post('returns/edit/saleDocument', {
-			saleDocument: entry.saleDocument,
-			returnId: entry.id
-		});
+		try {
+			await post('returns/edit/saleDocument', {
+				saleDocument: entry.saleDocument,
+				returnId: entry.id
+			});
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateSaleDocumentSuccess'),
+				'success'
+			);
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.updateSaleDocumentErr'),
+				'error'
+			);
+		}
 	}
 	const saleDocumentChange = debounce(() => saveSaleDocument(), 500);
 
@@ -97,7 +156,7 @@
 </script>
 
 <div class="selectTheme transactionDetailsGrid">
-	<span>Sale source</span>
+	<span>{$_('returns.entry.saleSource')}</span>
 	<div>
 		<Select
 			items={saleSources}
@@ -107,7 +166,7 @@
 			{groupBy}
 		/>
 	</div>
-	<span>Return reason</span>
+	<span>{$_('returns.entry.transactionDetails.returnReason')}</span>
 	<div>
 		<Select
 			items={returnReasons}
@@ -117,7 +176,7 @@
 			{groupBy}
 		/>
 	</div>
-	<span>Sale document</span>
+	<span>{$_('returns.entry.transactionDetails.saleDocument')}</span>
 	<div>
 		<Input
 			bind:value={entry.saleDocument}
@@ -125,7 +184,7 @@
 			on:input={() => saleDocumentChange()}
 		/>
 	</div>
-	<span>Status</span>
+	<span>{$_('returns.entry.transactionDetails.status')}</span>
 	<span>{entry.resolved}</span>
 </div>
 

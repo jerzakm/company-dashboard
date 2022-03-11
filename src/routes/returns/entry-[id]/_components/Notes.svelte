@@ -7,6 +7,7 @@
 	import { post } from '$lib/core/api';
 	import { formatToDateHour } from '$lib/util/time';
 	import { createEventDispatcher } from 'svelte';
+	import { notifications } from '$lib/stores/notifications';
 
 	const dispatch = createEventDispatcher();
 
@@ -18,18 +19,23 @@
 
 	async function addNote() {
 		if (content.length < 5) {
-			alert('Note too short, must be at least 5 characters long.');
+			notifications.sendNotification($_('returns.entry.notifications.addNoteTooShort'), 'warning');
 			return;
 		}
 
-		const changedDocuments = await post('returns/edit/notes', {
-			returnId: entry.id,
-			content
-		});
-		if (changedDocuments.data) {
-			content = '';
-			showModal = false;
-			dispatch('noteAdded');
+		try {
+			const changedDocuments = await post('returns/edit/notes', {
+				returnId: entry.id,
+				content
+			});
+			if (changedDocuments.data) {
+				content = '';
+				showModal = false;
+				dispatch('noteAdded');
+				notifications.sendNotification($_('returns.entry.notifications.addNoteSuccess'), 'success');
+			}
+		} catch (e) {
+			notifications.sendNotification($_('returns.entry.notifications.addNoteErr'), 'error');
 		}
 	}
 </script>

@@ -5,6 +5,7 @@
 	import { get, post } from '$lib/core/api';
 	import Input from '$lib/components/core/Input.svelte';
 	import { _ } from 'svelte-i18n';
+	import { notifications } from '$lib/stores/notifications';
 
 	export let entry;
 	let addProductTableEl;
@@ -74,7 +75,9 @@
 				dispatch('newProductAdded', {
 					product: response.data
 				});
+				notifications.sendNotification($_('returns.entry.notifications.productAdded'), 'success');
 			} catch (e) {
+				notifications.sendNotification($_('returns.entry.notifications.productAddErr'), 'error');
 				console.log(e);
 			}
 		});

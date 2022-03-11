@@ -6,6 +6,7 @@
 	import { formatToDateHour } from '$lib/util/time';
 
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { notifications } from '$lib/stores/notifications';
 
 	export let entry;
 
@@ -28,8 +29,14 @@
 				});
 				dispatch('newImageAdded');
 				fileinput.value = '';
+				notifications.sendNotification(
+					$_('returns.entry.notifications.newImageAddSuccess'),
+					'success'
+				);
 			} catch (e) {
 				console.log(e);
+
+				notifications.sendNotification($_('returns.entry.notifications.newImageAddErr'), 'error');
 			}
 		};
 	};
@@ -68,14 +75,14 @@
 						modalImageIndex > 0
 							? (modalImageIndex = modalImageIndex - 1)
 							: (modalImageIndex = entry.images.length - 1);
-					}}>&lt Previous</Button
+					}}>&lt ${$_('returns.entry.images.previous')}</Button
 				>
 				<Button
 					on:click={() => {
 						modalImageIndex < entry.images.length - 1
 							? (modalImageIndex = modalImageIndex + 1)
 							: (modalImageIndex = 0);
-					}}>Next &gt</Button
+					}}>${$_('returns.entry.images.next')} &gt</Button
 				>
 			</div>
 		</controls>

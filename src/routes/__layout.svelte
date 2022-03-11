@@ -9,13 +9,17 @@
 	import Sidebar from '$lib/components/Nav/Sidebar.svelte';
 	import { authStore } from '$lib/core/auth';
 	import Topbar from '$lib/components/Nav/Topbar.svelte';
+	import Notifications from '$lib/components/Layout/Notifications.svelte';
 
 	import '$lib/locale/i18n';
 	import ReturnsSidebar from '$lib/components/Sidebars/ReturnsSidebar.svelte';
 	import Button from '$lib/components/core/Button.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { notificationStore } from '$lib/stores/notifications';
 	let user = null;
+
+	// notificationStore
 
 	let url = '';
 
@@ -82,7 +86,10 @@
 		</div>
 	{/if}
 
-	<div class={`notification ${showReturnNotification ? 'flex' : 'hidden'}`}>
+	<div
+		class={` notification ${showReturnNotification ? 'flex' : 'hidden'}`}
+		style="backdrop-filter: blur(1px);"
+	>
 		<div class={`notification-bg  opacity-10`} />
 		<div
 			class={`notification-content flex flex-col items-center ${
@@ -119,6 +126,8 @@
 		</content>
 	</main>
 </CoreLayout>
+
+<Notifications />
 
 <style>
 	.notification {

@@ -5,6 +5,7 @@
 
 	import Handsontable from 'handsontable';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { notifications } from '$lib/stores/notifications';
 
 	export let entry;
 
@@ -57,9 +58,17 @@
 									const returnProductId = rowData[6];
 									try {
 										await post('returns/edit/location', { returnProductId, locationId: loc.id });
+										notifications.sendNotification(
+											$_('returns.entry.notifications.locationChangedSuccess'),
+											'success'
+										);
 										dispatch('locationChanged');
 									} catch (e) {
 										console.log(e);
+										notifications.sendNotification(
+											$_('returns.entry.notifications.locationChangedErr'),
+											'error'
+										);
 									}
 								}, 0);
 							}
@@ -79,8 +88,15 @@
 						try {
 							await del('returns/edit/location', { returnProductId });
 							dispatch('locationChanged');
+							notifications.sendNotification(
+								$_('returns.entry.notifications.locationRemovedSuccess'),
+								'success'
+							);
 						} catch (e) {
-							console.log(e);
+							notifications.sendNotification(
+								$_('returns.entry.notifications.locationRemovedErr'),
+								'error'
+							);
 						}
 					}, 0);
 				}, 0);
@@ -106,8 +122,15 @@
 						try {
 							await del('returns/edit/products', { returnProductId, returnId: entry.id });
 							dispatch('locationChanged');
+							notifications.sendNotification(
+								$_('returns.entry.notifications.productRemovedSuccess'),
+								'success'
+							);
 						} catch (e) {
-							console.log(e);
+							notifications.sendNotification(
+								$_('returns.entry.notifications.productRemovedErr'),
+								'error'
+							);
 						}
 					}, 0);
 				}, 0);
