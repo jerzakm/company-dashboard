@@ -115,6 +115,7 @@
 				saleDocument: entry.saleDocument,
 				returnId: entry.id
 			});
+
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateSaleDocumentSuccess'),
 				'success'

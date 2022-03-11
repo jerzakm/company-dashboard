@@ -19,7 +19,9 @@ export async function get({ params, request }) {
 				notes: true,
 				products: true,
 				returnReason: true,
-				sender: true
+				sender: true,
+				saleSource: true,
+				images: true
 			}
 		});
 	} catch (e) {

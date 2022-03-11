@@ -16,7 +16,7 @@ export async function get({ params, request }) {
 	const id = parseInt(params.id);
 
 	try {
-		data = await prisma.returnEntry.findUnique({
+		const entry = await prisma.returnEntry.findUnique({
 			where: {
 				id
 			},
@@ -60,6 +60,8 @@ export async function get({ params, request }) {
 				sender: true
 			}
 		});
+
+		data = entry;
 	} catch (e) {
 		console.log(e);
 	}
