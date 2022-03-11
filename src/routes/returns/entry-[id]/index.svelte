@@ -28,6 +28,7 @@
 	import TransactionDetails from './_components/TransactionDetails.svelte';
 	import ImageGallery from './_components/ImageGallery.svelte';
 	import Notes from './_components/Notes.svelte';
+	import { notifications } from '$lib/stores/notifications';
 	export let id;
 	export let data;
 
@@ -37,9 +38,17 @@
 
 	// update sender
 	async function saveSender() {
-		const changedSender = await put('returns/edit/sender', entry.sender);
-		if (changedSender.data) {
-			entry.sender = changedSender.data;
+		notifications.startLoader();
+
+		try {
+			const changedSender = await put('returns/edit/sender', entry.sender);
+			if (changedSender.data) {
+				entry.sender = changedSender.data;
+				notifications.sendNotification($_('returns.entry.notifications.senderChanged'), 'success');
+			}
+			notifications.stopLoader();
+		} catch (e) {
+			alert('err @saveSender()');
 		}
 	}
 	const senderChange = debounce(() => saveSender(), 500);
