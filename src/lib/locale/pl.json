@@ -69,5 +69,10 @@
   "returns.entry.saleSource": "Źródło sprzedaży",
   "returns.entry.notifications.addNoteTooShort": "Notatka zbyt krótka",
   "returns.entry.notifications.senderChangeFailed": "Błąd zmiany danych nadawcy",
-  "returns.entry.notifications.updateReturnReasonSuccess": "Zmieniono powód zwrotu"
+  "returns.entry.notifications.updateReturnReasonSuccess": "Zmieniono powód zwrotu",
+  "returns.entry.notifications.removeSaleSourceErr": "Błąd podczas usuwania źródła sprzedaży",
+  "returns.entry.notifications.removeSaleSourceSuccess": "Usunięto źródło sprzedaży",
+  "returns.entry.notifications.updateSaleSourceErr": "Błąd podczas zmiany źródła sprzedaży",
+  "returns.entry.notifications.updateSaleSourceSuccess": "Zmieniono źródło sprzedaży",
+  "ui.select": "Wybierz"
 }

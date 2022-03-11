@@ -73,5 +73,6 @@
   "returns.entry.notifications.updateSaleSourceSuccess": "Sale source updated",
   "returns.entry.notifications.updateSaleSourceErr": "Failed to update sale source",
   "returns.entry.notifications.removeSaleSourceSuccess": "Sale source removed",
-  "returns.entry.notifications.removeSaleSourceErr": "Failed to remove sale source"
+  "returns.entry.notifications.removeSaleSourceErr": "Failed to remove sale source",
+  "ui.select": "Select"
 }

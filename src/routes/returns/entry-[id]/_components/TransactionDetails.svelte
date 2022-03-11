@@ -163,6 +163,7 @@
 			value={saleSourceValue}
 			on:select={updateSaleSource}
 			on:clear={removeSaleSource}
+			placeholder={$_('ui.select')}
 			{groupBy}
 		/>
 	</div>
@@ -173,6 +174,7 @@
 			value={returnReasonValue}
 			on:select={updateReturnReason}
 			on:clear={removeReturnReason}
+			placeholder={$_('ui.select')}
 			{groupBy}
 		/>
 	</div>
