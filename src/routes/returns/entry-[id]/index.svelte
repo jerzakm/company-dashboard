@@ -76,7 +76,7 @@
 
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
-		<div class="flex items-center justify-between">
+		<div class="flex flex-col justify-between md:flex-row md:items-center">
 			<div class="flex flex-col">
 				<span>{$_('returns.entry.pageTitle')}</span>
 				<h1 class="-mt-1">#{id}</h1>
