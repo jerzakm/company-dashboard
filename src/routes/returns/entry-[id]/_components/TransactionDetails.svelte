@@ -8,8 +8,26 @@
 
 	import Select from 'svelte-select';
 	import { notifications } from '$lib/stores/notifications';
+	import Badge from '$lib/components/core/Badge.svelte';
+	import { checkEntryStatusRequirements } from '$lib/returnLogic/entryStatus';
+	import Button from '$lib/components/core/Button.svelte';
+	import MissingDataBadges from './MissingDataBadges.svelte';
 
 	const dispatch = createEventDispatcher();
+
+	$: missingData = checkRequiredFields(entry);
+
+	function checkRequiredFields(entry) {
+		const requirements = checkEntryStatusRequirements(entry);
+
+		for (const key in requirements) {
+			if (!requirements[key]) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	export let entry;
 
@@ -196,7 +214,16 @@
 		/>
 	</div>
 	<span>{$_('returns.entry.transactionDetails.status')}</span>
-	<span>{entry.resolved}</span>
+	<div>
+		{#if entry.resolved}
+			<Badge text={$_('returns.entry.transactionDetails.statusResolved')} type="success" />
+		{:else if !entry.resolved && missingData}
+			<MissingDataBadges {entry} class="flex-wrap" />
+		{:else}
+			<Badge text={$_('returns.entry.transactionDetails.statusInProgress')} type="info" />
+			<Button>{$_('returns.entry.transactionDetails.statusResolveButton')}</Button>
+		{/if}
+	</div>
 </div>
 
 <style>

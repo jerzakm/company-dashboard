@@ -10,7 +10,7 @@
 	$: console.log(missingData);
 </script>
 
-<badges class="flex gap-2">
+<badges class={`flex gap-2 ${$$props.class}`}>
 	{#each Object.keys(missingData) as badge}
 		{#if !missingData[badge]}
 			<Badge text={$_(`returns.entry.statusEntry.${badge}`)} type={'error'} pulse />
