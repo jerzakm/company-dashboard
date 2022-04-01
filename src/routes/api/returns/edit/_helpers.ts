@@ -253,3 +253,19 @@ export interface IReturnProduct {
 	group: string;
 	description: string;
 }
+
+export const updateEntryStatus = async (returnId: any, status: boolean) => {
+	try {
+		return await prisma.returnEntry.update({
+			where: {
+				id: parseInt(returnId)
+			},
+			data: {
+				resolved: status
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};

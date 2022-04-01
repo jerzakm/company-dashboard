@@ -81,5 +81,8 @@
   "ui.select": "Select",
   "returns.entry.transactionDetails.statusResolved": "Resolved",
   "returns.entry.transactionDetails.statusInProgress": "In progress",
-  "returns.entry.transactionDetails.statusResolveButton": "Resolve"
+  "returns.entry.transactionDetails.statusResolveButton": "Resolve",
+  "returns.entry.notifications.statusChangeErr": "Failed to change entry status",
+  "returns.entry.transactionDetails.statusResolveButtonOpen": "Re-open",
+  "returns.entry.notifications.changedStatus": "Changed entry status"
 }

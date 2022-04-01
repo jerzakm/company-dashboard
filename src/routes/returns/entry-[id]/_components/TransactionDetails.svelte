@@ -121,6 +121,19 @@
 		}
 	}
 
+	async function changeEntryStatus(entryStatus) {
+		try {
+			await post('returns/edit/status', {
+				returnId: entry.id,
+				entryStatus
+			});
+			dispatch('detailsChanged');
+			notifications.sendNotification($_('returns.entry.notifications.changedStatus'), 'success');
+		} catch (e) {
+			notifications.sendNotification($_('returns.entry.notifications.statusChangeErr'), 'error');
+		}
+	}
+
 	function displayReturnReason() {
 		const i = returnReasons.findIndex((r) => {
 			return r.value == entry.returnReasonId;
@@ -214,14 +227,25 @@
 		/>
 	</div>
 	<span>{$_('returns.entry.transactionDetails.status')}</span>
-	<div>
+	<div class="flex items-center gap-2">
 		{#if entry.resolved}
 			<Badge text={$_('returns.entry.transactionDetails.statusResolved')} type="success" />
+			<Button
+				size="tiny"
+				class="opacity-50"
+				on:click={() => {
+					changeEntryStatus(false);
+				}}>{$_('returns.entry.transactionDetails.statusResolveButtonOpen')}</Button
+			>
 		{:else if !entry.resolved && missingData}
 			<MissingDataBadges {entry} class="flex-wrap" />
 		{:else}
 			<Badge text={$_('returns.entry.transactionDetails.statusInProgress')} type="info" />
-			<Button>{$_('returns.entry.transactionDetails.statusResolveButton')}</Button>
+			<Button
+				on:click={() => {
+					changeEntryStatus(true);
+				}}>{$_('returns.entry.transactionDetails.statusResolveButton')}</Button
+			>
 		{/if}
 	</div>
 </div>
