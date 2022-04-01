@@ -4,10 +4,31 @@
 	import { get, post } from '$lib/core/api';
 	import { debounce } from '$lib/util/debounce';
 
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	import Select from 'svelte-select';
 	import { notifications } from '$lib/stores/notifications';
+	import Badge from '$lib/components/core/Badge.svelte';
+	import { checkEntryStatusRequirements } from '$lib/returnLogic/entryStatus';
+	import Button from '$lib/components/core/Button.svelte';
+	import MissingDataBadges from './MissingDataBadges.svelte';
+
+	const dispatch = createEventDispatcher();
+
+	$: missingData = checkRequiredFields(entry);
+
+	function checkRequiredFields(entry) {
+		const requirements = checkEntryStatusRequirements(entry);
+
+		for (const key in requirements) {
+			if (!requirements[key]) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	export let entry;
 
 	// SALE SOURCE
@@ -24,6 +45,7 @@
 				$_('returns.entry.notifications.updateSaleSourceSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateSaleSourceErr'),
@@ -39,6 +61,7 @@
 				$_('returns.entry.notifications.removeSaleSourceSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.removeSaleSourceErr'),
@@ -73,6 +96,7 @@
 				$_('returns.entry.notifications.updateReturnReasonSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateReturnReasonErr'),
@@ -88,11 +112,25 @@
 				$_('returns.entry.notifications.removeReturnReasonSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.removeReturnReasonErr'),
 				'error'
 			);
+		}
+	}
+
+	async function changeEntryStatus(entryStatus) {
+		try {
+			await post('returns/edit/status', {
+				returnId: entry.id,
+				entryStatus
+			});
+			dispatch('detailsChanged');
+			notifications.sendNotification($_('returns.entry.notifications.changedStatus'), 'success');
+		} catch (e) {
+			notifications.sendNotification($_('returns.entry.notifications.statusChangeErr'), 'error');
 		}
 	}
 
@@ -120,6 +158,7 @@
 				$_('returns.entry.notifications.updateSaleDocumentSuccess'),
 				'success'
 			);
+			dispatch('detailsChanged');
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateSaleDocumentErr'),
@@ -188,7 +227,27 @@
 		/>
 	</div>
 	<span>{$_('returns.entry.transactionDetails.status')}</span>
-	<span>{entry.resolved}</span>
+	<div class="flex items-center gap-2">
+		{#if entry.resolved}
+			<Badge text={$_('returns.entry.transactionDetails.statusResolved')} type="success" />
+			<Button
+				size="tiny"
+				class="opacity-50"
+				on:click={() => {
+					changeEntryStatus(false);
+				}}>{$_('returns.entry.transactionDetails.statusResolveButtonOpen')}</Button
+			>
+		{:else if !entry.resolved && missingData}
+			<MissingDataBadges {entry} class="flex-wrap" />
+		{:else}
+			<Badge text={$_('returns.entry.transactionDetails.statusInProgress')} type="info" />
+			<Button
+				on:click={() => {
+					changeEntryStatus(true);
+				}}>{$_('returns.entry.transactionDetails.statusResolveButton')}</Button
+			>
+		{/if}
+	</div>
 </div>
 
 <style>

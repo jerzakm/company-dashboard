@@ -29,6 +29,7 @@
 	import ImageGallery from './_components/ImageGallery.svelte';
 	import Notes from './_components/Notes.svelte';
 	import { notifications } from '$lib/stores/notifications';
+	import MissingDataBadges from './_components/MissingDataBadges.svelte';
 	export let id;
 	export let data;
 
@@ -75,13 +76,18 @@
 
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
-		<div class="flex items-center justify-between">
-			<span>{$_('returns.entry.pageTitle')}</span>
-			<span class="text-sm text-[color:var(--text-color-light)]"
-				>{formatToDateHour(entry.created_at)}</span
-			>
+		<div class="flex flex-col justify-between md:flex-row md:items-center">
+			<div class="flex flex-col">
+				<span>{$_('returns.entry.pageTitle')}</span>
+				<h1 class="-mt-1">#{id}</h1>
+			</div>
+			<div class="flex flex-col items-end">
+				<span class="text-sm text-[color:var(--text-color-light)]"
+					>{formatToDateHour(entry.created_at)}</span
+				>
+				<MissingDataBadges {entry} />
+			</div>
 		</div>
-		<h1 class="-mt-6">#{id}</h1>
 
 		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.sender.header')}</span>
@@ -159,7 +165,12 @@
 		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.transactionDetails.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
-				<TransactionDetails {entry} />
+				<TransactionDetails
+					{entry}
+					on:detailsChanged={() => {
+						getEntryData();
+					}}
+				/>
 			</div>
 		</Card>
 		<Card>

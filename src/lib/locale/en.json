@@ -74,5 +74,15 @@
   "returns.entry.notifications.updateSaleSourceErr": "Failed to update sale source",
   "returns.entry.notifications.removeSaleSourceSuccess": "Sale source removed",
   "returns.entry.notifications.removeSaleSourceErr": "Failed to remove sale source",
-  "ui.select": "Select"
+  "returns.entry.statusEntry.sender": "Incomplete sender data",
+  "returns.entry.statusEntry.images": "Not enough images",
+  "returns.entry.statusEntry.saleSource": "No sale source",
+  "returns.entry.statusEntry.returnReason": "No return reason",
+  "ui.select": "Select",
+  "returns.entry.transactionDetails.statusResolved": "Resolved",
+  "returns.entry.transactionDetails.statusInProgress": "In progress",
+  "returns.entry.transactionDetails.statusResolveButton": "Resolve",
+  "returns.entry.notifications.statusChangeErr": "Failed to change entry status",
+  "returns.entry.transactionDetails.statusResolveButtonOpen": "Re-open",
+  "returns.entry.notifications.changedStatus": "Changed entry status"
 }
