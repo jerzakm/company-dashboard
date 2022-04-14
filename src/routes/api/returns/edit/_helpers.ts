@@ -1,6 +1,29 @@
 import type { ReturnProduct, ReturnSender } from '@prisma/client';
 import { prisma } from '../../_prisma';
 
+export const addReturnEvent = async (
+	returnId: number,
+	userId: string,
+	type: string,
+	data: string,
+	description: string
+) => {
+	try {
+		return await prisma.returnEvent.create({
+			data: {
+				data,
+				description,
+				type,
+				userId,
+				returnId
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
 	const { city, country, name, postCode, phone, street, products } = returnEntry;
 
@@ -106,31 +129,6 @@ export const addNote = async (content: string, userId, returnId) => {
 				type: 'Return note',
 				returnId,
 				userId
-			}
-		});
-	} catch (e) {
-		console.log(e);
-		return null;
-	}
-};
-
-export const createReturnEvent = async (returnId, userId, type, description, diff = '') => {
-	try {
-		return await prisma.returnEvent.create({
-			data: {
-				returnEntry: {
-					connect: {
-						id: returnId
-					}
-				},
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				type,
-				description,
-				diff
 			}
 		});
 	} catch (e) {
