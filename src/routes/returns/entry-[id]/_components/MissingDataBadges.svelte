@@ -7,7 +7,6 @@
 	export let entry;
 
 	$: missingData = checkEntryStatusRequirements(entry);
-	$: console.log(missingData);
 </script>
 
 <badges class={`flex gap-2 ${$$props.class}`}>

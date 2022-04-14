@@ -13,7 +13,6 @@ export const dbAuthCheck = async (login, password) => {
 };
 
 export const tokenHasPermission = async (token: string, requiredPermission: string) => {
-	console.log(token);
 	const login = token.split(':')[0];
 	const password = token.split(':')[1];
 	let granted = false;

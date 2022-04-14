@@ -176,7 +176,6 @@
 			contextMenu: {
 				callback(key, selection, clickEvent) {
 					// Common callback for all options
-					// console.log(key, selection, clickEvent);
 				},
 				items
 			},
