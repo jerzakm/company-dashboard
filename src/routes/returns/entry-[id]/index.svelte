@@ -30,6 +30,7 @@
 	import Notes from './_components/Notes.svelte';
 	import { notifications } from '$lib/stores/notifications';
 	import MissingDataBadges from './_components/MissingDataBadges.svelte';
+	import Events from './_components/Events.svelte';
 	export let id;
 	export let data;
 
@@ -72,8 +73,6 @@
 	<title>{$_('returns.entry.pageTitle')} #{id}</title>
 </svelte:head>
 
-<!-- <img src="http://localhost:3030/image/example/jpg" /> -->
-
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
 		<div class="flex flex-col justify-between md:flex-row md:items-center">
@@ -88,6 +87,13 @@
 				<MissingDataBadges {entry} />
 			</div>
 		</div>
+
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.events.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Events {entry} />
+			</div>
+		</Card>
 
 		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.sender.header')}</span>
