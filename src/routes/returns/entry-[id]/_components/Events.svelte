@@ -2,6 +2,8 @@
 	import { _ } from 'svelte-i18n';
 	import { formatToDateHour } from '$lib/util/time';
 	export let entry;
+
+	console.log(entry.events);
 </script>
 
 <div class="flex flex-col gap-6">
@@ -9,16 +11,18 @@
 		{#each entry.events as event, i}
 			{@const data = JSON.parse(event.data)}
 
-			<span class={i % 2 == 0 ? 'bg-[color:var(--background-color)]' : ''}
-				>{formatToDateHour(event.created_at)}</span
-			>
-			<span class={i % 2 == 0 ? 'bg-[color:var(--background-color)]' : ''}>{event.user.name}</span>
-			<span class={i % 2 == 0 ? 'bg-[color:var(--background-color)]' : ''}>
+			<span>{formatToDateHour(event.created_at)}</span>
+			<span>{event.user.name}</span>
+			<span>
 				{$_(`${event.type}`)}
 			</span>
-			<span class={i % 2 == 0 ? 'bg-[color:var(--background-color)]' : ''}>
+			<span>
 				{#if event.type.includes('retunEvents.sender.changed')}
 					{data.to}
+				{:else if event.type.includes('retunEvents.image.added')}
+					<img class="max-h-16" src={`/api/images/${data.id}_400.${data.extension}`} />
+				{:else if event.type.includes('retunEvents.product.location.change')}
+					{data.to.name} - {data.to.subName}
 				{/if}
 			</span>
 		{/each}

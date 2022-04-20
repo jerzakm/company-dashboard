@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { prisma, tokenHasPermission } from '../../_prisma';
-import { updateReturnReason } from './_helpers';
+import { addReturnEvent, updateReturnReason } from './_helpers';
 
 export async function post({ request }) {
 	let status = 400;
@@ -24,12 +24,13 @@ export async function post({ request }) {
 	};
 
 	try {
-		const { returnProductId, locationId } = await request.json();
+		const { returnProductId, locationId, returnId } = await request.json();
 
 		const currentLocation = await prisma.returnLocation.findFirst({
 			where: {
 				productId: returnProductId
-			}
+			},
+			include: { locationInfo: true }
 		});
 
 		if (currentLocation) {
@@ -40,7 +41,7 @@ export async function post({ request }) {
 			});
 		}
 
-		await prisma.returnProduct.update({
+		const newLocation = await prisma.returnProduct.update({
 			where: {
 				id: returnProductId
 			},
@@ -52,12 +53,24 @@ export async function post({ request }) {
 						userId: permission.userId
 					}
 				}
-			}
+			},
+			include: { location: { include: { locationInfo: true } } }
 		});
 
-		// const returnReasonUpdate = await updateReturnReason(returnId, returnReasonId);
+		console.log(returnId);
 
-		// body.data = returnReasonUpdate;
+		if (currentLocation.locationId != newLocation.location.locationId) {
+			const event = await addReturnEvent(
+				returnId,
+				permission.userId,
+				`retunEvents.product.location.change`,
+				JSON.stringify({
+					from: currentLocation.locationInfo,
+					to: newLocation.location.locationInfo
+				}),
+				''
+			);
+		}
 
 		status = 200;
 	} catch (e) {
@@ -93,12 +106,13 @@ export async function del({ request }) {
 	};
 
 	try {
-		const { returnProductId } = await request.json();
+		const { returnProductId, returnId } = await request.json();
 
 		const currentLocation = await prisma.returnLocation.findFirst({
 			where: {
 				productId: returnProductId
-			}
+			},
+			include: { locationInfo: true }
 		});
 
 		if (currentLocation) {
@@ -107,11 +121,20 @@ export async function del({ request }) {
 					id: currentLocation.id
 				}
 			});
+
+			console.log(returnId);
+
+			const event = await addReturnEvent(
+				returnId,
+				permission.userId,
+				`retunEvents.product.location.delete`,
+				JSON.stringify({
+					from: currentLocation.locationInfo,
+					to: null
+				}),
+				''
+			);
 		}
-
-		// const returnReasonUpdate = await updateReturnReason(returnId, returnReasonId);
-
-		// body.data = returnReasonUpdate;
 
 		status = 200;
 	} catch (e) {

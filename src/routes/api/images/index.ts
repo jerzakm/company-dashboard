@@ -2,6 +2,7 @@ import { ApiPermission } from '$lib/core/auth';
 import fs from 'fs';
 import { prisma, tokenHasPermission } from '../_prisma';
 import sharp from 'sharp';
+import { addReturnEvent } from '../returns/edit/_helpers';
 
 export async function post({ request }) {
 	const authorization = await request.headers.get('authorization');
@@ -62,6 +63,18 @@ export async function post({ request }) {
 			miniatureImageData,
 			'base64'
 		);
+
+		try {
+			await addReturnEvent(
+				returnImage.returnId,
+				returnImage.userId,
+				`retunEvents.image.added`,
+				JSON.stringify(returnImage),
+				''
+			);
+		} catch (e) {
+			console.log('error creating an event');
+		}
 	} catch (e) {
 		await prisma.returnImage.delete({ where: { id: returnImage.id } });
 		return { status: 500 };
