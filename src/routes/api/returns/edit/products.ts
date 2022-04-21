@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { prisma, tokenHasPermission } from '../../_prisma';
-import { addProduct } from './_helpers';
+import { addProduct, addReturnEvent } from './_helpers';
 
 export async function post({ request }) {
 	let status = 400;
@@ -29,6 +29,16 @@ export async function post({ request }) {
 		const addedProduct = await addProduct(productId, permission.userId, returnId);
 
 		body.data = addedProduct;
+
+		if (addedProduct) {
+			await addReturnEvent(
+				returnId,
+				permission.userId,
+				`returnEvents.productAdded`,
+				JSON.stringify(addedProduct),
+				''
+			);
+		}
 
 		status = 200;
 	} catch (e) {
@@ -67,7 +77,12 @@ export async function del({ request }) {
 
 		const returnProduct = await prisma.returnProduct.findFirst({
 			where: { id: returnProductId },
-			include: { location: true }
+			include: {
+				location: true,
+				returnEntry: {
+					select: { id: true }
+				}
+			}
 		});
 
 		if (returnProduct.location?.id) {
@@ -81,6 +96,14 @@ export async function del({ request }) {
 		await prisma.returnProduct.delete({
 			where: { id: returnProduct.id }
 		});
+
+		const event = await addReturnEvent(
+			returnProduct.returnEntry.id,
+			permission.userId,
+			`returnEvents.productRemoved`,
+			JSON.stringify(returnProduct),
+			''
+		);
 
 		status = 200;
 	} catch (e) {

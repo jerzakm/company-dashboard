@@ -23,6 +23,16 @@
 					<img class="max-h-16" src={`/api/images/${data.id}_400.${data.extension}`} />
 				{:else if event.type.includes('retunEvents.product.location.change')}
 					{data.to.name} - {data.to.subName}
+				{:else if event.type.includes('retunEvents.note.add')}
+					<span class="italic text-xs">{data.content}</span>
+				{:else if event.type.includes('returnEvents.productAdded')}
+					{data?.name} - [{data?.symbol}]
+				{:else if event.type.includes('returnEvents.productRemoved')}
+					{data.name} - [{data.symbol}]
+				{:else if event.type.includes('returnEvents.returnReasonUpdate')}
+					{data.returnReason.category} - {data.returnReason.reason}
+				{:else}
+					{event.data}
 				{/if}
 			</span>
 		{/each}

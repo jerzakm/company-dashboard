@@ -87,6 +87,8 @@ export const addProduct = async (
 	quantity = 1
 ) => {
 	try {
+		if (!productId) return;
+
 		const { group, name, symbol, buyPrice } = await prisma.product.findUnique({
 			where: { id: productId }
 		});
@@ -181,6 +183,9 @@ export const updateReturnReason = async (returnId: number, returnReasonId: strin
 							id: returnReasonId
 						}
 					}
+				},
+				select: {
+					returnReason: true
 				}
 			});
 		} else {
@@ -190,6 +195,9 @@ export const updateReturnReason = async (returnId: number, returnReasonId: strin
 					returnReason: {
 						disconnect: true
 					}
+				},
+				select: {
+					returnReason: true
 				}
 			});
 		}

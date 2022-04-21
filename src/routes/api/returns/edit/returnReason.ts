@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { tokenHasPermission } from '../../_prisma';
-import { updateReturnReason } from './_helpers';
+import { addReturnEvent, updateReturnReason } from './_helpers';
 
 export async function post({ request }) {
 	let status = 400;
@@ -29,6 +29,16 @@ export async function post({ request }) {
 		const returnReasonUpdate = await updateReturnReason(returnId, returnReasonId);
 
 		body.data = returnReasonUpdate;
+
+		if (returnReasonUpdate) {
+			await addReturnEvent(
+				returnId,
+				permission.userId,
+				`returnEvents.returnReasonUpdate`,
+				JSON.stringify(returnReasonUpdate),
+				''
+			);
+		}
 
 		status = 200;
 	} catch (e) {
