@@ -1,6 +1,29 @@
 import type { ReturnProduct, ReturnSender } from '@prisma/client';
 import { prisma } from '../../_prisma';
 
+export const addReturnEvent = async (
+	returnId: number,
+	userId: string,
+	type: string,
+	data: string,
+	description: string
+) => {
+	try {
+		return await prisma.returnEvent.create({
+			data: {
+				data,
+				description,
+				type,
+				userId,
+				returnId
+			}
+		});
+	} catch (e) {
+		console.log(e);
+		return null;
+	}
+};
+
 export const newReturn = async (returnEntry: IReturnEntryBasic, userId: string) => {
 	const { city, country, name, postCode, phone, street, products } = returnEntry;
 
@@ -64,6 +87,8 @@ export const addProduct = async (
 	quantity = 1
 ) => {
 	try {
+		if (!productId) return;
+
 		const { group, name, symbol, buyPrice } = await prisma.product.findUnique({
 			where: { id: productId }
 		});
@@ -98,22 +123,6 @@ export const delProduct = async (data: ReturnProduct) => {
 	}
 };
 
-// export const addImage = async (imgSrc: string, userId, returnId) => {
-// 	try {
-// 		return await prisma.returnImage.create({
-// 			data: {
-// 				imgSrc,
-// 				description: '',
-// 				userId,
-// 				returnId
-// 			}
-// 		});
-// 	} catch (e) {
-// 		console.log(e);
-// 		return null;
-// 	}
-// };
-
 export const addNote = async (content: string, userId, returnId) => {
 	try {
 		return await prisma.returnNote.create({
@@ -122,31 +131,6 @@ export const addNote = async (content: string, userId, returnId) => {
 				type: 'Return note',
 				returnId,
 				userId
-			}
-		});
-	} catch (e) {
-		console.log(e);
-		return null;
-	}
-};
-
-export const createReturnEvent = async (returnId, userId, type, description, diff = '') => {
-	try {
-		return await prisma.returnEvent.create({
-			data: {
-				returnEntry: {
-					connect: {
-						id: returnId
-					}
-				},
-				user: {
-					connect: {
-						id: userId
-					}
-				},
-				type,
-				description,
-				diff
 			}
 		});
 	} catch (e) {
@@ -168,6 +152,11 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 							id: saleSourceId
 						}
 					}
+				},
+				select: {
+					saleSource: {
+						select: { name: true, subCategory: true }
+					}
 				}
 			});
 		} else {
@@ -176,6 +165,11 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 				data: {
 					saleSource: {
 						disconnect: true
+					}
+				},
+				select: {
+					saleSource: {
+						select: { name: true, subCategory: true }
 					}
 				}
 			});
@@ -199,6 +193,9 @@ export const updateReturnReason = async (returnId: number, returnReasonId: strin
 							id: returnReasonId
 						}
 					}
+				},
+				select: {
+					returnReason: true
 				}
 			});
 		} else {
@@ -208,6 +205,9 @@ export const updateReturnReason = async (returnId: number, returnReasonId: strin
 					returnReason: {
 						disconnect: true
 					}
+				},
+				select: {
+					returnReason: true
 				}
 			});
 		}
@@ -226,6 +226,9 @@ export const updateSaleDocument = async (returnId: any, saleDocument: string) =>
 			},
 			data: {
 				saleDocument
+			},
+			select: {
+				saleDocument: true
 			}
 		});
 	} catch (e) {
@@ -262,6 +265,9 @@ export const updateEntryStatus = async (returnId: any, status: boolean) => {
 			},
 			data: {
 				resolved: status
+			},
+			select: {
+				resolved: true
 			}
 		});
 	} catch (e) {

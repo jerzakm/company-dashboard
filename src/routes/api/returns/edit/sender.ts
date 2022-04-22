@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { prisma, tokenHasPermission } from '../../_prisma';
-import { updateSender } from './_helpers';
+import { addReturnEvent, updateSender } from './_helpers';
 
 export async function put({ request }) {
 	let status = 400;
@@ -39,15 +39,27 @@ export async function put({ request }) {
 		const updatedSender = await updateSender(sender);
 		body.data = updatedSender;
 
-		// if (updateSender) {
-		// 	const senderDiff = diff(originalSender, updatedSender);
-		// 	await createReturnEvent(sender.returnId, permission.userId, 'Edit', 'Nadawca', JSON.stringify(senderDiff));
-		// }
+		for (const key in originalSender) {
+			if (sender[key] != originalSender[key]) {
+				const change = {
+					from: originalSender[key],
+					to: sender[key]
+				};
+
+				const event = await addReturnEvent(
+					originalSender.returnId,
+					permission.userId,
+					`retunEvents.sender.changed.${key}`,
+					JSON.stringify(change),
+					''
+				);
+			}
+		}
 
 		status = 200;
 		// body = updatedSender;
 	} catch (e) {
-		// createAppLogEntry(AppLogStatus.CRITICAL, JSON.stringify(e), permission.userId);
+		console.log(e);
 	}
 
 	return {

@@ -5,10 +5,6 @@ export async function get({ params }) {
 
 	const img = fs.readFileSync(`data/images/${imgPath}`);
 
-	// console.log(img);
-
-	console.log(imgPath);
-
 	const status = 200;
 	const body = img;
 

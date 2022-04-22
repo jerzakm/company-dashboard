@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { tokenHasPermission } from '../../_prisma';
-import { addNote } from './_helpers';
+import { addNote, addReturnEvent } from './_helpers';
 
 export async function post({ request }) {
 	let status = 400;
@@ -27,6 +27,14 @@ export async function post({ request }) {
 		const { content, returnId } = await request.json();
 
 		const note = await addNote(content, permission.userId, returnId);
+
+		const event = await addReturnEvent(
+			returnId,
+			permission.userId,
+			`retunEvents.note.add`,
+			JSON.stringify(note),
+			''
+		);
 
 		body.data = note;
 

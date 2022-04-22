@@ -34,11 +34,8 @@ export const notificationStore = writable({
 
 export const notifications = {
 	startLoader: () => {
-		console.log('loader started');
 		const n = get(notificationStore);
-		console.log(n);
 		n.loader = true;
-		console.log(n);
 		notificationStore.set(n);
 	},
 	stopLoader: () => {

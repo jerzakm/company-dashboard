@@ -57,7 +57,11 @@
 									const rowData = productsTable.getDataAtRow(row);
 									const returnProductId = rowData[6];
 									try {
-										await post('returns/edit/location', { returnProductId, locationId: loc.id });
+										await post('returns/edit/location', {
+											returnProductId,
+											locationId: loc.id,
+											returnId: entry.id
+										});
 										notifications.sendNotification(
 											$_('returns.entry.notifications.locationChangedSuccess'),
 											'success'
@@ -86,7 +90,7 @@
 					const returnProductId = rowData[6];
 					setTimeout(async () => {
 						try {
-							await del('returns/edit/location', { returnProductId });
+							await del('returns/edit/location', { returnProductId, returnId: entry.id });
 							dispatch('locationChanged');
 							notifications.sendNotification(
 								$_('returns.entry.notifications.locationRemovedSuccess'),
@@ -176,7 +180,6 @@
 			contextMenu: {
 				callback(key, selection, clickEvent) {
 					// Common callback for all options
-					// console.log(key, selection, clickEvent);
 				},
 				items
 			},

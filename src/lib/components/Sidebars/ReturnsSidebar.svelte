@@ -10,7 +10,6 @@
 
 	export let active = '';
 
-	$: console.log(active);
 
 	let underline;
 

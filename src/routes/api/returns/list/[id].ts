@@ -57,7 +57,16 @@ export async function get({ params, request }) {
 					}
 				},
 				returnReason: true,
-				sender: true
+				sender: true,
+				events: {
+					include: {
+						user: {
+							select: {
+								name: true
+							}
+						}
+					}
+				}
 			}
 		});
 

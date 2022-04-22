@@ -78,7 +78,6 @@
 				notifications.sendNotification($_('returns.entry.notifications.productAdded'), 'success');
 			} catch (e) {
 				notifications.sendNotification($_('returns.entry.notifications.productAddErr'), 'error');
-				console.log(e);
 			}
 		});
 

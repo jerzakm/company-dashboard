@@ -35,8 +35,6 @@
 					'success'
 				);
 			} catch (e) {
-				console.log(e);
-
 				notifications.sendNotification($_('returns.entry.notifications.newImageAddErr'), 'error');
 			}
 			notifications.stopLoader();

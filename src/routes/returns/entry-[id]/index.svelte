@@ -30,6 +30,7 @@
 	import Notes from './_components/Notes.svelte';
 	import { notifications } from '$lib/stores/notifications';
 	import MissingDataBadges from './_components/MissingDataBadges.svelte';
+	import Events from './_components/Events.svelte';
 	export let id;
 	export let data;
 
@@ -71,8 +72,6 @@
 <svelte:head>
 	<title>{$_('returns.entry.pageTitle')} #{id}</title>
 </svelte:head>
-
-<!-- <img src="http://localhost:3030/image/example/jpg" /> -->
 
 {#if entry && entry.id == id}
 	<div class="flex w-full flex-col gap-6 p-4">
@@ -125,17 +124,7 @@
 				</div>
 			</div>
 		</Card>
-		<Card>
-			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
-			<div slot="content" class="flex flex-col gap-4">
-				<ImageGallery
-					{entry}
-					on:newImageAdded={() => {
-						getEntryData();
-					}}
-				/>
-			</div>
-		</Card>
+
 		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.products.header')}</span>
 			<div slot="content" class="flex flex-col gap-4 ">
@@ -182,6 +171,23 @@
 						getEntryData();
 					}}
 				/>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<ImageGallery
+					{entry}
+					on:newImageAdded={() => {
+						getEntryData();
+					}}
+				/>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.events.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Events {entry} />
 			</div>
 		</Card>
 	</div>

@@ -72,7 +72,7 @@ model ReturnEvent {
   description String
   created_at  DateTime    @default(now())
   userId      String
-  diff        String?
+  data        String?
   user        User        @relation(fields: [userId], references: [id])
   returnId    Int
   returnEntry ReturnEntry @relation(fields: [returnId], references: [id])
