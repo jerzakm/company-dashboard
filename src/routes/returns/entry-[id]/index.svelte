@@ -89,13 +89,6 @@
 		</div>
 
 		<Card>
-			<span class="text-xl" slot="header">{$_('returns.entry.events.header')}</span>
-			<div slot="content" class="flex flex-col gap-4">
-				<Events {entry} />
-			</div>
-		</Card>
-
-		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.sender.header')}</span>
 			<div slot="content" class="flex flex-col gap-4">
 				<Input
@@ -131,17 +124,7 @@
 				</div>
 			</div>
 		</Card>
-		<Card>
-			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
-			<div slot="content" class="flex flex-col gap-4">
-				<ImageGallery
-					{entry}
-					on:newImageAdded={() => {
-						getEntryData();
-					}}
-				/>
-			</div>
-		</Card>
+
 		<Card>
 			<span class="text-xl" slot="header">{$_('returns.entry.products.header')}</span>
 			<div slot="content" class="flex flex-col gap-4 ">
@@ -188,6 +171,23 @@
 						getEntryData();
 					}}
 				/>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.images.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<ImageGallery
+					{entry}
+					on:newImageAdded={() => {
+						getEntryData();
+					}}
+				/>
+			</div>
+		</Card>
+		<Card>
+			<span class="text-xl" slot="header">{$_('returns.entry.events.header')}</span>
+			<div slot="content" class="flex flex-col gap-4">
+				<Events {entry} />
 			</div>
 		</Card>
 	</div>

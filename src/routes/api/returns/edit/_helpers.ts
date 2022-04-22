@@ -152,6 +152,11 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 							id: saleSourceId
 						}
 					}
+				},
+				select: {
+					saleSource: {
+						select: { name: true, subCategory: true }
+					}
 				}
 			});
 		} else {
@@ -160,6 +165,11 @@ export const updateSaleSource = async (returnId: number, saleSourceId: string | 
 				data: {
 					saleSource: {
 						disconnect: true
+					}
+				},
+				select: {
+					saleSource: {
+						select: { name: true, subCategory: true }
 					}
 				}
 			});
@@ -216,6 +226,9 @@ export const updateSaleDocument = async (returnId: any, saleDocument: string) =>
 			},
 			data: {
 				saleDocument
+			},
+			select: {
+				saleDocument: true
 			}
 		});
 	} catch (e) {
@@ -252,6 +265,9 @@ export const updateEntryStatus = async (returnId: any, status: boolean) => {
 			},
 			data: {
 				resolved: status
+			},
+			select: {
+				resolved: true
 			}
 		});
 	} catch (e) {

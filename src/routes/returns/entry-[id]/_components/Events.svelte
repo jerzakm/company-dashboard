@@ -31,6 +31,14 @@
 					{data.name} - [{data.symbol}]
 				{:else if event.type.includes('returnEvents.returnReasonUpdate')}
 					{data.returnReason.category} - {data.returnReason.reason}
+				{:else if event.type.includes('returnEvents.saleDocumentUpdate')}
+					{data.saleDocument}
+				{:else if event.type.includes('returnEvents.saleSourceUpdate')}
+					{#if data.saleSource}
+						{data.saleSource.name} {data.saleSource.subCategory}
+					{:else}
+						{$_('returnEvents.saleSourceUpdate.null')}
+					{/if}
 				{:else}
 					{event.data}
 				{/if}

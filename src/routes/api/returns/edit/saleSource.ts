@@ -1,6 +1,6 @@
 import { ApiPermission } from '$lib/core/auth';
 import { prisma, tokenHasPermission } from '../../_prisma';
-import { updateSaleSource } from './_helpers';
+import { addReturnEvent, updateSaleSource } from './_helpers';
 
 export async function post({ request }) {
 	let status = 400;
@@ -29,6 +29,16 @@ export async function post({ request }) {
 		const saleSourceUpdate = await updateSaleSource(returnId, saleSourceId);
 
 		body.data = saleSourceUpdate;
+
+		if (saleSourceUpdate) {
+			await addReturnEvent(
+				returnId,
+				permission.userId,
+				`returnEvents.saleSourceUpdated`,
+				JSON.stringify(saleSourceUpdate),
+				''
+			);
+		}
 
 		status = 200;
 	} catch (e) {
