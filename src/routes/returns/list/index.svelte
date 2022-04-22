@@ -99,6 +99,7 @@
 		let clickedId = 0;
 
 		returnsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
+			if (coords.row == -1) return;
 			try {
 				const id = returnsTable.getDataAtRow(coords.row)[0];
 
