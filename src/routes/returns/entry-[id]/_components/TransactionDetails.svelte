@@ -36,21 +36,23 @@
 	let saleSourceValue;
 
 	async function updateSaleSource(event) {
-		try {
-			await post('returns/edit/saleSource', {
-				returnId: entry.id,
-				saleSourceId: event.detail.value
-			});
-			notifications.sendNotification(
-				$_('returns.entry.notifications.updateSaleSourceSuccess'),
-				'success'
-			);
-			dispatch('detailsChanged');
-		} catch (e) {
-			notifications.sendNotification(
-				$_('returns.entry.notifications.updateSaleSourceErr'),
-				'error'
-			);
+		if (entry.saleSourceId != event.detail.value) {
+			try {
+				await post('returns/edit/saleSource', {
+					returnId: entry.id,
+					saleSourceId: event.detail.value
+				});
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updateSaleSourceSuccess'),
+					'success'
+				);
+				dispatch('detailsChanged');
+			} catch (e) {
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updateSaleSourceErr'),
+					'error'
+				);
+			}
 		}
 	}
 
@@ -88,15 +90,17 @@
 
 	async function updateReturnReason(event) {
 		try {
-			await post('returns/edit/returnReason', {
-				returnId: entry.id,
-				returnReasonId: event.detail.value
-			});
-			notifications.sendNotification(
-				$_('returns.entry.notifications.updateReturnReasonSuccess'),
-				'success'
-			);
-			dispatch('detailsChanged');
+			if (entry.returnReasonId != event.detail.value) {
+				await post('returns/edit/returnReason', {
+					returnId: entry.id,
+					returnReasonId: event.detail.value
+				});
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updateReturnReasonSuccess'),
+					'success'
+				);
+				dispatch('detailsChanged');
+			}
 		} catch (e) {
 			notifications.sendNotification(
 				$_('returns.entry.notifications.updateReturnReasonErr'),
