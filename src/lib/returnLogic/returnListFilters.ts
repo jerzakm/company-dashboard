@@ -1,3 +1,5 @@
+import * as removeAccents from 'remove-accents';
+
 export const processFilterQuery = (list, query) => {
 	console.log('process query');
 	console.log(list[10]);
@@ -12,5 +14,13 @@ export const processFilterQuery = (list, query) => {
 };
 
 const senderQuery = (sender, senderQuery) => {
-	return JSON.stringify(sender).toLowerCase().includes(senderQuery.toLowerCase());
+	// both sender and query strings have locale accents removed (like ą,ę,ź etc), are normalized (NFC), converted to lowercase and non alpha-numeric characters removed
+	const senderString = removeAccents
+		.remove(Object.values(sender).join(''))
+		.toLowerCase()
+		.normalize()
+		.replace(/\W+/g, ' ');
+	const query = removeAccents.remove(senderQuery).toLowerCase().normalize().replace(/\W+/g, ' ');
+
+	return senderString.includes(query);
 };
