@@ -6,6 +6,8 @@
 	import Handsontable from 'handsontable';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import ReturnListFilters from './_components/ReturnListFilters.svelte';
+	import { processFilterQuery } from '$lib/returnLogic/returnListFilters';
 
 	const getList = async () => {
 		const list = await get('returns/list');
@@ -14,11 +16,17 @@
 
 	let returnsListEl;
 
-	onMount(async () => {
+	let initialData = [];
+	let returnsTable;
+
+	function filterQuery(query) {
+		console.log(query);
+		const filteredData = processFilterQuery(initialData, query.detail);
+		renderList(filteredData);
+	}
+
+	function renderList(data) {
 		const returnsList = [];
-
-		const { data } = await getList();
-
 		data.map((entry) => {
 			returnsList.push({
 				id: entry.id,
@@ -31,9 +39,12 @@
 				status: entry.resolved
 			});
 		});
+		returnsTable.updateData(returnsList);
+	}
 
-		const returnsTable = new Handsontable(returnsListEl, {
-			data: returnsList,
+	onMount(async () => {
+		returnsTable = new Handsontable(returnsListEl, {
+			data: [],
 			rowHeaders: false,
 			colHeaders: [
 				'#',
@@ -52,12 +63,10 @@
 				{ data: 'status' }
 			],
 			height: '100%',
-			dropdownMenu: true,
+			dropdownMenu: false,
 			hiddenColumns: {
 				indicators: true
 			},
-			search: true,
-			filters: true,
 			// @ts-ignore
 			contextMenu: {
 				callback(key, selection, clickEvent) {
@@ -86,13 +95,7 @@
 			allowInsertColumn: false,
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
-			readOnly: true,
-			multiColumnSorting: {
-				initialConfig: {
-					column: 0,
-					sortOrder: 'desc'
-				}
-			}
+			readOnly: true
 		});
 
 		let clicked = 0;
@@ -122,6 +125,11 @@
 			}
 		});
 
+		// render list
+		const { data } = await getList();
+		initialData = data;
+		renderList(data);
+
 		function editEntry(id) {
 			goto(`/returns/entry-${id}`);
 		}
@@ -131,6 +139,8 @@
 <svelte:head>
 	<title>{$_('returns.list.pageTitle')}</title>
 </svelte:head>
+
+<ReturnListFilters on:filterQuery={filterQuery} />
 
 <div bind:this={returnsListEl} id="returnsList" />
 
