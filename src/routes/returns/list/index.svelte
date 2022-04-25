@@ -62,7 +62,7 @@
 				{ data: 'returnReason' },
 				{ data: 'status' }
 			],
-			height: '100%',
+			height: 'calc(100%)',
 			dropdownMenu: false,
 			hiddenColumns: {
 				indicators: true
@@ -140,6 +140,8 @@
 	<title>{$_('returns.list.pageTitle')}</title>
 </svelte:head>
 
-<ReturnListFilters on:filterQuery={filterQuery} />
+<div class="flex h-full flex-col">
+	<ReturnListFilters on:filterQuery={filterQuery} />
 
-<div bind:this={returnsListEl} id="returnsList" />
+	<div bind:this={returnsListEl} id="returnsList" />
+</div>
