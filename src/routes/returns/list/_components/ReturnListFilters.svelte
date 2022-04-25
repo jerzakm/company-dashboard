@@ -10,17 +10,24 @@
 	let query = {
 		sender: '',
 		product: '',
-		returnReasons: null
+		returnReasons: null,
+		saleSources: null
 	};
 
 	let returnReasons = [];
 	let saleSources = [];
 	let returnReasonValue;
+	let saleSourceValue;
 
 	const groupBy = (item) => item.group;
 
 	function updateReturnReasonQuery(q) {
 		query.returnReasons = q.detail;
+		dispatch('filterQuery', query);
+	}
+
+	function updateSaleSourceQuery(q) {
+		query.saleSources = q.detail;
 		dispatch('filterQuery', query);
 	}
 
@@ -31,7 +38,7 @@
 		data.saleSources.map((s) => {
 			sources.push({
 				value: s.id,
-				label: `${s.subCategory ? s.subCategory : s.name}`,
+				label: `${s.subCategory} ${s.name}`,
 				group: s.name
 			});
 		});
@@ -71,10 +78,20 @@
 			value={returnReasonValue}
 			containerClasses={'flex-1'}
 			isMulti
-			placeholder={$_('returns.list.table.returnReason')}
+			placeholder={$_('returns.entry.transactionDetails.returnReason')}
 			{groupBy}
 			on:select={updateReturnReasonQuery}
 			on:clear={updateReturnReasonQuery}
+		/>
+		<Select
+			items={saleSources}
+			value={saleSourceValue}
+			containerClasses={'flex-1'}
+			isMulti
+			placeholder={$_('returns.entry.saleSource')}
+			{groupBy}
+			on:select={updateSaleSourceQuery}
+			on:clear={updateSaleSourceQuery}
 		/>
 	</div>
 </div>

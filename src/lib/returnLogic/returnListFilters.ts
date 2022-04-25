@@ -9,7 +9,8 @@ export const processFilterQuery = (list, query) => {
 		return (
 			senderQuery(entry.sender, query.sender) &&
 			productQuery(entry.products, query.product) &&
-			returnReasonQuery(entry.returnReasonId, query.returnReasons)
+			returnReasonQuery(entry.returnReasonId, query.returnReasons) &&
+			saleSourceQuery(entry.saleSourceId, query.saleSources)
 		);
 	});
 
@@ -45,6 +46,16 @@ const returnReasonQuery = (returnReasonId, returnReasonQuery) => {
 
 	for (const q of returnReasonQuery) {
 		if (q.value == returnReasonId) return true;
+	}
+
+	return false;
+};
+
+const saleSourceQuery = (saleSourceId, saleSourceQuery) => {
+	if (!saleSourceQuery) return true;
+
+	for (const q of saleSourceQuery) {
+		if (q.value == saleSourceId) return true;
 	}
 
 	return false;
