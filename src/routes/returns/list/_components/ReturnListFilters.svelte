@@ -21,14 +21,14 @@
 
 	const groupBy = (item) => item.group;
 
+	$: dispatch('filterQuery', query);
+
 	function updateReturnReasonQuery(q) {
-		query.returnReasons = q.detail;
-		dispatch('filterQuery', query);
+		query.returnReasons = returnReasonValue;
 	}
 
 	function updateSaleSourceQuery(q) {
-		query.saleSources = q.detail;
-		dispatch('filterQuery', query);
+		query.saleSources = saleSourceValue;
 	}
 
 	onMount(async () => {
@@ -56,42 +56,28 @@
 	});
 </script>
 
-<div class="selectTheme px-2 py-4">
-	<div class="grid grid-cols-2 gap-2">
-		<Input
-			placeholder={$_('returns.entry.sender.header')}
-			bind:value={query.sender}
-			on:input={() => {
-				dispatch('filterQuery', query);
-			}}
-		/>
-		<Input
-			placeholder={$_('returns.entry.products.header')}
-			bind:value={query.product}
-			on:input={() => {
-				dispatch('filterQuery', query);
-			}}
-		/>
+<div class="selectTheme flex items-start gap-2 px-2 py-4">
+	<Input placeholder={$_('returns.entry.sender.header')} bind:value={query.sender} />
+	<Input placeholder={$_('returns.entry.products.header')} bind:value={query.product} />
 
-		<Select
-			items={returnReasons}
-			value={returnReasonValue}
-			containerClasses={'flex-1'}
-			isMulti
-			placeholder={$_('returns.entry.transactionDetails.returnReason')}
-			{groupBy}
-			on:select={updateReturnReasonQuery}
-			on:clear={updateReturnReasonQuery}
-		/>
-		<Select
-			items={saleSources}
-			value={saleSourceValue}
-			containerClasses={'flex-1'}
-			isMulti
-			placeholder={$_('returns.entry.saleSource')}
-			{groupBy}
-			on:select={updateSaleSourceQuery}
-			on:clear={updateSaleSourceQuery}
-		/>
-	</div>
+	<Select
+		items={returnReasons}
+		value={returnReasonValue}
+		containerClasses={'flex-1'}
+		isMulti
+		placeholder={$_('returns.entry.transactionDetails.returnReason')}
+		{groupBy}
+		on:select={updateReturnReasonQuery}
+		on:clear={updateReturnReasonQuery}
+	/>
+	<Select
+		items={saleSources}
+		value={saleSourceValue}
+		containerClasses={'flex-1'}
+		isMulti
+		placeholder={$_('returns.entry.saleSource')}
+		{groupBy}
+		on:select={updateSaleSourceQuery}
+		on:clear={updateSaleSourceQuery}
+	/>
 </div>
