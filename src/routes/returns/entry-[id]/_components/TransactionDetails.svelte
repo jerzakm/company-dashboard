@@ -255,23 +255,6 @@
 </div>
 
 <style>
-	.selectTheme {
-		--border: 1px solid var(--text-color-light);
-		--borderRadius: 10px;
-		--placeholderColor: var(--text-color-strong);
-		--background: var(--background-color);
-		--listBackground: var(--background-color);
-		--listZIndex: 9000;
-		--groupTitleColor: var(--color-primary);
-		--inputColor: var(--text-color-strong);
-		--itemIsActiveBG: var(--primary-color);
-		--itemColor: var(--text-color-strong);
-		--itemIsActiveColor: var(--text-color-strong);
-		--borderFocusColor: var(--primary-color);
-		--borderHoverColor: var(--text-color-strong);
-		--itemHoverColor: var(--background-color);
-		--itemHoverBG: var(--text-color-strong);
-	}
 	.transactionDetailsGrid {
 		grid-template-columns: auto 1fr auto 1fr;
 		@apply grid items-center gap-x-16 gap-y-2;

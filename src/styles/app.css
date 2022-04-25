@@ -37,3 +37,22 @@ h2 {
 h3 {
 	@apply text-2xl font-bold;
 }
+
+.selectTheme {
+	--border: 1px solid var(--surface-border-light);
+	--borderRadius: 10px;
+	--placeholderColor: var(--text-color-strong);
+	--background: var(--background-color);
+	--listBackground: var(--background-color);
+	--listZIndex: 9000;
+	--groupTitleColor: var(--color-primary);
+	--inputColor: var(--text-color-strong);
+	--itemIsActiveBG: var(--primary-color);
+	--itemColor: var(--text-color-strong);
+	--itemIsActiveColor: var(--text-color-strong);
+	--borderFocusColor: var(--primary-color);
+	--borderHoverColor: var(--text-color-light);
+	--itemHoverColor: var(--background-color);
+	--itemHoverBG: var(--text-color-strong);
+	--multiItemBG: var(--secondary-color);
+}

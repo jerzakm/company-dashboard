@@ -6,7 +6,11 @@ export const processFilterQuery = (list, query) => {
 
 	//sender query
 	const filteredList = list.filter((entry) => {
-		return senderQuery(entry.sender, query.sender) && productQuery(entry.products, query.product);
+		return (
+			senderQuery(entry.sender, query.sender) &&
+			productQuery(entry.products, query.product) &&
+			returnReasonQuery(entry.returnReasonId, query.returnReasons)
+		);
 	});
 
 	return filteredList;
@@ -34,4 +38,14 @@ const productQuery = (products, productQuery) => {
 	const query = removeAccents.remove(productQuery).toLowerCase().normalize().replace(/\W+/g, ' ');
 
 	return productString.includes(query);
+};
+
+const returnReasonQuery = (returnReasonId, returnReasonQuery) => {
+	if (!returnReasonQuery) return true;
+
+	for (const q of returnReasonQuery) {
+		if (q.value == returnReasonId) return true;
+	}
+
+	return false;
 };

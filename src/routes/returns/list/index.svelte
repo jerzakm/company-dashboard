@@ -143,6 +143,3 @@
 <ReturnListFilters on:filterQuery={filterQuery} />
 
 <div bind:this={returnsListEl} id="returnsList" />
-
-<style>
-</style>
