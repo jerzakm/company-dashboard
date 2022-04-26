@@ -1,7 +1,8 @@
 import * as removeAccents from 'remove-accents';
 
 export const processFilterQuery = (list, query) => {
-	//sender query
+	console.log(query);
+
 	const filteredList = list.filter((entry) => {
 		return (
 			senderQuery(entry.sender, query.sender) &&

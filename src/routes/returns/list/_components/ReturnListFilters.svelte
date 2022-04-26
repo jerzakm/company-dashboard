@@ -24,11 +24,11 @@
 	$: dispatch('filterQuery', query);
 
 	function updateReturnReasonQuery(q) {
-		query.returnReasons = returnReasonValue;
+		query.returnReasons = q.detail;
 	}
 
 	function updateSaleSourceQuery(q) {
-		query.saleSources = saleSourceValue;
+		query.saleSources = q.detail;
 	}
 
 	onMount(async () => {

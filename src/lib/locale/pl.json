@@ -100,5 +100,6 @@
   "returnEvents.saleSourceUpdate.null": "Usunięto",
   "returnEvents.saleSourceUpdated": "Zmieniono źródło sprzedaży",
   "returns.entry.events.created": "Utworzono zwrot",
-  "returns.entry.events.header": "Historia"
+  "returns.entry.events.header": "Historia",
+  "returns.list.table.saleSource": "Źródło Sprzedaży"
 }

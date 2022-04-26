@@ -20,8 +20,8 @@
 	let returnsTable;
 
 	function filterQuery(query) {
-		console.log(query);
 		const filteredData = processFilterQuery(initialData, query.detail);
+		console.log(filteredData.length);
 		renderList(filteredData);
 	}
 
@@ -33,6 +33,9 @@
 				date: entry.created_at,
 				sender: `${entry.sender.name}\n${entry.sender.street}\n${entry.sender.postCode} ${entry.sender.city}`,
 				products: JSON.stringify(entry.products),
+				saleSource: entry.saleSource
+					? `${entry.saleSource.subCategory} ${entry.saleSource.name}`
+					: '',
 				returnReason: entry.returnReason
 					? `${entry.returnReason.category} - ${entry.returnReason.reason}`
 					: '',
@@ -52,6 +55,7 @@
 				$_('returns.list.table.sender'),
 				$_('returns.list.table.products'),
 				$_('returns.list.table.returnReason'),
+				$_('returns.list.table.saleSource'),
 				$_('returns.list.table.status')
 			],
 			columns: [
@@ -60,6 +64,7 @@
 				{ data: 'sender' },
 				{ data: 'products', renderer: 'productsRenderer' },
 				{ data: 'returnReason' },
+				{ data: 'saleSource' },
 				{ data: 'status' }
 			],
 			height: 'calc(100%)',
@@ -95,7 +100,9 @@
 			allowInsertColumn: false,
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
-			readOnly: true
+			readOnly: true,
+			colWidths: [50, 50, 240, 80, 80],
+			stretchH: 'all'
 		});
 
 		let clicked = 0;
