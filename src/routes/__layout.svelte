@@ -118,11 +118,9 @@
 		<Topbar {user} />
 
 		<content class="flex flex-1 overflow-y-auto " style="max-height: 100vh;">
-			<!-- <div class="w-full"> -->
 			<PageTransition refresh={url} class="w-full">
 				<slot /></PageTransition
 			>
-			<!-- </div> -->
 		</content>
 	</main>
 </CoreLayout>

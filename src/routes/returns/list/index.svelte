@@ -6,6 +6,8 @@
 	import Handsontable from 'handsontable';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import ReturnListFilters from './_components/ReturnListFilters.svelte';
+	import { processFilterQuery } from '$lib/returnLogic/returnListFilters';
 
 	const getList = async () => {
 		const list = await get('returns/list');
@@ -14,26 +16,38 @@
 
 	let returnsListEl;
 
-	onMount(async () => {
+	let initialData = [];
+	let returnsTable;
+
+	function filterQuery(query) {
+		const filteredData = processFilterQuery(initialData, query.detail);
+		console.log(filteredData.length);
+		renderList(filteredData);
+	}
+
+	function renderList(data) {
 		const returnsList = [];
-
-		const { data } = await getList();
-
 		data.map((entry) => {
 			returnsList.push({
 				id: entry.id,
 				date: entry.created_at,
 				sender: `${entry.sender.name}\n${entry.sender.street}\n${entry.sender.postCode} ${entry.sender.city}`,
 				products: JSON.stringify(entry.products),
+				saleSource: entry.saleSource
+					? `${entry.saleSource.subCategory} ${entry.saleSource.name}`
+					: '',
 				returnReason: entry.returnReason
 					? `${entry.returnReason.category} - ${entry.returnReason.reason}`
 					: '',
 				status: entry.resolved
 			});
 		});
+		returnsTable.updateData(returnsList);
+	}
 
-		const returnsTable = new Handsontable(returnsListEl, {
-			data: returnsList,
+	onMount(async () => {
+		returnsTable = new Handsontable(returnsListEl, {
+			data: [],
 			rowHeaders: false,
 			colHeaders: [
 				'#',
@@ -41,6 +55,7 @@
 				$_('returns.list.table.sender'),
 				$_('returns.list.table.products'),
 				$_('returns.list.table.returnReason'),
+				$_('returns.list.table.saleSource'),
 				$_('returns.list.table.status')
 			],
 			columns: [
@@ -49,15 +64,14 @@
 				{ data: 'sender' },
 				{ data: 'products', renderer: 'productsRenderer' },
 				{ data: 'returnReason' },
+				{ data: 'saleSource' },
 				{ data: 'status' }
 			],
-			height: '100%',
-			dropdownMenu: true,
+			height: 'calc(100%)',
+			dropdownMenu: false,
 			hiddenColumns: {
 				indicators: true
 			},
-			search: true,
-			filters: true,
 			// @ts-ignore
 			contextMenu: {
 				callback(key, selection, clickEvent) {
@@ -87,18 +101,15 @@
 			allowInsertRow: false,
 			licenseKey: 'non-commercial-and-evaluation',
 			readOnly: true,
-			multiColumnSorting: {
-				initialConfig: {
-					column: 0,
-					sortOrder: 'desc'
-				}
-			}
+			colWidths: [50, 50, 240, 80, 80],
+			stretchH: 'all'
 		});
 
 		let clicked = 0;
 		let clickedId = 0;
 
 		returnsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
+			if (coords.row == -1) return;
 			try {
 				const id = returnsTable.getDataAtRow(coords.row)[0];
 
@@ -121,6 +132,11 @@
 			}
 		});
 
+		// render list
+		const { data } = await getList();
+		initialData = data;
+		renderList(data);
+
 		function editEntry(id) {
 			goto(`/returns/entry-${id}`);
 		}
@@ -131,7 +147,8 @@
 	<title>{$_('returns.list.pageTitle')}</title>
 </svelte:head>
 
-<div bind:this={returnsListEl} id="returnsList" />
+<div class="flex h-full flex-col">
+	<ReturnListFilters on:filterQuery={filterQuery} />
 
-<style>
-</style>
+	<div bind:this={returnsListEl} id="returnsList" />
+</div>
