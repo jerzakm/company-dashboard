@@ -23,7 +23,7 @@ export async function get({ request }) {
 				id: true
 			}
 		});
-		const shippingCompanies = await prisma.shippingCompany.findMany();
+		const shippingCompanies = await prisma.shippingCompany.findMany({});
 
 		const locationGroups = [
 			...new Set(

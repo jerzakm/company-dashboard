@@ -43,6 +43,8 @@
 					{:else}
 						{$_('returnEvents.saleSourceUpdate.null')}
 					{/if}
+				{:else if event.type.includes('returnEvents.shippingCompanyUpdate')}
+					{data.ShippingCompany ? data.ShippingCompany.name : '-'}
 				{:else}
 					{event.data}
 				{/if}
