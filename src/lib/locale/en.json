@@ -101,5 +101,10 @@
   "returnEvents.saleDocumentUpdate": "Sale document updated",
   "returnEvents.saleSourceUpdated": "Sale source updated",
   "returnEvents.saleSourceUpdate.null": "Removed",
-  "returns.list.table.saleSource": "Sale Source"
+  "returns.list.table.saleSource": "Sale Source",
+  "returns.entry.notifications.updateShippingCompany": "Shipping updated",
+  "returns.entry.notifications.removeShippingCompany": "Shipping removed",
+  "returns.entry.notifications.removeShippingCompanyErr": "Failed to remove shipping",
+  "returns.entry.shippingCompany": "Shipping company",
+  "returns.entry.notifications.updateShippingCompanyErr": "Failed to update shipping"
 }
