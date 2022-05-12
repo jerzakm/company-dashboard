@@ -334,4 +334,9 @@
 		grid-template-columns: 1fr 2fr 1fr 2fr;
 		@apply grid items-center gap-x-16 gap-y-2;
 	}
+	@media (max-width: 960px) {
+		.transactionDetailsGrid {
+			grid-template-columns: 1fr 2fr;
+		}
+	}
 </style>
