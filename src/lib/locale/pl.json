@@ -106,5 +106,7 @@
   "returns.entry.notifications.removeShippingCompany": "Wysyłka usunięta",
   "returns.entry.notifications.removeShippingCompanyErr": "Błąd usuwania metody wysyłki",
   "returns.entry.notifications.updateShippingCompany": "Wysyłka zaktualizowana",
-  "returns.entry.shippingCompany": "Wysyłka"
+  "returns.entry.shippingCompany": "Wysyłka",
+  "returns.addedNew": "Dodano nowy zwrot",
+  "returns.addedNewContinue": "Kontynuuj"
 }

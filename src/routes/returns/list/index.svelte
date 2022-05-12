@@ -42,6 +42,7 @@
 				status: entry.resolved
 			});
 		});
+		returnsList.reverse();
 		returnsTable.updateData(returnsList);
 	}
 

@@ -106,5 +106,7 @@
   "returns.entry.notifications.removeShippingCompany": "Shipping removed",
   "returns.entry.notifications.removeShippingCompanyErr": "Failed to remove shipping",
   "returns.entry.shippingCompany": "Shipping company",
-  "returns.entry.notifications.updateShippingCompanyErr": "Failed to update shipping"
+  "returns.entry.notifications.updateShippingCompanyErr": "Failed to update shipping",
+  "returns.addedNew": "Added a new return",
+  "returns.addedNewContinue": "Continue"
 }
