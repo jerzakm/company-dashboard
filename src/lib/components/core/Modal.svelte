@@ -30,6 +30,11 @@
 		z-index: 9999;
 		min-width: 40vw;
 	}
+	@media (max-width: 800px) {
+		content {
+			width: 95%;
+		}
+	}
 	.modal-bg {
 		z-index: 9990;
 	}

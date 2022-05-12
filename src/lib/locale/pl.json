@@ -101,5 +101,12 @@
   "returnEvents.saleSourceUpdated": "Zmieniono źródło sprzedaży",
   "returns.entry.events.created": "Utworzono zwrot",
   "returns.entry.events.header": "Historia",
-  "returns.list.table.saleSource": "Źródło Sprzedaży"
+  "returns.list.table.saleSource": "Źródło Sprzedaży",
+  "returns.entry.notifications.updateShippingCompanyErr": "Błąd aktualizacji wysyłki",
+  "returns.entry.notifications.removeShippingCompany": "Wysyłka usunięta",
+  "returns.entry.notifications.removeShippingCompanyErr": "Błąd usuwania metody wysyłki",
+  "returns.entry.notifications.updateShippingCompany": "Wysyłka zaktualizowana",
+  "returns.entry.shippingCompany": "Wysyłka",
+  "returns.addedNew": "Dodano nowy zwrot",
+  "returns.addedNewContinue": "Kontynuuj"
 }

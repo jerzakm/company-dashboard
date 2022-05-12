@@ -30,7 +30,11 @@
 				{:else if event.type.includes('returnEvents.productRemoved')}
 					{data.name} - [{data.symbol}]
 				{:else if event.type.includes('returnEvents.returnReasonUpdate')}
-					{data.returnReason.category} - {data.returnReason.reason}
+					{#if data.returnReason?.category}
+						{data.returnReason.category} - {data.returnReason.reason}
+					{:else}
+						{$_('returnEvents.saleSourceUpdate.null')}
+					{/if}
 				{:else if event.type.includes('returnEvents.saleDocumentUpdate')}
 					{data.saleDocument}
 				{:else if event.type.includes('returnEvents.saleSourceUpdate')}
@@ -39,6 +43,8 @@
 					{:else}
 						{$_('returnEvents.saleSourceUpdate.null')}
 					{/if}
+				{:else if event.type.includes('returnEvents.shippingCompanyUpdate')}
+					{data.ShippingCompany ? data.ShippingCompany.name : '-'}
 				{:else}
 					{event.data}
 				{/if}

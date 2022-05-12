@@ -31,6 +31,59 @@
 
 	export let entry;
 
+	// SHIPPING COMPANY
+	let shippingCompanies = [];
+	let shippingCompanyValue;
+
+	async function updateShippingCompany(event) {
+		if (entry.shippingCompanyId != event.detail.value) {
+			try {
+				await post('returns/edit/shippingCompany', {
+					returnId: entry.id,
+					shippingCompanyId: event.detail.value
+				});
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updateShippingCompany'),
+					'success'
+				);
+				dispatch('detailsChanged');
+			} catch (e) {
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updateShippingCompanyErr'),
+					'error'
+				);
+			}
+		}
+	}
+
+	async function removeShippingCompany() {
+		try {
+			await post('returns/edit/shippingCompany', { returnId: entry.id, shippingCompanyId: null });
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeShippingCompany'),
+				'success'
+			);
+			dispatch('detailsChanged');
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removeShippingCompanyErr'),
+				'error'
+			);
+		}
+	}
+
+	function displayShippingCompany() {
+		const i = shippingCompanies.findIndex((r) => {
+			return r.value == entry.shippingCompanyId;
+		});
+
+		if (i >= 0) {
+			shippingCompanyValue = shippingCompanies[i];
+		}
+	}
+
+	$: shippingCompanies && entry && displayShippingCompany();
+
 	// SALE SOURCE
 	let saleSources = [];
 	let saleSourceValue;
@@ -194,12 +247,33 @@
 		});
 		saleSources = sources;
 		returnReasons = reasons;
+
+		const shipping = [];
+		data.shippingCompanies.map((s) => {
+			shipping.push({
+				value: s.id,
+				label: s.name,
+				group: ''
+			});
+		});
+		shippingCompanies = shipping;
 	});
 
 	const groupBy = (item) => item.group;
 </script>
 
 <div class="selectTheme transactionDetailsGrid">
+	<span>{$_('returns.entry.shippingCompany')}</span>
+	<div>
+		<Select
+			items={shippingCompanies}
+			value={shippingCompanyValue}
+			on:select={updateShippingCompany}
+			on:clear={removeShippingCompany}
+			placeholder={$_('ui.select')}
+			{groupBy}
+		/>
+	</div>
 	<span>{$_('returns.entry.saleSource')}</span>
 	<div>
 		<Select
@@ -231,7 +305,7 @@
 		/>
 	</div>
 	<span>{$_('returns.entry.transactionDetails.status')}</span>
-	<div class="flex items-center gap-2">
+	<div class="flex flex-wrap items-center gap-2">
 		{#if entry.resolved}
 			<Badge text={$_('returns.entry.transactionDetails.statusResolved')} type="success" />
 			<Button
@@ -241,8 +315,6 @@
 					changeEntryStatus(false);
 				}}>{$_('returns.entry.transactionDetails.statusResolveButtonOpen')}</Button
 			>
-		{:else if !entry.resolved && missingData}
-			<MissingDataBadges {entry} class="flex-wrap" />
 		{:else}
 			<Badge text={$_('returns.entry.transactionDetails.statusInProgress')} type="info" />
 			<Button
@@ -252,11 +324,19 @@
 			>
 		{/if}
 	</div>
+	<div class="flex flex-wrap">
+		<MissingDataBadges {entry} class="flex-wrap" />
+	</div>
 </div>
 
 <style>
 	.transactionDetailsGrid {
-		grid-template-columns: auto 1fr auto 1fr;
+		grid-template-columns: 1fr 2fr 1fr 2fr;
 		@apply grid items-center gap-x-16 gap-y-2;
+	}
+	@media (max-width: 960px) {
+		.transactionDetailsGrid {
+			grid-template-columns: 1fr 2fr;
+		}
 	}
 </style>

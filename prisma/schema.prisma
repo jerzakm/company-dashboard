@@ -52,6 +52,8 @@ model ReturnEntry {
   returnReason   ReturnReason?   @relation(fields: [returnReasonId], references: [id])
   returnReasonId String?
 
+  ShippingCompany   ShippingCompany? @relation(fields: [shippingCompanyId], references: [id])
+  shippingCompanyId String?
 }
 
 model ReturnSender {
@@ -167,4 +169,10 @@ model Product {
   weight    Decimal
   buyPrice  Decimal
   group     String
+}
+
+model ShippingCompany {
+  id            String        @id @default(cuid())
+  name          String
+  returnEntries ReturnEntry[]
 }

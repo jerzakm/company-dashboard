@@ -57,8 +57,6 @@ export async function post({ request }) {
 			include: { location: { include: { locationInfo: true } } }
 		});
 
-		console.log(returnId);
-
 		if (currentLocation.locationId != newLocation.location.locationId) {
 			const event = await addReturnEvent(
 				returnId,

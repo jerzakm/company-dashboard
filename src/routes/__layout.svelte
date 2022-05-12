@@ -16,7 +16,7 @@
 	import Button from '$lib/components/core/Button.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { notificationStore } from '$lib/stores/notifications';
+	import { _ } from 'svelte-i18n';
 	let user = null;
 
 	// notificationStore
@@ -97,7 +97,7 @@
 			}`}
 		>
 			{#if addedReturnData}
-				<h2>Added a new return</h2>
+				<h2>{$_('returns.addedNew')}</h2>
 				<h1 class="mt-2 mb-2 text-8xl">{addedReturnData.id}</h1>
 				<Button
 					fullwidth
@@ -105,7 +105,7 @@
 					on:click={() => {
 						goto(`/returns/entry-${addedReturnData?.id}`);
 						showReturnNotification = false;
-					}}><span class="text-2xl">Continue</span></Button
+					}}><span class="text-2xl">{$_('returns.addedNewContinue')}</span></Button
 				>
 			{/if}
 		</div>

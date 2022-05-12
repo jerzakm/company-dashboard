@@ -65,18 +65,38 @@
 			disableVisualSelection: false
 		});
 
+		let clicked = 0;
+		let clickedId;
+
 		productsTable.addHook('afterOnCellMouseDown', async (event, coords, TD) => {
+			if (coords.row == -1) return;
 			try {
-				const product = productsTable.getDataAtRow(coords.row);
-				const response = await post('returns/edit/products', {
-					productId: product[2],
-					returnId: entry.id
-				});
-				dispatch('newProductAdded', {
-					product: response.data
-				});
-				notifications.sendNotification($_('returns.entry.notifications.productAdded'), 'success');
+				const id = productsTable.getDataAtRow(coords.row)[0];
+
+				if (clickedId == 0 || clickedId == id) {
+					clicked++;
+				}
+
+				clickedId = id;
+
+				if (clicked >= 2) {
+					const product = productsTable.getDataAtRow(coords.row);
+					const response = await post('returns/edit/products', {
+						productId: product[2],
+						returnId: entry.id
+					});
+					dispatch('newProductAdded', {
+						product: response.data
+					});
+					notifications.sendNotification($_('returns.entry.notifications.productAdded'), 'success');
+				}
+
+				setTimeout(() => {
+					clicked = 0;
+					clickedId = 0;
+				}, 1000);
 			} catch (e) {
+				console.log(e);
 				notifications.sendNotification($_('returns.entry.notifications.productAddErr'), 'error');
 			}
 		});
