@@ -31,6 +31,59 @@
 
 	export let entry;
 
+	// PAYMENT METHOD
+	let paymentMethods = [];
+	let paymentMethodValue;
+
+	async function updatePaymentMethod(event) {
+		if (entry.shippingCompanyId != event.detail.value) {
+			try {
+				await post('returns/edit/paymentMethod', {
+					returnId: entry.id,
+					paymentMethodId: event.detail.value
+				});
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updatePaymentMethod'),
+					'success'
+				);
+				dispatch('detailsChanged');
+			} catch (e) {
+				notifications.sendNotification(
+					$_('returns.entry.notifications.updatePaymentMethodErr'),
+					'error'
+				);
+			}
+		}
+	}
+
+	async function removePaymentMethod() {
+		try {
+			await post('returns/edit/paymentMethod', { returnId: entry.id, paymentMethodId: null });
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removedPaymentMethod'),
+				'success'
+			);
+			dispatch('detailsChanged');
+		} catch (e) {
+			notifications.sendNotification(
+				$_('returns.entry.notifications.removePaymentMethodErr'),
+				'error'
+			);
+		}
+	}
+
+	function displayPaymentMethod() {
+		const i = paymentMethods.findIndex((r) => {
+			return r.value == entry.paymentMethodId;
+		});
+
+		if (i >= 0) {
+			paymentMethodValue = paymentMethods[i];
+		}
+	}
+
+	$: paymentMethods && entry && displayPaymentMethod();
+
 	// SHIPPING COMPANY
 	let shippingCompanies = [];
 	let shippingCompanyValue;
@@ -257,6 +310,16 @@
 			});
 		});
 		shippingCompanies = shipping;
+
+		const payments = [];
+		data.paymentMethods.map((s) => {
+			payments.push({
+				value: s.id,
+				label: s.name,
+				group: ''
+			});
+		});
+		paymentMethods = payments;
 	});
 
 	const groupBy = (item) => item.group;
@@ -302,6 +365,17 @@
 			bind:value={entry.saleDocument}
 			on:change={() => saleDocumentChange()}
 			on:input={() => saleDocumentChange()}
+		/>
+	</div>
+	<span>{$_('returns.entry.transactionDetails.paymentMethod')}</span>
+	<div>
+		<Select
+			items={paymentMethods}
+			value={paymentMethodValue}
+			on:select={updatePaymentMethod}
+			on:clear={removePaymentMethod}
+			placeholder={$_('ui.select')}
+			{groupBy}
 		/>
 	</div>
 	<span>{$_('returns.entry.transactionDetails.status')}</span>
