@@ -112,5 +112,7 @@
   "returns.entry.notifications.removePaymentMethodErr": "Błąd usuwania metody płatności",
   "returns.entry.notifications.removedPaymentMethod": "Usunięto metodę płatności",
   "returns.entry.notifications.updatePaymentMethod": "Zmieniono metodę płatności",
-  "returns.entry.notifications.updatePaymentMethodErr": "Błąd zmiany metody płatności"
+  "returns.entry.notifications.updatePaymentMethodErr": "Błąd zmiany metody płatności",
+  "returnEvents.paymentMethodUpdate": "Sposób płatności",
+  "returns.entry.transactionDetails.paymentMethod": "Sposób płatności"
 }
