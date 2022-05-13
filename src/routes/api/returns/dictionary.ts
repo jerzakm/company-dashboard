@@ -24,6 +24,7 @@ export async function get({ request }) {
 			}
 		});
 		const shippingCompanies = await prisma.shippingCompany.findMany({});
+		const paymentMethods = await prisma.paymentMethod.findMany({});
 
 		const locationGroups = [
 			...new Set(
@@ -42,7 +43,14 @@ export async function get({ request }) {
 			};
 		});
 
-		data = { saleSources, returnReasons, locations, locationsByGroup, shippingCompanies };
+		data = {
+			saleSources,
+			returnReasons,
+			locations,
+			locationsByGroup,
+			shippingCompanies,
+			paymentMethods
+		};
 	} catch (e) {
 		console.log(e);
 	}
