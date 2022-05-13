@@ -45,6 +45,12 @@
 					{/if}
 				{:else if event.type.includes('returnEvents.shippingCompanyUpdate')}
 					{data.ShippingCompany ? data.ShippingCompany.name : '-'}
+				{:else if event.type.includes('returnEvents.paymentMethod')}
+					{#if data.PaymentMethod}
+						{data.PaymentMethod.name}
+					{:else}
+						{$_('returnEvents.saleSourceUpdate.null')}
+					{/if}
 				{:else}
 					{event.data}
 				{/if}

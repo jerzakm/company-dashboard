@@ -108,5 +108,11 @@
   "returns.entry.notifications.updateShippingCompany": "Wysyłka zaktualizowana",
   "returns.entry.shippingCompany": "Wysyłka",
   "returns.addedNew": "Dodano nowy zwrot",
-  "returns.addedNewContinue": "Kontynuuj"
+  "returns.addedNewContinue": "Kontynuuj",
+  "returns.entry.notifications.removePaymentMethodErr": "Błąd usuwania metody płatności",
+  "returns.entry.notifications.removedPaymentMethod": "Usunięto metodę płatności",
+  "returns.entry.notifications.updatePaymentMethod": "Zmieniono metodę płatności",
+  "returns.entry.notifications.updatePaymentMethodErr": "Błąd zmiany metody płatności",
+  "returnEvents.paymentMethodUpdate": "Sposób płatności",
+  "returns.entry.transactionDetails.paymentMethod": "Sposób płatności"
 }

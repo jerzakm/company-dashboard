@@ -108,5 +108,11 @@
   "returns.entry.shippingCompany": "Shipping company",
   "returns.entry.notifications.updateShippingCompanyErr": "Failed to update shipping",
   "returns.addedNew": "Added a new return",
-  "returns.addedNewContinue": "Continue"
+  "returns.addedNewContinue": "Continue",
+  "returns.entry.notifications.updatePaymentMethod": "Payment method changed",
+  "returns.entry.notifications.updatePaymentMethodErr": "Failed to change payment method",
+  "returns.entry.notifications.removedPaymentMethod": "Payment method removed",
+  "returns.entry.notifications.removePaymentMethodErr": "Failed to remove payment method",
+  "returnEvents.paymentMethodUpdate": "Payment method",
+  "returns.entry.transactionDetails.paymentMethod": "Payment method"
 }
