@@ -54,6 +54,8 @@ model ReturnEntry {
 
   ShippingCompany   ShippingCompany? @relation(fields: [shippingCompanyId], references: [id])
   shippingCompanyId String?
+  PaymentMethod     PaymentMethod?   @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId   String?
 }
 
 model ReturnSender {
@@ -172,6 +174,12 @@ model Product {
 }
 
 model ShippingCompany {
+  id            String        @id @default(cuid())
+  name          String
+  returnEntries ReturnEntry[]
+}
+
+model PaymentMethod {
   id            String        @id @default(cuid())
   name          String
   returnEntries ReturnEntry[]
