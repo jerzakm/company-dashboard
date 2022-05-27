@@ -8,6 +8,7 @@
 	import { goto } from '$app/navigation';
 	import ReturnListFilters from './_components/ReturnListFilters.svelte';
 	import { processFilterQuery } from '$lib/returnLogic/returnListFilters';
+	import { checkEntryStatusRequirements } from '$lib/returnLogic/entryStatus';
 
 	const getList = async () => {
 		const list = await get('returns/list');
@@ -39,7 +40,8 @@
 				returnReason: entry.returnReason
 					? `${entry.returnReason.category} - ${entry.returnReason.reason}`
 					: '',
-				status: entry.resolved
+				status: entry.resolved,
+				entry
 			});
 		});
 		returnsList.reverse();
@@ -47,6 +49,32 @@
 	}
 
 	onMount(async () => {
+		function returnStatusCellRenderer(instance, td, row, col, prop, value) {
+			const status = checkEntryStatusRequirements(value);
+			let html = '';
+
+			let missingCounter = 0;
+
+			for (const s in status) {
+				if (!status[s]) {
+					missingCounter++;
+				}
+			}
+
+			if (value.resolved) {
+				html += `<span style="background-color: var(--success-color);" class="rounded-lg px-2 text-black">${`Resolved`}</span><br>`;
+			} else {
+				html += `<span style="background-color: var(--warning-color);" class="rounded-lg px-2  text-black">${`In-progress`}</span><br>`;
+			}
+
+			if (missingCounter > 0) {
+				html += `<span style="color: var(--error-color);">${missingCounter} fields missing</span>`;
+			}
+
+			td.innerHTML = html;
+		}
+		Handsontable.renderers.registerRenderer('returnStatusRenderer', returnStatusCellRenderer);
+
 		returnsTable = new Handsontable(returnsListEl, {
 			data: [],
 			rowHeaders: false,
@@ -66,7 +94,7 @@
 				{ data: 'products', renderer: 'productsRenderer' },
 				{ data: 'returnReason' },
 				{ data: 'saleSource' },
-				{ data: 'status' }
+				{ data: 'entry', renderer: 'returnStatusRenderer' }
 			],
 			height: 'calc(100%)',
 			dropdownMenu: false,
