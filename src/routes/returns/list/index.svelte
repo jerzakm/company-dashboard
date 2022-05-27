@@ -50,25 +50,30 @@
 
 	onMount(async () => {
 		function returnStatusCellRenderer(instance, td, row, col, prop, value) {
-			const status = checkEntryStatusRequirements(value);
 			let html = '';
 
-			let missingCounter = 0;
-
-			for (const s in status) {
-				if (!status[s]) {
-					missingCounter++;
-				}
-			}
-
 			if (value.resolved) {
-				html += `<span style="background-color: var(--success-color);" class="rounded-lg px-2 text-black">${`Resolved`}</span><br>`;
+				html += `<span style="background-color: var(--success-color);" class="rounded-lg px-2 text-black">${$_(
+					'returns.list.table.status.resolved'
+				)}</span><br>`;
 			} else {
-				html += `<span style="background-color: var(--warning-color);" class="rounded-lg px-2  text-black">${`In-progress`}</span><br>`;
-			}
+				const status = checkEntryStatusRequirements(value);
+				let missingCounter = 0;
 
-			if (missingCounter > 0) {
-				html += `<span style="color: var(--error-color);">${missingCounter} fields missing</span>`;
+				for (const s in status) {
+					if (!status[s]) {
+						missingCounter++;
+					}
+				}
+				html += `<span style="background-color: var(--warning-color);" class="rounded-lg px-2 text-black inline-block">${$_(
+					'returns.list.table.status.inProgress'
+				)}</span><br>`;
+
+				if (missingCounter > 0) {
+					html += `<span style="color: var(--error-color);">${$_(
+						'returns.list.table.status.fieldsMissing'
+					)} (${missingCounter})</span>`;
+				}
 			}
 
 			td.innerHTML = html;

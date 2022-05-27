@@ -114,5 +114,8 @@
   "returns.entry.notifications.updatePaymentMethod": "Zmieniono metodę płatności",
   "returns.entry.notifications.updatePaymentMethodErr": "Błąd zmiany metody płatności",
   "returnEvents.paymentMethodUpdate": "Sposób płatności",
-  "returns.entry.transactionDetails.paymentMethod": "Sposób płatności"
+  "returns.entry.transactionDetails.paymentMethod": "Sposób płatności",
+  "returns.list.table.status.fieldsMissing": "Niepełne dane",
+  "returns.list.table.status.resolved": "Zakończony",
+  "returns.list.table.status.inProgress": "W trakcie"
 }
